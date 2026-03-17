@@ -8,7 +8,7 @@ import os
 from data import CustomDataModule
 from pathlib import Path
 import shutil
-from model_backbone_unetpp_coords import build_system
+from model_backbone_coords import build_system
 from datetime import datetime
 
 # Видимость GPU задаётся снаружи через окружение или настройки Lightning.
