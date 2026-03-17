@@ -1,0 +1,50 @@
+architecture: boundary_aware_manet        # для имени эксперимента в логах
+encoder_name: efficientnet_v2_m          # или _m/_l
+num_classes: 1
+warmup_epochs: 5
+
+lr: 2e-4
+loss:
+  w_bce: 1.0
+  w_dice: 1.0
+  w_pts: 0.8
+  w_bnd: 0.1
+  point_sigma: 2.0
+  focal:
+    use_focal_seg: false
+    alpha: 0.25
+    gamma: 2.0
+  improved_points:
+    enabled: true
+    alpha: 0.25
+    beta: 0.10
+    gamma: 2.0  
+
+data_path: /home/nikita/project/segpoint/export_project/segpoint_folds/fold_01
+batch_size: 16
+img_size: 640
+num_workers: 6
+augment: true
+num_points: 4
+point_names: ["AA1", "AA2", "STJ1", "STJ2"]
+
+logging:
+  save_dir: runs
+  experiment_name: aortic_ring
+
+trainer:
+  epochs: 35
+  devices: 1
+  precision: auto
+  monitor: "val/dice"
+  mode: "max"
+
+attention:
+  coordinate: true      # CoordinateAttention в head точек
+  decoder: true         # <<< ВКЛ/ВЫКЛ глобальное attention в декодере
+  decoder_attn_levels: 2  # на скольких первых уровнях декодера включать
+  max_attn_tokens: 4096   # максимум H*W внутри attention
+
+fusion:
+  enabled: true           # <<< ВКЛ/ВЫКЛ deep+decoder fusion
+  point_head_channels: 256

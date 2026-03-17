@@ -1,0 +1,15 @@
+task: pose
+model: yolo26m-pose.pt
+path: /home/nikita/Documents/segpoint/yolo_keypoints_folds/fold_02
+train: images/train
+val: images/val
+nc: 1
+names:
+- aortic_ring
+epochs: 35
+imgsz: 896
+project: runs
+name: aortic_ring_pose
+kpt_shape:
+- 4
+- 3

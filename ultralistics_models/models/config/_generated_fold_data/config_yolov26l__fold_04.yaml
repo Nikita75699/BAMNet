@@ -1,0 +1,15 @@
+task: detect
+model: yolo26l.pt
+path: /home/nikita/Documents/segpoint/yolo_data_folds/fold_04
+train: images/train
+val: images/val
+names:
+- AA1
+- AA2
+- STJ1
+- STJ2
+nc: 4
+epochs: 35
+imgsz: 896
+project: runs
+name: aortic_ring_detect

@@ -1,0 +1,13 @@
+model: yolo26m-seg.pt
+task: segment
+path: /home/nikita/Documents/segpoint/yolo_segmentation_folds/fold_01
+train: images/train
+val: images/val
+test: images/val
+nc: 1
+names:
+  0: aortic_ring_root
+epochs: 35
+imgsz: 896
+project: runs
+name: aortic_ring_seg

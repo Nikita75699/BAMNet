@@ -1,0 +1,16 @@
+# YOLO Keypoint Detection config
+# For training AA1, AA2, STJ1, STJ2 as single class keypoints
+task: pose
+model: yolo26l-pose.pt
+path: /home/nikita/Documents/segpoint/yolo_keypoints_folds
+train: images/train
+val: images/val
+nc: 1
+names: ["aortic_ring"]
+epochs: 35
+imgsz: 896
+
+project: runs
+name: aortic_ring_pose
+
+kpt_shape: [4, 3]
