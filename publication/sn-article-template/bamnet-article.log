@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) (preloaded format=pdflatex 2026.3.17)  17 MAR 2026 18:23
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) (preloaded format=pdflatex 2026.3.17)  18 MAR 2026 14:49
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -498,18 +498,17 @@ Package hyperref Info: Link coloring ON on input line 11.
 \@outlinefile=\write3
 \openout3 = `bamnet-article.out'.
 
-LaTeX Font Info:    Calculating math sizes for size <12.045> on input line 24.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 24.
+LaTeX Font Info:    Calculating math sizes for size <12.045> on input line 40.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 40.
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 24.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 40.
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Calculating math sizes for size <11.04124> on input line 24.
-LaTeX Font Info:    Calculating math sizes for size <9.03374> on input line 24.
-LaTeX Font Info:    Calculating math sizes for size <10.03749> on input line 24.
+LaTeX Font Info:    Calculating math sizes for size <11.04124> on input line 40.
+LaTeX Font Info:    Calculating math sizes for size <9.03374> on input line 40.
 
 
 
@@ -518,6 +517,8 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
  [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+LaTeX Font Info:    Calculating math sizes for size <10.03749> on input line 40.
+
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -558,7 +559,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [9]
-Underfull \hbox (badness 3482) in paragraph at lines 293--294
+Underfull \hbox (badness 3482) in paragraph at lines 309--310
 []\OT1/cmr/m/n/10 A sec-ond impor-tant aspect is valve posi-tion-ing accu-racy. Even mod-est
  []
 
@@ -568,45 +569,74 @@ Underfull \hbox (badness 3482) in paragraph at lines 293--294
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [10]
-Underfull \hbox (badness 7081) in paragraph at lines 317--318
-[]\OT1/cmr/m/n/10 In patient-level 5-fold cross-validation, BAM-Net remained sta-ble, with
- []
-
-
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [11]
+Underfull \hbox (badness 7081) in paragraph at lines 333--334
+[]\OT1/cmr/m/n/10 In patient-level 5-fold cross-validation, BAM-Net remained sta-ble, with
+ []
+
 
 Package hyperref Warning: Difference (4) between bookmark levels is greater 
-(hyperref)                than one, level fixed on input line 323.
+(hyperref)                than one, level fixed on input line 339.
 
 
-Underfull \hbox (badness 1990) in paragraph at lines 323--324
+Underfull \hbox (badness 1990) in paragraph at lines 339--340
  []\OT1/cmr/bx/n/10.03749 Supplementary infor-ma-tion.[][] \OT1/cmr/m/n/10 No sup-ple-men-tary files are included in this
  []
 
 
 Package hyperref Warning: Difference (3) between bookmark levels is greater 
-(hyperref)                than one, level fixed on input line 327.
-
-(./bamnet-article.bbl
+(hyperref)                than one, level fixed on input line 343.
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [12]
-Underfull \hbox (badness 1112) in paragraph at lines 192--199
-[]\OT1/cmr/m/n/10 ClinicalTrials.gov: NCT07152574 (ROTAO 1). Clin-i-cal trial reg-istry entry.
+Underfull \hbox (badness 1910) in paragraph at lines 349--350
+\OT1/cmr/m/n/10 This study was sup-ported by the Rus-sian Sci-ence Foun-da-tion under Grant
  []
 
-)
+
+Underfull \hbox (badness 1024) in paragraph at lines 349--350
+\OT1/cmr/m/n/10 No. 24-19-00084, titled \OT1/cmr/m/it/10.03749 ``Robotic Sys-tem for Med-i-cal Instru-ment Deliv-ery with
+ []
+
+
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [13] (./bamnet-article.aux)
+ [12{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc}] (./bamnet-article.bbl
+Underfull \hbox (badness 10000) in paragraph at lines 80--87
+[]\OT1/cmr/m/n/10 Grand View Research: Tran-scatheter Aor-tic Valve Replace-ment
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 80--87
+\OT1/cmr/m/n/10 Mar-ket Report, 2033. Mar-ket report web page. Accessed 2026-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 80--87
+\OT1/cmr/m/n/10 03-18 (2025). [][]$https : / / www . grandviewresearch . com / industry-[]analysis /
+ []
+
+
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [13]
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [14])
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [15] (./bamnet-article.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
@@ -615,18 +645,18 @@ Package rerunfilecheck Info: File `bamnet-article.out' has not changed.
 (rerunfilecheck)             Checksum: 3BE644220DA4D0E8AC236284B578E684;3941.
  ) 
 Here is how much of TeX's memory you used:
- 12068 strings out of 473197
- 185777 string characters out of 5718605
- 596937 words of memory out of 5000000
- 35053 multiletter control sequences out of 15000+600000
- 580232 words of font info for 117 fonts, out of 8000000 for 9000
+ 12097 strings out of 473197
+ 186134 string characters out of 5718605
+ 599965 words of memory out of 5000000
+ 35073 multiletter control sequences out of 15000+600000
+ 580913 words of font info for 119 fonts, out of 8000000 for 9000
  1151 hyphenation exceptions out of 8191
- 90i,11n,93p,1578b,622s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on bamnet-article.pdf (13 pages, 264236 bytes).
+ 90i,11n,93p,1578b,634s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1000.pfb>
+Output written on bamnet-article.pdf (15 pages, 299955 bytes).
 PDF statistics:
- 323 PDF objects out of 1000 (max. 8388607)
- 269 compressed objects within 3 object streams
- 77 named destinations out of 1000 (max. 500000)
+ 376 PDF objects out of 1000 (max. 8388607)
+ 315 compressed objects within 4 object streams
+ 83 named destinations out of 1000 (max. 500000)
  185 words of extra memory for PDF output out of 10000 (max. 10000000)
 

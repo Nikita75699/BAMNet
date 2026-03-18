@@ -1,0 +1,128 @@
+\documentclass[tikz,border=15pt]{standalone}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, fit, calc, backgrounds}
+
+\begin{document}
+
+\tikzset{
+    base/.style = {draw=black!70, thick, align=center, inner sep=2ex, rounded corners=3pt, font=\sffamily, text width=3.5cm},
+    input/.style = {base, fill=blue!15, text=black},
+    enc/.style = {base, fill=yellow!20, text=black!80!orange},
+    dec/.style = {base, fill=green!15, text=black!60!green},
+    attn/.style = {base, fill=red!15, text=black!60!red, font=\sffamily\bfseries\small},
+    feat/.style = {base, fill=purple!15, text=black!60!purple},
+    outblock/.style = {base, fill=blue!15, text=black, font=\sffamily\bfseries},
+    loss/.style = {base, fill=yellow!20, text=black!80!orange, rounded corners=0pt},
+    container/.style = {draw=black!40, thick, rounded corners=5pt, inner sep=20pt, fill=gray!5},
+    arrow/.style = {-{Latex[scale=1.2]}, thick, draw=black!70},
+    skip/.style = {-{Latex[scale=1.2]}, thick, dashed, draw=black!50},
+    title/.style = {font=\sffamily\bfseries\Large, text=black}
+}
+
+\begin{tikzpicture}[node distance=1cm and 2cm]
+
+% --- Input ---
+\node[input] (input) {Input Image\\$640\times 640\times 3$\\(Fluoroscopy)};
+
+% --- Encoder ---
+\node[enc, right=2cm of input] (enc1) {Block 1 / $\times 1$\\$H/4$};
+\node[enc, below=0.6cm of enc1] (enc2) {Block 2 / $\times 2$\\$H/8$};
+\node[enc, below=0.6cm of enc2] (enc3) {Block 3 / $\times 3$\\$H/16$};
+\node[enc, below=0.6cm of enc3] (enc4) {Block 4 / $\times 4$\\$H/32$};
+\node[enc, below=0.6cm of enc4] (enc5) {Block 5 / $\times 5$\\deep features};
+
+\begin{scope}[on background layer]
+    \node[container, fit=(enc1) (enc5), label={[font=\sffamily\bfseries]above:Encoder: EfficientNet-V2 (ImageNet)}] (enc_box) {};
+\end{scope}
+
+% --- Decoder ---
+\node[dec, right=4.5cm of enc4] (dec4) {Up-block 4\\256 channels\\skip $\times 4$};
+\node[attn, left=0.5cm of dec4, text width=2.5cm] (pa1) {Position\\Attention\\(global context)};
+\node[dec, above=0.6cm of dec4] (dec3) {Up-block 3\\128 channels\\skip $\times 3$};
+\node[attn, left=0.5cm of dec3, text width=2.5cm] (pa2) {Position\\Attention\\(global context)};
+\node[dec, above=0.6cm of dec3] (dec2) {Up-block 2\\64 channels\\skip $\times 2$};
+\node[dec, above=0.6cm of dec2] (dec1) {Up-block 1\\32 channels\\skip $\times 1$};
+\node[feat, below=0.6cm of dec4] (segref) {Refinement Block\\(Refine head)\\seg\_feats};
+
+\begin{scope}[on background layer]
+    \node[container, fit=(pa1) (pa2) (dec1) (segref), label={[font=\sffamily\bfseries]above:Modified MA-Net Decoder}] (dec_box) {};
+\end{scope}
+
+% --- Segmentation Output ---
+\node[outblock, right=1.5cm of dec2] (segout) {Segmentation Output\\Aortic Root Mask};
+
+% --- Landmark Branch ---
+\node[enc, below=1.5cm of segref] (ups) {Upsample $\times 5$\\to seg\_feats size};
+\node[dec, below=0.6cm of ups] (fusion) {Feature Fusion\\$\times 5{\uparrow}$ + seg\_feats\\$\rightarrow$ 256 ch};
+\node[dec, below=0.6cm of fusion] (pointconv) {Pointwise Conv.\\($2 \times 3\times 3$ conv)};
+\node[attn, below=0.6cm of pointconv] (coord) {Coordinate\\Attention};
+
+\node[outblock, below left=1.0cm and 0.2cm of coord] (heatmaps) {4 Heatmaps\\(AA1, AA2, STJ1, STJ2)};
+\node[feat, below right=1.0cm and 0.2cm of coord] (bweights) {Boundary\\Weight Map};
+
+\begin{scope}[on background layer]
+    \node[container, fit=(ups) (bweights), label={[font=\sffamily\bfseries]above:Landmark Localization Branch}] (lm_box) {};
+\end{scope}
+
+% --- Postprocessing ---
+\node[feat, right=2cm of heatmaps] (soft) {Improved\\Soft-Argmax 2D\\$\beta$-schedule};
+\node[outblock, right=2cm of soft] (coords) {Landmark Coordinates\\AA1, AA2, STJ1, STJ2};
+
+% --- Losses ---
+\node[loss, above=2.5cm of coords] (loss_pts) {SoftArgmax Coord Loss\\+ Consistency loss};
+\node[loss, above=0.6cm of loss_pts] (loss_seg) {Segmentation Loss\\Focal/BCE + Dice loss};
+\node[loss, below=0.6cm of loss_pts] (loss_bnd) {Boundary Loss\\Sobel GT boundary};
+
+\begin{scope}[on background layer]
+    \node[container, fit=(loss_seg) (loss_pts) (loss_bnd), label={[font=\sffamily\bfseries]above:Loss Functions}] (loss_box) {};
+\end{scope}
+
+\begin{scope}[on background layer]
+    \draw[arrow] (input) -- (enc1.west |- input); 
+    \draw[arrow] (enc1) -- (enc2);
+    \draw[arrow] (enc2) -- (enc3);
+    \draw[arrow] (enc3) -- (enc4);
+    \draw[arrow] (enc4) -- (enc5);
+
+    \draw[arrow] (enc5.east) -- ++(1,0) |- (dec4.west);
+    \draw[arrow] (dec4) -- (dec3);
+    \draw[arrow] (dec3) -- (dec2);
+    \draw[arrow] (dec2) -- (dec1);
+    \draw[arrow] (dec1.east) -- ++(0.5,0) |- (segref.east); 
+
+    % Skip connections
+    \draw[skip, draw=red!60!black] (enc4.east) -- (pa1.west);
+    \draw[skip, draw=red!60!black] (enc3.east) -- (pa2.west);
+    \draw[skip, dashed, draw=red!60!black] (pa1.east) -- (dec4.west);
+    \draw[skip, dashed, draw=red!60!black] (pa2.east) -- (dec3.west);
+
+    \draw[skip, draw=green!60!black] (enc2.east) -- (dec2.west);
+    \draw[skip, draw=green!60!black] (enc1.east) -- (dec1.west);
+
+    \draw[arrow] (segref.east) -| (segout.south);
+
+    \draw[arrow] (enc5.south) |- (ups.west);
+    \draw[arrow] (segref.south) -- (fusion.north);
+    \draw[arrow] (ups.south) -- (fusion.north);
+    \draw[arrow] (fusion.south) -- (pointconv.north);
+    \draw[arrow] (pointconv.south) -- (coord.north);
+    \draw[arrow] (coord.south) -- (heatmaps.north);
+    \draw[arrow] (coord.south) -- (bweights.north);
+
+    \draw[arrow] (heatmaps.east) -- (soft.west);
+    \draw[arrow] (soft.east) -- (coords.west);
+
+    \draw[skip] (segout.east) -| (loss_seg.north);
+    \draw[skip] (coords.north) -- (loss_pts.south);
+    \draw[skip] (bweights.east) -| (loss_bnd.south);
+\end{scope}
+
+% Title
+\node[above=1.5cm of enc_box, font=\sffamily\bfseries\Large] (title) {BoundaryAwareMAnet Architecture};
+
+\end{tikzpicture}
+
+\end{document}

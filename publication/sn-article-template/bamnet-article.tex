@@ -12,9 +12,25 @@
 
 \title[BAMNet for TAVI Guidance]{BoundaryAwareMAnet: Multi-Task Fluoroscopic Segmentation of the Aortic Root and Landmark Localization for TAVI Guidance}
 
-\author*[1]{\fnm{TODO} \sur{Author}}\email{TODO@example.com}
+\author*[1]{\fnm{Nikita V.} \sur{Laptev}}\email{nikitalaptev77@gmail.com}
 
-\affil*[1]{\orgdiv{TODO Department}, \orgname{TODO Institution}, \orgaddress{\city{TODO City}, \country{TODO Country}}}
+\author[2]{\fnm{Olga M.} \sur{Gerget}}
+
+\author[3]{\fnm{Julia K.} \sur{Belova}}
+
+\author[1]{\fnm{Evgeny E.} \sur{Vasilchenko}}
+
+\author[3]{\fnm{Mikhail A.} \sur{Chernyavsky}}
+
+\author*[4]{\fnm{Viacheslav V.} \sur{Danilov}}\email{viacheslav.v.danilov@gmail.com}
+
+\affil*[1]{\orgname{Siberian State Medical University}, \orgaddress{\city{Tomsk}, \country{Russia}}}
+
+\affil[2]{\orgname{Institute of Control Sciences of Russian Academy of Sciences}, \orgaddress{\city{Moscow}, \country{Russia}}}
+
+\affil[3]{\orgname{Almazov National Medical Research Center}, \orgaddress{\city{Saint Petersburg}, \country{Russia}}}
+
+\affil[4]{\orgname{Pompeu Fabra University}, \orgaddress{\city{Barcelona}, \country{Spain}}}
 
 \abstract{Accurate intraoperative visualization of the aortic root during transcatheter aortic valve implantation (TAVI) is essential for safe valve positioning, yet fluoroscopy remains challenging because of low soft-tissue contrast, motion artifacts, and occlusion by endovascular devices. Repeated contrast injections further increase the risk of renal complications, particularly in patients with pre-existing chronic kidney disease. We present BoundaryAwareMAnet (BAMNet), a multitask neural network for simultaneous aortic root segmentation and localization of four key anatomical landmarks on fluoroscopic images. The model combines an EfficientNet-V2 encoder, a modified MA-Net decoder with global spatial attention, and a dedicated landmark head with coordinate-aware feature modulation, heatmap prediction, offset refinement, and boundary-guided supervision. The study used 2,925 grayscale intraoperative images from 83 patients. On the validation set, BAMNet achieved a Dice score of 0.887, an IoU of 0.805, and a mean landmark localization error of 3.16~mm (11.95~px) while preserving real-time performance at 43.9 FPS. In patient-level 5-fold cross-validation, the model achieved a Dice score of $0.897 \pm 0.024$ and a mean localization error of $11.13 \pm 0.76$~px. These findings indicate that joint segmentation and landmark localization on fluoroscopy is feasible and may provide a practical foundation for contrast-sparing visual guidance and future robot-assisted TAVI systems.}
 
@@ -328,21 +344,37 @@ TODO.
 
 \section*{Declarations}
 
-\noindent\textbf{Funding} TODO.
+\section*{Funding}
 
-\noindent\textbf{Conflict of interest/Competing interests} TODO.
+This study was supported by the Russian Science Foundation under Grant No.~24-19-00084, titled \textit{``Robotic System for Medical Instrument Delivery with Integrated Intelligent Information Processing''}. For more information, please visit \href{https://rscf.ru/project/24-19-00084/}{https://rscf.ru/project/24-19-00084/}.
+
+\section*{Data Availability Statement}
+
+All essential components of the study, including curated source code, data, and trained models, have been made publicly available:
+
+\begin{itemize}
+\item \textbf{Source code:} \url{https://github.com/Nikita75699/segmentation_tavi}
+\item \textbf{Dataset:} \url{https://doi.org/10.5281/zenodo.15094600}
+\item \textbf{Models:} \url{https://doi.org/10.5281/zenodo.15106413}
+\end{itemize}
+
+\section*{Conflict of Interest Statement}
+
+Authors declare that the research was conducted in the absence of any commercial or financial relationships that could be construed as a potential conflict of interest.
 
 \noindent\textbf{Ethics approval and consent to participate} TODO.
 
 \noindent\textbf{Consent for publication} TODO.
 
-\noindent\textbf{Data availability} TODO.
+\noindent\textbf{Data availability} See the Data Availability Statement above.
 
 \noindent\textbf{Materials availability} TODO.
 
-\noindent\textbf{Code availability} TODO.
+\noindent\textbf{Code availability} See the Data Availability Statement above.
 
-\noindent\textbf{Author contribution} TODO.
+\section*{Author Contributions}
+
+NL: Conceptualization, Data curation, Formal analysis, Investigation, Methodology, Software, Supervision, Validation, Visualization, Writing--original draft, Writing--review and editing. OG: Formal analysis, Investigation, Methodology, Software, Validation, Visualization, Writing--review and editing. YK: Data curation, Formal analysis, Visualization, Writing--review and editing. EV: Data curation, Writing--review and editing. MC: Conceptualization, Funding acquisition, Project administration, Resources, Supervision, Writing--review and editing. VD: Methodology, Resources, Validation, Writing--review and editing, Supervision.
 
 \bibliography{bamnet}
 

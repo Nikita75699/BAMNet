@@ -44,145 +44,346 @@
 \csname PreBibitemsHook\endcsname
 
 %%% 1
-\bibitem[\protect\citeauthoryear{Otto et~al.}{2020}]{otto2020_guideline}
-\begin{botherref}
-\oauthor{\bsnm{Otto}, \binits{C.M.}}, et al.:
-2020 {ACC}/{AHA} guideline for the management of patients with valvular heart disease.
-Circulation
-(2020).
-TODO: complete volume, issue, pages, and DOI
-\end{botherref}
+\bibitem[\protect\citeauthoryear{Otto et~al.}{2021}]{otto2020_guideline}
+\begin{barticle}
+\bauthor{\bsnm{Otto}, \binits{C.M.}},
+\bauthor{\bsnm{Nishimura}, \binits{R.A.}},
+\bauthor{\bsnm{Bonow}, \binits{R.O.}},
+\bauthor{\bsnm{Carabello}, \binits{B.A.}},
+\bauthor{\bsnm{Erwin}, \binits{I.} \bsuffix{John~P.}},
+\bauthor{\bsnm{Gentile}, \binits{F.}},
+\bauthor{\bsnm{Jneid}, \binits{H.}},
+\bauthor{\bsnm{Krieger}, \binits{E.V.}},
+\bauthor{\bsnm{Mack}, \binits{M.}},
+\bauthor{\bsnm{McLeod}, \binits{C.}},
+\bauthor{\bsnm{O'Gara}, \binits{P.T.}},
+\bauthor{\bsnm{Rigolin}, \binits{V.H.}},
+\bauthor{\bsnm{Sundt}, \binits{I.} \bsuffix{Thoralf~M.}},
+\bauthor{\bsnm{Thompson}, \binits{A.}},
+\bauthor{\bsnm{Toly}, \binits{C.}}:
+\batitle{2020 {ACC}/{AHA} guideline for the management of patients with
+  valvular heart disease: Executive summary: A report of the american college
+  of cardiology/american heart association joint committee on clinical practice
+  guidelines}.
+\bjtitle{Circulation}
+\bvolume{143}(\bissue{5}),
+\bfpage{35}--\blpage{71}
+(\byear{2021})
+\doiurl{10.1161/CIR.0000000000000932}
+\end{barticle}
 \endbibitem
 
 %%% 2
-\bibitem[\protect\citeauthoryear{{Grand View Research}}{2025}]{grandview2025_tavrmarket}
+\bibitem[\protect\citeauthoryear{{Grand View
+  Research}}{2025}]{grandview2025_tavrmarket}
 \begin{botherref}
 \oauthor{\bsnm{{Grand View Research}}}:
-Transcatheter Aortic Valve Replacement Market Report.
-Market report.
-TODO: complete publisher details and URL
-(2025)
+Transcatheter Aortic Valve Replacement Market Report, 2033.
+Market report web page. Accessed 2026-03-18
+(2025).
+\url{https://www.grandviewresearch.com/industry-analysis/transcatheter-aortic-valve-replacement-tavr-market}
 \end{botherref}
 \endbibitem
 
 %%% 3
-\bibitem[\protect\citeauthoryear{Vahanian et~al.}{2021}]{vahanian2021_guidelines}
-\begin{botherref}
-\oauthor{\bsnm{Vahanian}, \binits{A.}}, et al.:
-2021 {ESC}/{EACTS} guidelines for the management of valvular heart disease.
-European Heart Journal
-(2021).
-TODO: complete volume, issue, pages, and DOI
-\end{botherref}
+\bibitem[\protect\citeauthoryear{Vahanian
+  et~al.}{2022}]{vahanian2021_guidelines}
+\begin{barticle}
+\bauthor{\bsnm{Vahanian}, \binits{A.}},
+\bauthor{\bsnm{Beyersdorf}, \binits{F.}},
+\bauthor{\bsnm{Praz}, \binits{F.}},
+\bauthor{\bsnm{Milojevic}, \binits{M.}},
+\bauthor{\bsnm{Baldus}, \binits{S.}},
+\bauthor{\bsnm{Bauersachs}, \binits{J.}},
+\bauthor{\bsnm{Capodanno}, \binits{D.}},
+\bauthor{\bsnm{Conradi}, \binits{L.}},
+\bauthor{\bsnm{De~Bonis}, \binits{M.}},
+\bauthor{\bsnm{De~Paulis}, \binits{R.}},
+\bauthor{\bsnm{Delgado}, \binits{V.}},
+\bauthor{\bsnm{Freemantle}, \binits{N.}},
+\bauthor{\bsnm{Gilard}, \binits{M.}},
+\bauthor{\bsnm{Haugaa}, \binits{K.H.}},
+\bauthor{\bsnm{Jeppsson}, \binits{A.}},
+\bauthor{\bsnm{J{\"u}ni}, \binits{P.}},
+\bauthor{\bsnm{Pierard}, \binits{L.}},
+\bauthor{\bsnm{Prendergast}, \binits{B.D.}},
+\bauthor{\bsnm{S{\'a}daba}, \binits{J.R.}},
+\bauthor{\bsnm{Tribouilloy}, \binits{C.}},
+\bauthor{\bsnm{Wojakowski}, \binits{W.}},
+\bauthor{\bsnm{{{ESC/EACTS Scientific Document Group}}}}:
+\batitle{2021 {ESC}/{EACTS} guidelines for the management of valvular heart
+  disease}.
+\bjtitle{European Heart Journal}
+\bvolume{43}(\bissue{7}),
+\bfpage{561}--\blpage{632}
+(\byear{2022})
+\doiurl{10.1093/eurheartj/ehab395}
+\end{barticle}
 \endbibitem
 
 %%% 4
-\bibitem[\protect\citeauthoryear{Leon et~al.}{2019}]{leon2019_partner3}
-\begin{botherref}
-\oauthor{\bsnm{Leon}, \binits{M.B.}}, et al.:
-{PARTNER} 3 trial.
-New England Journal of Medicine
-(2019).
-TODO: replace short title with full article title and add pages and DOI
-\end{botherref}
+\bibitem[\protect\citeauthoryear{Mack et~al.}{2019}]{leon2019_partner3}
+\begin{barticle}
+\bauthor{\bsnm{Mack}, \binits{M.J.}},
+\bauthor{\bsnm{Leon}, \binits{M.B.}},
+\bauthor{\bsnm{Thourani}, \binits{V.H.}},
+\bauthor{\bsnm{Makkar}, \binits{R.R.}},
+\bauthor{\bsnm{Kodali}, \binits{S.K.}},
+\bauthor{\bsnm{Russo}, \binits{M.}},
+\bauthor{\bsnm{Kapadia}, \binits{S.R.}},
+\bauthor{\bsnm{Malaisrie}, \binits{S.C.}},
+\bauthor{\bsnm{Cohen}, \binits{D.J.}},
+\bauthor{\bsnm{Pibarot}, \binits{P.}},
+\bauthor{\bsnm{Leipsic}, \binits{J.}},
+\bauthor{\bsnm{Hahn}, \binits{R.T.}},
+\bauthor{\bsnm{Blanke}, \binits{P.}},
+\bauthor{\bsnm{Williams}, \binits{M.R.}},
+\bauthor{\bsnm{McCabe}, \binits{J.M.}},
+\bauthor{\bsnm{Brown}, \binits{D.L.}},
+\bauthor{\bsnm{Babaliaros}, \binits{V.}},
+\bauthor{\bsnm{Webb}, \binits{J.G.}},
+\bauthor{\bsnm{Genereux}, \binits{P.}},
+\bauthor{\bsnm{Pershad}, \binits{A.}},
+\bauthor{\bsnm{Reardon}, \binits{M.J.}},
+\bauthor{\bsnm{Smith}, \binits{C.R.}},
+\bauthor{\bsnm{investigators}, \binits{f.t.P..}}:
+\batitle{Transcatheter aortic-valve replacement with a balloon-expandable valve
+  in low-risk patients}.
+\bjtitle{New England Journal of Medicine}
+\bvolume{380}(\bissue{18}),
+\bfpage{1695}--\blpage{1705}
+(\byear{2019})
+\doiurl{10.1056/NEJMoa1814052}
+\end{barticle}
 \endbibitem
 
 %%% 5
-\bibitem[\protect\citeauthoryear{Mack et~al.}{2020}]{mack2020_fiveyear}
-\begin{botherref}
-\oauthor{\bsnm{Mack}, \binits{M.J.}}, et al.:
-Five-year outcomes after transcatheter aortic valve replacement.
-New England Journal of Medicine
-(2020).
-TODO: complete bibliographic details
-\end{botherref}
+\bibitem[\protect\citeauthoryear{Makkar et~al.}{2020}]{mack2020_fiveyear}
+\begin{barticle}
+\bauthor{\bsnm{Makkar}, \binits{R.R.}},
+\bauthor{\bsnm{Thourani}, \binits{V.H.}},
+\bauthor{\bsnm{Mack}, \binits{M.J.}},
+\bauthor{\bsnm{Kodali}, \binits{S.K.}},
+\bauthor{\bsnm{Kapadia}, \binits{S.}},
+\bauthor{\bsnm{Webb}, \binits{J.G.}},
+\bauthor{\bsnm{Yoon}, \binits{S.-H.}},
+\bauthor{\bsnm{Trento}, \binits{A.}},
+\bauthor{\bsnm{Svensson}, \binits{L.G.}},
+\bauthor{\bsnm{Herrmann}, \binits{H.C.}},
+\bauthor{\bsnm{Szeto}, \binits{W.Y.}},
+\bauthor{\bsnm{Miller}, \binits{D.C.}},
+\bauthor{\bsnm{Satler}, \binits{L.}},
+\bauthor{\bsnm{Cohen}, \binits{D.J.}},
+\bauthor{\bsnm{Dewey}, \binits{T.M.}},
+\bauthor{\bsnm{Babaliaros}, \binits{V.}},
+\bauthor{\bsnm{Williams}, \binits{M.R.}},
+\bauthor{\bsnm{Kereiakes}, \binits{D.J.}},
+\bauthor{\bsnm{Zajarias}, \binits{A.}},
+\bauthor{\bsnm{Greason}, \binits{K.L.}},
+\bauthor{\bsnm{Whisenant}, \binits{B.K.}},
+\bauthor{\bsnm{Hodson}, \binits{R.W.}},
+\bauthor{\bsnm{Brown}, \binits{D.L.}},
+\bauthor{\bsnm{Fearon}, \binits{W.F.}},
+\bauthor{\bsnm{Russo}, \binits{M.J.}},
+\bauthor{\bsnm{Pibarot}, \binits{P.}},
+\bauthor{\bsnm{Hahn}, \binits{R.T.}},
+\bauthor{\bsnm{Jaber}, \binits{W.A.}},
+\bauthor{\bsnm{Rogers}, \binits{E.}},
+\bauthor{\bsnm{Xu}, \binits{K.}},
+\bauthor{\bsnm{Wheeler}, \binits{J.}},
+\bauthor{\bsnm{Alu}, \binits{M.C.}},
+\bauthor{\bsnm{Smith}, \binits{C.R.}},
+\bauthor{\bsnm{Leon}, \binits{M.B.}},
+\bauthor{\bsnm{{{PARTNER 2 Investigators}}}}:
+\batitle{Five-year outcomes of transcatheter or surgical aortic-valve
+  replacement}.
+\bjtitle{New England Journal of Medicine}
+\bvolume{382}(\bissue{9}),
+\bfpage{799}--\blpage{809}
+(\byear{2020})
+\doiurl{10.1056/NEJMoa1910555}
+\end{barticle}
 \endbibitem
 
 %%% 6
-\bibitem[\protect\citeauthoryear{Pibarot et~al.}{2021}]{pibarot2021_pvl}
-\begin{botherref}
-\oauthor{\bsnm{Pibarot}, \binits{P.}}, et al.:
-Paravalvular regurgitation after transcatheter aortic valve implantation.
-Journal of the American College of Cardiology
-(2021).
-TODO: complete bibliographic details
-\end{botherref}
+\bibitem[\protect\citeauthoryear{Chau et~al.}{2022}]{pibarot2021_pvl}
+\begin{barticle}
+\bauthor{\bsnm{Chau}, \binits{K.H.}},
+\bauthor{\bsnm{Chen}, \binits{S.}},
+\bauthor{\bsnm{Crowley}, \binits{A.}},
+\bauthor{\bsnm{Redfors}, \binits{B.}},
+\bauthor{\bsnm{Li}, \binits{D.}},
+\bauthor{\bsnm{Hahn}, \binits{R.T.}},
+\bauthor{\bsnm{Douglas}, \binits{P.S.}},
+\bauthor{\bsnm{Alu}, \binits{M.C.}},
+\bauthor{\bsnm{Finn}, \binits{M.T.}},
+\bauthor{\bsnm{Kodali}, \binits{S.}},
+\bauthor{\bsnm{Jaber}, \binits{W.A.}},
+\bauthor{\bsnm{Rodriguez}, \binits{L.}},
+\bauthor{\bsnm{Thourani}, \binits{V.H.}},
+\bauthor{\bsnm{Pibarot}, \binits{P.}},
+\bauthor{\bsnm{Leon}, \binits{M.B.}}:
+\batitle{Paravalvular regurgitation after transcatheter aortic valve
+  replacement in intermediate-risk patients: A pooled {PARTNER} 2 study}.
+\bjtitle{EuroIntervention}
+\bvolume{17}(\bissue{13}),
+\bfpage{1053}--\blpage{1060}
+(\byear{2022})
+\doiurl{10.4244/EIJ-D-20-01293}
+\end{barticle}
 \endbibitem
 
 %%% 7
-\bibitem[\protect\citeauthoryear{Jilaihawi et~al.}{2022}]{jilaihawi2022_coronary}
-\begin{botherref}
-\oauthor{\bsnm{Jilaihawi}, \binits{H.}}, et al.:
-Coronary obstruction during or after transcatheter aortic valve implantation.
-JACC: Cardiovascular Interventions
-(2022).
-TODO: complete bibliographic details
-\end{botherref}
+\bibitem[\protect\citeauthoryear{Ojeda et~al.}{2023}]{jilaihawi2022_coronary}
+\begin{barticle}
+\bauthor{\bsnm{Ojeda}, \binits{S.}},
+\bauthor{\bsnm{Gonz{\'a}lez-Manzanares}, \binits{R.}},
+\bauthor{\bsnm{Jim{\'e}nez-Quevedo}, \binits{P.}},
+\bauthor{\bsnm{Pi{\~n}{\'o}n}, \binits{P.}},
+\bauthor{\bsnm{Asmarats}, \binits{L.}},
+\bauthor{\bsnm{Amat-Santos}, \binits{I.}},
+\bauthor{\bsnm{Fern{\'a}ndez-Nofrerias}, \binits{E.}},
+\bauthor{\bsnm{Del~Valle}, \binits{R.}},
+\bauthor{\bsnm{Mu{\~n}oz-Garc{\'i}a}, \binits{E.}},
+\bauthor{\bsnm{Ferrer-Gracia}, \binits{M.-C.}},
+\bauthor{\bsnm{Moreno}, \binits{R.}},
+\bauthor{\bsnm{Salinas}, \binits{P.}},
+\bauthor{\bsnm{Rivero}, \binits{F.}},
+\bauthor{\bsnm{Jurado-Rom{\'a}n}, \binits{A.}},
+\bauthor{\bsnm{Mota}, \binits{P.}},
+\bauthor{\bsnm{Pan}, \binits{M.}},
+\bauthor{\bsnm{Carrasco-Moraleja}, \binits{M.}},
+\bauthor{\bsnm{Serra}, \binits{V.}},
+\bauthor{\bsnm{Serra}, \binits{A.}},
+\bauthor{\bsnm{Nombela-Franco}, \binits{L.}}, \betal:
+\batitle{Coronary obstruction after transcatheter aortic valve replacement:
+  Insights from the spanish {TAVI} registry}.
+\bjtitle{JACC: Cardiovascular Interventions}
+\bvolume{16}(\bissue{10}),
+\bfpage{1208}--\blpage{1217}
+(\byear{2023})
+\doiurl{10.1016/j.jcin.2023.03.024}
+\end{barticle}
 \endbibitem
 
 %%% 8
-\bibitem[\protect\citeauthoryear{{TODO}}{TODOa}]{todo_ctfusion_1}
-\begin{botherref}
-\oauthor{\bsnm{{TODO}}}:
-{TODO CT-fluoroscopy fusion reference 1}.
-TODO.
-TODO: replace with the first CT-fluoroscopy fusion source cited in the draft
-(TODO)
-\end{botherref}
+\bibitem[\protect\citeauthoryear{Vernikouskaya et~al.}{2017}]{todo_ctfusion_1}
+\begin{barticle}
+\bauthor{\bsnm{Vernikouskaya}, \binits{I.}},
+\bauthor{\bsnm{Rottbauer}, \binits{W.}},
+\bauthor{\bsnm{Gonska}, \binits{B.}},
+\bauthor{\bsnm{Rodewald}, \binits{C.}},
+\bauthor{\bsnm{Seeger}, \binits{J.}},
+\bauthor{\bsnm{Rasche}, \binits{V.}},
+\bauthor{\bsnm{W{\"o}hrle}, \binits{J.}}:
+\batitle{Image-guidance for transcatheter aortic valve implantation ({TAVI})
+  and cerebral embolic protection}.
+\bjtitle{International Journal of Cardiology}
+\bvolume{249},
+\bfpage{90}--\blpage{95}
+(\byear{2017})
+\doiurl{10.1016/j.ijcard.2017.09.158}
+\end{barticle}
 \endbibitem
 
 %%% 9
-\bibitem[\protect\citeauthoryear{{TODO}}{TODOb}]{todo_ctfusion_2}
-\begin{botherref}
-\oauthor{\bsnm{{TODO}}}:
-{TODO CT-fluoroscopy fusion reference 2}.
-TODO.
-TODO: replace with the second CT-fluoroscopy fusion source cited in the draft
-(TODO)
-\end{botherref}
+\bibitem[\protect\citeauthoryear{Vernikouskaya et~al.}{2018}]{todo_ctfusion_2}
+\begin{barticle}
+\bauthor{\bsnm{Vernikouskaya}, \binits{I.}},
+\bauthor{\bsnm{Rottbauer}, \binits{W.}},
+\bauthor{\bsnm{Seeger}, \binits{J.}},
+\bauthor{\bsnm{Gonska}, \binits{B.}},
+\bauthor{\bsnm{Rasche}, \binits{V.}},
+\bauthor{\bsnm{W{\"o}hrle}, \binits{J.}}:
+\batitle{Patient-specific registration of 3d {CT} angiography ({CTA}) with
+  x-ray fluoroscopy for image fusion during transcatheter aortic valve
+  implantation ({TAVI}) increases performance of the procedure}.
+\bjtitle{Clinical Research in Cardiology}
+\bvolume{107}(\bissue{6}),
+\bfpage{507}--\blpage{516}
+(\byear{2018})
+\doiurl{10.1007/s00392-018-1212-8}
+\end{barticle}
 \endbibitem
 
 %%% 10
-\bibitem[\protect\citeauthoryear{{TODO}}{TODOc}]{todo_ctfusion_3}
-\begin{botherref}
-\oauthor{\bsnm{{TODO}}}:
-{TODO CT-fluoroscopy fusion reference 3}.
-TODO.
-TODO: replace with the third CT-fluoroscopy fusion source cited in the draft
-(TODO)
-\end{botherref}
+\bibitem[\protect\citeauthoryear{Konami et~al.}{2022}]{todo_ctfusion_3}
+\begin{barticle}
+\bauthor{\bsnm{Konami}, \binits{Y.}},
+\bauthor{\bsnm{Sakamoto}, \binits{T.}},
+\bauthor{\bsnm{Horio}, \binits{E.}},
+\bauthor{\bsnm{Suzuyama}, \binits{H.}},
+\bauthor{\bsnm{Taguchi}, \binits{E.}},
+\bauthor{\bsnm{Sassa}, \binits{T.}},
+\bauthor{\bsnm{Ideta}, \binits{I.}},
+\bauthor{\bsnm{Yamada}, \binits{M.}},
+\bauthor{\bsnm{Horibata}, \binits{Y.}},
+\bauthor{\bsnm{Nakao}, \binits{K.}}:
+\batitle{Transfemoral transcatheter aortic valve implantation by
+  three-dimensional computed tomography/fluoroscopy fusion imaging guidance in
+  a patient with right-sided aortic arch and chronic aortic dissection}.
+\bjtitle{Cardiovascular Revascularization Medicine}
+\bvolume{40S},
+\bfpage{179}--\blpage{181}
+(\byear{2022})
+\doiurl{10.1016/j.carrev.2022.03.032}
+\end{barticle}
 \endbibitem
 
 %%% 11
 \bibitem[\protect\citeauthoryear{Laptev et~al.}{2025}]{laptev2025_aorticroot}
-\begin{botherref}
-\oauthor{\bsnm{Laptev}, \binits{N.V.}}, et al.:
-Optimized aortic root segmentation on intraoperative angiographic images for {TAVI}.
-Frontiers in Cardiovascular Medicine
-(2025).
-TODO: complete author list, volume, article number, and DOI
-\end{botherref}
+\begin{barticle}
+\bauthor{\bsnm{Laptev}, \binits{N.V.}},
+\bauthor{\bsnm{Gerget}, \binits{O.M.}},
+\bauthor{\bsnm{Belova}, \binits{J.K.}},
+\bauthor{\bsnm{Vasilchenko}, \binits{E.E.}},
+\bauthor{\bsnm{Chernyavskiy}, \binits{M.A.}},
+\bauthor{\bsnm{Danilov}, \binits{V.V.}}:
+\batitle{Optimized aortic root segmentation during transcatheter aortic valve
+  implantation}.
+\bjtitle{Frontiers in Cardiovascular Medicine}
+\bvolume{12},
+\bfpage{1602780}
+(\byear{2025})
+\doiurl{10.3389/fcvm.2025.1602780}
+\end{barticle}
 \endbibitem
 
 %%% 12
 \bibitem[\protect\citeauthoryear{Smits et~al.}{2025}]{smits2025_autonomous}
-\begin{botherref}
-\oauthor{\bsnm{Smits}, \binits{J.}}, et al.:
-Towards autonomous robot-assisted {TAVI}.
-Frontiers in Robotics and AI
-(2025).
-TODO: complete bibliographic details
-\end{botherref}
+\begin{barticle}
+\bauthor{\bsnm{Smits}, \binits{J.}},
+\bauthor{\bsnm{Schegg}, \binits{P.}},
+\bauthor{\bsnm{Wauters}, \binits{L.}},
+\bauthor{\bsnm{Perard}, \binits{L.}},
+\bauthor{\bsnm{Languepin}, \binits{C.}},
+\bauthor{\bsnm{Recchia}, \binits{D.}},
+\bauthor{\bsnm{Damerjian~Pieters}, \binits{V.}},
+\bauthor{\bsnm{Lopez}, \binits{S.}},
+\bauthor{\bsnm{Tchetche}, \binits{D.}},
+\bauthor{\bsnm{Grubb}, \binits{K.}},
+\bauthor{\bsnm{Hansen}, \binits{J.}},
+\bauthor{\bsnm{Sejor}, \binits{E.}},
+\bauthor{\bsnm{Berthet-Rayne}, \binits{P.}}:
+\batitle{Towards autonomous robot-assisted transcatheter heart valve
+  implantation: In vivo teleoperation and phantom validation of {AI}-guided
+  positioning}.
+\bjtitle{Frontiers in Robotics and AI}
+\bvolume{12},
+\bfpage{1650228}
+(\byear{2025})
+\doiurl{10.3389/frobt.2025.1650228}
+\end{barticle}
 \endbibitem
 
 %%% 13
 \bibitem[\protect\citeauthoryear{{Caranx Medical}}{2025}]{caranx2025_tavipilot}
 \begin{botherref}
 \oauthor{\bsnm{{Caranx Medical}}}:
-First Clinical Use of {TAVIPILOT Soft}.
-Company communication.
-TODO: complete URL and access date
-(2025)
+{TAVIPILOT} Software.
+Official product page. Accessed 2026-03-18
+(2025).
+\url{https://caranx-medical.com/our-solution/tavipilot-solution/}
 \end{botherref}
 \endbibitem
 
@@ -190,55 +391,131 @@ TODO: complete URL and access date
 \bibitem[\protect\citeauthoryear{{ClinicalTrials.gov}}{2025}]{clinicaltrials_nct07152574}
 \begin{botherref}
 \oauthor{\bsnm{{ClinicalTrials.gov}}}:
-{NCT07152574} ({ROTAO} 1).
-Clinical trial registry entry.
-TODO: complete URL and access date
-(2025)
+{ROTAO} 1 - Feasibility and Safety of the {TAVIPILOT} Tele-operated Robot
+  During Transcatheter Aortic Valve Replacement ({TAVR}/{TAVI}).
+Identifier NCT07152574. Sponsor: Caranx Medical. Last update posted 2025-09-03.
+  Accessed 2026-03-18
+(2025).
+\url{https://clinicaltrials.gov/study/NCT07152574}
 \end{botherref}
 \endbibitem
 
 %%% 15
-\bibitem[\protect\citeauthoryear{Dangas et~al.}{2020}]{dangas2020_tavi}
-\begin{botherref}
-\oauthor{\bsnm{Dangas}, \binits{G.D.}}, et al.:
-Todo: complete article title related to clinical outcomes after {TAVI}.
-JACC: Cardiovascular Interventions
-(2020).
-TODO: complete bibliographic details
-\end{botherref}
+\bibitem[\protect\citeauthoryear{Venturi et~al.}{2020}]{dangas2020_tavi}
+\begin{barticle}
+\bauthor{\bsnm{Venturi}, \binits{G.}},
+\bauthor{\bsnm{Pighi}, \binits{M.}},
+\bauthor{\bsnm{Pesarini}, \binits{G.}},
+\bauthor{\bsnm{Ferrero}, \binits{V.}},
+\bauthor{\bsnm{Lunardi}, \binits{M.}},
+\bauthor{\bsnm{Castaldi}, \binits{G.}},
+\bauthor{\bsnm{Setti}, \binits{M.}},
+\bauthor{\bsnm{Benini}, \binits{A.}},
+\bauthor{\bsnm{Scarsini}, \binits{R.}},
+\bauthor{\bsnm{Ribichini}, \binits{F.L.}}:
+\batitle{Contrast-induced acute kidney injury in patients undergoing {TAVI}
+  compared with coronary interventions}.
+\bjtitle{Journal of the American Heart Association}
+\bvolume{9}(\bissue{16}),
+\bfpage{017194}
+(\byear{2020})
+\doiurl{10.1161/JAHA.120.017194}
+\end{barticle}
 \endbibitem
 
 %%% 16
-\bibitem[\protect\citeauthoryear{Yamamoto et~al.}{2021}]{yamamoto2021_tavi}
-\begin{botherref}
-\oauthor{\bsnm{Yamamoto}, \binits{M.}}, et al.:
-Todo: complete article title related to {TAVI} outcomes or contrast risk.
-European Heart Journal
-(2021).
-TODO: complete bibliographic details
-\end{botherref}
+\bibitem[\protect\citeauthoryear{Adachi et~al.}{2021}]{yamamoto2021_tavi}
+\begin{barticle}
+\bauthor{\bsnm{Adachi}, \binits{Y.}},
+\bauthor{\bsnm{Yamamoto}, \binits{M.}},
+\bauthor{\bsnm{Shimura}, \binits{T.}},
+\bauthor{\bsnm{Yamaguchi}, \binits{R.}},
+\bauthor{\bsnm{Kagase}, \binits{A.}},
+\bauthor{\bsnm{Tokuda}, \binits{T.}},
+\bauthor{\bsnm{Tsujimoto}, \binits{S.}},
+\bauthor{\bsnm{Koyama}, \binits{Y.}},
+\bauthor{\bsnm{Otsuka}, \binits{T.}},
+\bauthor{\bsnm{Yashima}, \binits{F.}},
+\bauthor{\bsnm{Tada}, \binits{N.}},
+\bauthor{\bsnm{Naganuma}, \binits{T.}},
+\bauthor{\bsnm{Araki}, \binits{M.}},
+\bauthor{\bsnm{Yamanaka}, \binits{F.}},
+\bauthor{\bsnm{Shirai}, \binits{S.}},
+\bauthor{\bsnm{Mizutani}, \binits{K.}},
+\bauthor{\bsnm{Tabata}, \binits{M.}},
+\bauthor{\bsnm{Ueno}, \binits{H.}},
+\bauthor{\bsnm{Takagi}, \binits{K.}},
+\bauthor{\bsnm{Watanabe}, \binits{Y.}},
+\bauthor{\bsnm{Hayashida}, \binits{K.}},
+\bauthor{\bsnm{{{OCEAN-TAVI Investigators}}}}:
+\batitle{Late kidney injury after transcatheter aortic valve replacement}.
+\bjtitle{American Heart Journal}
+\bvolume{234},
+\bfpage{122}--\blpage{130}
+(\byear{2021})
+\doiurl{10.1016/j.ahj.2021.01.007}
+\end{barticle}
 \endbibitem
 
 %%% 17
-\bibitem[\protect\citeauthoryear{Pibarot et~al.}{2022}]{pibarot2022_tavi}
-\begin{botherref}
-\oauthor{\bsnm{Pibarot}, \binits{P.}}, et al.:
-Todo: complete article title related to post-{TAVI} regurgitation or hemodynamics.
-Journal of the American College of Cardiology
-(2022).
-TODO: complete bibliographic details
-\end{botherref}
+\bibitem[\protect\citeauthoryear{Chau et~al.}{2022}]{pibarot2022_tavi}
+\begin{barticle}
+\bauthor{\bsnm{Chau}, \binits{K.H.}},
+\bauthor{\bsnm{Chen}, \binits{S.}},
+\bauthor{\bsnm{Crowley}, \binits{A.}},
+\bauthor{\bsnm{Redfors}, \binits{B.}},
+\bauthor{\bsnm{Li}, \binits{D.}},
+\bauthor{\bsnm{Hahn}, \binits{R.T.}},
+\bauthor{\bsnm{Douglas}, \binits{P.S.}},
+\bauthor{\bsnm{Alu}, \binits{M.C.}},
+\bauthor{\bsnm{Finn}, \binits{M.T.}},
+\bauthor{\bsnm{Kodali}, \binits{S.}},
+\bauthor{\bsnm{Jaber}, \binits{W.A.}},
+\bauthor{\bsnm{Rodriguez}, \binits{L.}},
+\bauthor{\bsnm{Thourani}, \binits{V.H.}},
+\bauthor{\bsnm{Pibarot}, \binits{P.}},
+\bauthor{\bsnm{Leon}, \binits{M.B.}}:
+\batitle{Paravalvular regurgitation after transcatheter aortic valve
+  replacement in intermediate-risk patients: A pooled {PARTNER} 2 study}.
+\bjtitle{EuroIntervention}
+\bvolume{17}(\bissue{13}),
+\bfpage{1053}--\blpage{1060}
+(\byear{2022})
+\doiurl{10.4244/EIJ-D-20-01293}
+\end{barticle}
 \endbibitem
 
 %%% 18
-\bibitem[\protect\citeauthoryear{Jilaihawi et~al.}{2023}]{jilaihawi2023_tavi}
-\begin{botherref}
-\oauthor{\bsnm{Jilaihawi}, \binits{H.}}, et al.:
-Todo: complete article title related to coronary obstruction or implantation depth in {TAVI}.
-JACC: Cardiovascular Interventions
-(2023).
-TODO: complete bibliographic details
-\end{botherref}
+\bibitem[\protect\citeauthoryear{Ojeda et~al.}{2023}]{jilaihawi2023_tavi}
+\begin{barticle}
+\bauthor{\bsnm{Ojeda}, \binits{S.}},
+\bauthor{\bsnm{Gonz{\'a}lez-Manzanares}, \binits{R.}},
+\bauthor{\bsnm{Jim{\'e}nez-Quevedo}, \binits{P.}},
+\bauthor{\bsnm{Pi{\~n}{\'o}n}, \binits{P.}},
+\bauthor{\bsnm{Asmarats}, \binits{L.}},
+\bauthor{\bsnm{Amat-Santos}, \binits{I.}},
+\bauthor{\bsnm{Fern{\'a}ndez-Nofrerias}, \binits{E.}},
+\bauthor{\bsnm{Del~Valle}, \binits{R.}},
+\bauthor{\bsnm{Mu{\~n}oz-Garc{\'i}a}, \binits{E.}},
+\bauthor{\bsnm{Ferrer-Gracia}, \binits{M.-C.}},
+\bauthor{\bsnm{Moreno}, \binits{R.}},
+\bauthor{\bsnm{Salinas}, \binits{P.}},
+\bauthor{\bsnm{Rivero}, \binits{F.}},
+\bauthor{\bsnm{Jurado-Rom{\'a}n}, \binits{A.}},
+\bauthor{\bsnm{Mota}, \binits{P.}},
+\bauthor{\bsnm{Pan}, \binits{M.}},
+\bauthor{\bsnm{Carrasco-Moraleja}, \binits{M.}},
+\bauthor{\bsnm{Serra}, \binits{V.}},
+\bauthor{\bsnm{Serra}, \binits{A.}},
+\bauthor{\bsnm{Nombela-Franco}, \binits{L.}}, \betal:
+\batitle{Coronary obstruction after transcatheter aortic valve replacement:
+  Insights from the spanish {TAVI} registry}.
+\bjtitle{JACC: Cardiovascular Interventions}
+\bvolume{16}(\bissue{10}),
+\bfpage{1208}--\blpage{1217}
+(\byear{2023})
+\doiurl{10.1016/j.jcin.2023.03.024}
+\end{barticle}
 \endbibitem
 
 \end{thebibliography}

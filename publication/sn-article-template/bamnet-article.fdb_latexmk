@@ -1,16 +1,17 @@
 # Fdb version 4
-["bibtex bamnet-article"] 1773746622.78248 "bamnet-article.aux" "bamnet-article.bbl" "bamnet-article" 1773746623.58788 0
-  "./bamnet.bib" 1773738086.25655 4949 00c3b1f59ba98ffa7e4b69ed7363a3bd ""
+["bibtex bamnet-article"] 1773819994.4893 "bamnet-article.aux" "bamnet-article.bbl" "bamnet-article" 1773820171.68103 0
+  "./bamnet.bib" 1773819958.65936 11910 9527694d06c99aca9ed5067625c12925 ""
   "/mnt/ssd4tb/project/BAMNet/publication/sn-article-template/bst/sn-mathphys-num.bst" 1773735613.84082 64164 943df446db725f71d6bb625fc0d6f4fc ""
-  "bamnet-article.aux" 1773746623.36299 7738 8bdca21e244fc8664058d2eaca2b9be1 "pdflatex"
+  "bamnet-article.aux" 1773820171.45535 7805 cf986b7f2503fc64af1167c7195f1a30 "pdflatex"
   (generated)
   "bamnet-article.bbl"
   "bamnet-article.blg"
   (rewritten before read)
-["pdflatex"] 1773746622.86978 "/mnt/ssd4tb/project/BAMNet/publication/sn-article-template/bamnet-article.tex" "bamnet-article.pdf" "bamnet-article" 1773746623.5882 0
+["pdflatex"] 1773820170.94072 "/mnt/ssd4tb/project/BAMNet/publication/sn-article-template/bamnet-article.tex" "bamnet-article.pdf" "bamnet-article" 1773820171.68135 0
   "/etc/texmf/web2c/texmf.cnf" 1773746283.0952 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/mnt/ssd4tb/project/BAMNet/publication/sn-article-template/bamnet-article.tex" 1773738157.56965 33894 4871ed573cb0ee0608024885cd642d6c ""
+  "/mnt/ssd4tb/project/BAMNet/publication/sn-article-template/bamnet-article.tex" 1773819360.9597 36073 6ef22cdba306d39c6dd9c5e18c57707f ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
+  "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/tcrm1000.tfm" 1136768653 1536 e07581a4bb3136ece9eeb4c3ffab8233 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy5.tfm" 1246382020 1120 1e8878807317373affa7f7bba4cf2f6a ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy7.tfm" 1246382020 1120 7f9f170e8aa57527ad6c49feafd45d54 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
@@ -47,6 +48,7 @@
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmsy10.tfm" 1136768653 1124 6c73e740cf17375f03eec0ee63599741 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmsy5.tfm" 1136768653 1112 14d5d5f6bd3c949edecb5b872f295553 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmsy7.tfm" 1136768653 1120 2b3f9b25605010c69bc328bea6ac000f ""
+  "/usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmti10.tfm" 1136768653 1480 aa8e34af0eb6a2941b776984cf1dfdc4 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy10.pfb" 1248133631 34793 87a84b12f86dfd35a1cf1bb142b75602 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb" 1248133631 34811 78b52f49e893bcba91bd7581cdc144c0 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb" 1248133631 32080 340ef9bf63678554ee606688e7b5339d ""
@@ -64,6 +66,7 @@
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb" 1248133631 33993 9b89b85fd2d9df0482bd47194d1d3bf3 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1248133631 32569 5e5ddc8df908dea60932f3c484a54c0d ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb" 1248133631 32716 08e384dc442464e7285e891af9f45947 ""
+  "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb" 1248133631 37944 359e864bd06cde3b1cf57bb20757fb06 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb" 1248133631 34694 ad62b13721ee8eda1dcc8993c8bd7041 ""
   "/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii" 1461363279 71627 94eb9990bed73c364d7f53f960cc8c5b ""
   "/usr/share/texlive/texmf-dist/tex/generic/atbegshi/atbegshi.sty" 1575674566 24708 5584a51a7101caf7e6bbf1fc27d8f7b1 ""
@@ -134,13 +137,15 @@
   "/usr/share/texlive/texmf-dist/tex/latex/url/url.sty" 1388531844 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "/usr/share/texlive/texmf-dist/tex/latex/wrapfig/wrapfig.sty" 1137111090 26220 3701aebf80ccdef248c0c20dd062fea9 ""
   "/usr/share/texlive/texmf-dist/web2c/texmf.cnf" 1741904018 41538 c016915c1d51223b6dbbfe27341748a8 ""
+  "/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1636152094 2900 1537cc8184ad1792082cd229ecc269f4 ""
+  "/usr/share/texmf/fonts/type1/public/cm-super/sfrm1000.pfb" 1636152094 138258 6525c253f16cededa14c7fd0da7f67b2 ""
   "/usr/share/texmf/web2c/texmf.cnf" 1741904018 41538 c016915c1d51223b6dbbfe27341748a8 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1773746296 5467255 9a64d1b40e0b893fc5588ecce9d8accf ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1773746386 3346146 bdb2411d57c85326ddc2041400d7b620 ""
-  "bamnet-article.aux" 1773746623.36299 7738 8bdca21e244fc8664058d2eaca2b9be1 "pdflatex"
-  "bamnet-article.bbl" 1773746622.86695 7828 8973c107604afd5add14a6cb0c4b81b0 "bibtex bamnet-article"
-  "bamnet-article.out" 1773746623.36382 3941 3be644220da4d0e8ac236284b578e684 "pdflatex"
-  "bamnet-article.tex" 1773738157.56965 33894 4871ed573cb0ee0608024885cd642d6c ""
+  "bamnet-article.aux" 1773820171.45535 7805 cf986b7f2503fc64af1167c7195f1a30 "pdflatex"
+  "bamnet-article.bbl" 1773819994.60115 19059 58dd6cfecc9b2c5fa9cec2341e85792d "bibtex bamnet-article"
+  "bamnet-article.out" 1773820171.45606 3941 3be644220da4d0e8ac236284b578e684 "pdflatex"
+  "bamnet-article.tex" 1773819360.9597 36073 6ef22cdba306d39c6dd9c5e18c57707f ""
   "sn-jnl.cls" 1773735613.84951 55857 c14ef9d34b3d95356940eaf177aff85f ""
   (generated)
   "bamnet-article.aux"
