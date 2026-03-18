@@ -1,0 +1,69 @@
+This is BibTeX, Version 0.99d (TeX Live 2025/dev/Debian)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: bamnet-article.aux
+The style file: sn-mathphys-num.bst
+Reallocated glb_str_ptr (elt_size=4) to 20 items from 10.
+Reallocated global_strs (elt_size=200001) to 20 items from 10.
+Reallocated glb_str_end (elt_size=4) to 20 items from 10.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Database file #1: bamnet.bib
+sn-mathphys-num.bst [2024/07/19 v1.1  bibliography style]
+Reallocated wiz_functions (elt_size=4) to 9000 items from 6000.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+You've used 18 entries,
+            7485 wiz_defined-function locations,
+            1259 strings with 12165 characters,
+and the built_in function-call counts, 34999 in all, are:
+= -- 5145
+> -- 270
+< -- 48
++ -- 1388
+- -- 90
+* -- 1521
+:= -- 7500
+add.period$ -- 36
+call.type$ -- 18
+change.case$ -- 84
+chr.to.int$ -- 16
+cite$ -- 18
+duplicate$ -- 450
+empty$ -- 1877
+format.name$ -- 288
+if$ -- 8342
+int.to.chr$ -- 3
+int.to.str$ -- 31
+missing$ -- 0
+newline$ -- 244
+num.names$ -- 90
+pop$ -- 312
+preamble$ -- 1
+purify$ -- 72
+quote$ -- 0
+skip$ -- 2744
+stack$ -- 0
+substring$ -- 3010
+swap$ -- 60
+text.length$ -- 180
+text.prefix$ -- 0
+top$ -- 1
+type$ -- 474
+warning$ -- 0
+while$ -- 324
+width$ -- 0
+write$ -- 362
