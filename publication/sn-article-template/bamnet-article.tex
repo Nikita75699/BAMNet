@@ -1,4 +1,4 @@
-\documentclass[pdflatex,sn-mathphys-num]{sn-jnl}
+\documentclass[oneside,pdflatex,sn-mathphys-num]{sn-jnl}
 
 \usepackage{graphicx}
 \usepackage{multirow}
@@ -6,7 +6,25 @@
 \usepackage{textcomp}
 \usepackage{booktabs}
 
-\raggedbottom
+\makeatletter
+\@twosidefalse
+\@mparswitchfalse
+\makeatother
+\geometry{
+  paperwidth=210mm,
+  paperheight=297mm,
+  top=26mm,
+  headheight=5.5pt,
+  headsep=5.6mm,
+  textheight=194.25mm,
+  left=39.41mm,
+  right=39.41mm,
+  marginparsep=0mm,
+  marginparwidth=0mm,
+  bindingoffset=0mm
+}
+
+\flushbottom
 
 \begin{document}
 
@@ -93,7 +111,14 @@ The landmark branch receives fused features from the deepest encoder stage and t
 \item a boundary-weight map that highlights probable anatomical boundaries.
 \end{enumerate}
 
-This design allows the model to exploit both global root morphology and local contour geometry when localizing landmarks. The architecture diagram present in the markdown draft was intentionally omitted from the main manuscript at this stage because of figure-count constraints.
+This design allows the model to exploit both global root morphology and local contour geometry when localizing landmarks. The complete architecture is shown in Fig.~\ref{fig:bamnet_architecture}.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{../fgure_article/figeure_orginal/BAMNet.jpg}
+\caption{Overview of the proposed BoundaryAwareMAnet (BAMNet) architecture for joint aortic root segmentation and anatomical landmark localization on fluoroscopic images. The network combines an EfficientNet-V2 encoder, a segmentation-oriented decoder, and a dedicated landmark branch with boundary-aware and coordinate-aware refinement modules.}
+\label{fig:bamnet_architecture}
+\end{figure}
 
 \subsection{Landmark coordinate extraction}\label{subsec:coordinates}
 

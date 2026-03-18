@@ -22,28 +22,30 @@
 \newlabel{subsec:training}{{2.2}{3}{Training strategy}{subsection.2.2}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Proposed multitask architecture}{4}{subsection.2.3}\protected@file@percent }
 \newlabel{subsec:architecture}{{2.3}{4}{Proposed multitask architecture}{subsection.2.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Overview of the proposed BoundaryAwareMAnet (BAMNet) architecture for joint aortic root segmentation and anatomical landmark localization on fluoroscopic images. The network combines an EfficientNet-V2 encoder, a segmentation-oriented decoder, and a dedicated landmark branch with boundary-aware and coordinate-aware refinement modules.}}{5}{figure.1}\protected@file@percent }
+\newlabel{fig:bamnet_architecture}{{1}{5}{Overview of the proposed BoundaryAwareMAnet (BAMNet) architecture for joint aortic root segmentation and anatomical landmark localization on fluoroscopic images. The network combines an EfficientNet-V2 encoder, a segmentation-oriented decoder, and a dedicated landmark branch with boundary-aware and coordinate-aware refinement modules}{figure.1}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.4}Landmark coordinate extraction}{5}{subsection.2.4}\protected@file@percent }
 \newlabel{subsec:coordinates}{{2.4}{5}{Landmark coordinate extraction}{subsection.2.4}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.5}Target generation}{5}{subsection.2.5}\protected@file@percent }
-\newlabel{subsec:targets}{{2.5}{5}{Target generation}{subsection.2.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.5}Target generation}{6}{subsection.2.5}\protected@file@percent }
+\newlabel{subsec:targets}{{2.5}{6}{Target generation}{subsection.2.5}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.6}Loss functions}{6}{subsection.2.6}\protected@file@percent }
 \newlabel{subsec:losses}{{2.6}{6}{Loss functions}{subsection.2.6}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.7}Evaluation metrics}{6}{subsection.2.7}\protected@file@percent }
-\newlabel{subsec:metrics}{{2.7}{6}{Evaluation metrics}{subsection.2.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.7}Evaluation metrics}{7}{subsection.2.7}\protected@file@percent }
+\newlabel{subsec:metrics}{{2.7}{7}{Evaluation metrics}{subsection.2.7}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {3}Results}{7}{section.3}\protected@file@percent }
 \newlabel{sec:results}{{3}{7}{Results}{section.3}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Comparison with baseline models}{7}{subsection.3.1}\protected@file@percent }
 \newlabel{subsec:baseline_results}{{3.1}{7}{Comparison with baseline models}{subsection.3.1}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Comparison of BAMNet with segmentation baselines.}}{7}{table.1}\protected@file@percent }
-\newlabel{tab:seg_baselines}{{1}{7}{Comparison of BAMNet with segmentation baselines}{table.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Comparison of BAMNet with segmentation baselines.}}{8}{table.1}\protected@file@percent }
+\newlabel{tab:seg_baselines}{{1}{8}{Comparison of BAMNet with segmentation baselines}{table.1}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Comparison of BAMNet with landmark localization baselines.}}{8}{table.2}\protected@file@percent }
 \newlabel{tab:landmark_baselines}{{2}{8}{Comparison of BAMNet with landmark localization baselines}{table.2}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Patient-level 5-fold cross-validation}{8}{subsection.3.2}\protected@file@percent }
 \newlabel{subsec:crossval}{{3.2}{8}{Patient-level 5-fold cross-validation}{subsection.3.2}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Patient-level 5-fold cross-validation results for BAMNet.}}{8}{table.3}\protected@file@percent }
 \newlabel{tab:crossval}{{3}{8}{Patient-level 5-fold cross-validation results for BAMNet}{table.3}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Landmark-wise localization accuracy}{8}{subsection.3.3}\protected@file@percent }
-\newlabel{subsec:landmarkwise}{{3.3}{8}{Landmark-wise localization accuracy}{subsection.3.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Landmark-wise localization accuracy}{9}{subsection.3.3}\protected@file@percent }
+\newlabel{subsec:landmarkwise}{{3.3}{9}{Landmark-wise localization accuracy}{subsection.3.3}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Landmark-wise localization accuracy aggregated over five folds.}}{9}{table.4}\protected@file@percent }
 \newlabel{tab:landmark_summary}{{4}{9}{Landmark-wise localization accuracy aggregated over five folds}{table.4}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Per-fold landmark localization errors for BAMNet.}}{9}{table.5}\protected@file@percent }
@@ -52,10 +54,10 @@
 \newlabel{subsec:overall}{{3.4}{9}{Overall interpretation}{subsection.3.4}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {4}Discussion}{9}{section.4}\protected@file@percent }
 \newlabel{sec:discussion}{{4}{9}{Discussion}{section.4}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Technical implications and architectural contribution}{9}{subsection.4.1}\protected@file@percent }
-\newlabel{subsec:technical}{{4.1}{9}{Technical implications and architectural contribution}{subsection.4.1}{}}
 \citation{dangas2020_tavi,yamamoto2021_tavi}
 \citation{pibarot2022_tavi,jilaihawi2023_tavi}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Technical implications and architectural contribution}{10}{subsection.4.1}\protected@file@percent }
+\newlabel{subsec:technical}{{4.1}{10}{Technical implications and architectural contribution}{subsection.4.1}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Clinical relevance}{10}{subsection.4.2}\protected@file@percent }
 \newlabel{subsec:clinical}{{4.2}{10}{Clinical relevance}{subsection.4.2}{}}
 \citation{smits2025_autonomous,clinicaltrials_nct07152574}
@@ -63,8 +65,8 @@
 \newlabel{subsec:robotic}{{4.3}{11}{Toward robot-assisted and autonomous TAVI}{subsection.4.3}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Limitations}{11}{subsection.4.4}\protected@file@percent }
 \newlabel{subsec:limitations}{{4.4}{11}{Limitations}{subsection.4.4}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Future directions}{11}{subsection.4.5}\protected@file@percent }
-\newlabel{subsec:future}{{4.5}{11}{Future directions}{subsection.4.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Future directions}{12}{subsection.4.5}\protected@file@percent }
+\newlabel{subsec:future}{{4.5}{12}{Future directions}{subsection.4.5}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {5}Conclusion}{12}{section.5}\protected@file@percent }
 \newlabel{sec:conclusion}{{5}{12}{Conclusion}{section.5}{}}
 \@writefile{toc}{\contentsline {subparagraph}{Supplementary information}{12}{section*.2}\protected@file@percent }
@@ -88,4 +90,4 @@
 \bibcite{yamamoto2021_tavi}{{16}{2021}{{Adachi et~al.}}{{}}}
 \bibcite{pibarot2022_tavi}{{17}{2022}{{Chau et~al.}}{{}}}
 \bibcite{jilaihawi2023_tavi}{{18}{2023}{{Ojeda et~al.}}{{}}}
-\gdef \@abspage@last{15}
+\gdef \@abspage@last{16}
