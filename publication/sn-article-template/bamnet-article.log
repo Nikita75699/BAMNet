@@ -1,14 +1,14 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) (preloaded format=pdflatex 2026.3.17)  18 MAR 2026 17:32
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) (preloaded format=pdflatex 2026.3.17)  19 MAR 2026 18:42
 entering extended mode
  restricted \write18 enabled.
- file:line:error style messages enabled.
  %&-line parsing enabled.
-**/mnt/ssd4tb/project/BAMNet/publication/sn-article-template/bamnet-article.tex
-(/mnt/ssd4tb/project/BAMNet/publication/sn-article-template/bamnet-article.tex
+**bamnet-article.tex
+(./bamnet-article.tex
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
 (./sn-jnl.cls
-Document Class: sn-jnl 2019/11/18 v0.1: An authoring template for Springer Journal articles
+Document Class: sn-jnl 2019/11/18 v0.1: An authoring template for Springer Jour
+nal articles
 (/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2024/06/29 v1.4n Standard LaTeX document class
 (/usr/share/texlive/texmf-dist/tex/latex/base/fleqn.clo
@@ -20,7 +20,8 @@ Already applied: [0000/00/00] Make \[ robust on input line 62.
 Applying: [2015/01/01] Make \] robust on input line 74.
 LaTeX Info: Redefining \] on input line 75.
 Already applied: [0000/00/00] Make \] robust on input line 83.
-) (/usr/share/texlive/texmf-dist/tex/latex/base/size10.clo
+)
+(/usr/share/texlive/texmf-dist/tex/latex/base/size10.clo
 File: size10.clo 2024/06/29 v1.4n Standard LaTeX file (size option)
 )
 \c@part=\count196
@@ -46,14 +47,18 @@ LaTeX Info: Redefining \cal on input line 153.
 LaTeX Info: Redefining \mit on input line 154.
 LaTeX Info: Redefining \textsubscript on input line 212.
 \columnhsize=\skip52
- (/usr/share/texlive/texmf-dist/tex/latex/geometry/geometry.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/geometry/geometry.sty
 Package: geometry 2020/01/02 v5.9 Page Geometry
- (/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
 Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
 \KV@toks@=\toks17
-) (/usr/share/texlive/texmf-dist/tex/generic/iftex/ifvtex.sty
+)
+(/usr/share/texlive/texmf-dist/tex/generic/iftex/ifvtex.sty
 Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
- (/usr/share/texlive/texmf-dist/tex/generic/iftex/iftex.sty
+
+(/usr/share/texlive/texmf-dist/tex/generic/iftex/iftex.sty
 Package: iftex 2024/12/12 v1.0g TeX engine tests
 ))
 \Gm@cnth=\count270
@@ -80,7 +85,8 @@ Package: iftex 2024/12/12 v1.0g TeX engine tests
 \PacsTmpCnt=\count280
 \FMremarkdim=\dimen150
 \fmremarkbox=\box53
- (/usr/share/texlive/texmf-dist/tex/latex/sttools/cuted.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/sttools/cuted.sty
 Package: cuted 2021/10/04 v2.0 Mixing onecolumn and twocolumn modes
 \At@ViperColsBreak=\toks19
 \preCutedStrip=\toks20
@@ -121,24 +127,31 @@ Package: cuted 2021/10/04 v2.0 Mixing onecolumn and twocolumn modes
 \temptbox=\box66
 \tempdime=\dimen168
 \tabhtdime=\dimen169
- (/usr/share/texlive/texmf-dist/tex/latex/graphics/rotating.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/rotating.sty
 Package: rotating 2016/08/11 v2.16d rotated objects in LaTeX
- (/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
 Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
- (/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
 Package: graphics 2024/08/06 v1.4g Standard LaTeX Graphics (DPC,SPQR)
- (/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty
 Package: trig 2023/12/02 v1.11 sin cos tan (DPC)
-) (/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
 File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
 Package graphics Info: Driver file: pdftex.def on input line 106.
- (/usr/share/texlive/texmf-dist/tex/latex/graphics-def/pdftex.def
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-def/pdftex.def
 File: pdftex.def 2024/04/13 v1.2c Graphics/color driver for pdftex
 ))
 \Gin@req@height=\dimen170
 \Gin@req@width=\dimen171
-) (/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty
 Package: ifthen 2024/03/16 v1.1e Standard LaTeX ifthen package (DPC)
 )
 \c@r@tfl@t=\count282
@@ -146,62 +159,83 @@ Package: ifthen 2024/03/16 v1.1e Standard LaTeX ifthen package (DPC)
 \rotFPbot=\skip56
 \rot@float@box=\box67
 \rot@mess@toks=\toks22
-) (/usr/share/texlive/texmf-dist/tex/latex/threeparttable/threeparttable.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/threeparttable/threeparttable.sty
 Package: threeparttable 2003/06/13  v 3.0
 \@tempboxb=\box68
-) (/usr/share/texlive/texmf-dist/tex/latex/appendix/appendix.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/appendix/appendix.sty
 Package: appendix 2020/02/08 v1.2c extra appendix facilities
 \c@@pps=\count283
 \c@@ppsavesec=\count284
 \c@@ppsaveapp=\count285
-) (/usr/share/texlive/texmf-dist/tex/latex/hyperref/hyperref.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/hyperref.sty
 Package: hyperref 2024-11-05 v7.01l Hypertext links for LaTeX
- (/usr/share/texlive/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty
 Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
-) (/usr/share/texlive/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty
+)
+(/usr/share/texlive/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty
 Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
-) (/usr/share/texlive/texmf-dist/tex/generic/pdfescape/pdfescape.sty
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pdfescape/pdfescape.sty
 Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
- (/usr/share/texlive/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
+
+(/usr/share/texlive/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
 Package: ltxcmds 2023-12-04 v1.26 LaTeX kernel commands for general use (HO)
-) (/usr/share/texlive/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
-Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO)
- (/usr/share/texlive/texmf-dist/tex/generic/infwarerr/infwarerr.sty
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
+)
+
+(/usr/share/texlive/texmf-dist/tex/generic/infwarerr/infwarerr.sty
 Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
 )
 Package pdftexcmds Info: \pdf@primitive is available.
 Package pdftexcmds Info: \pdf@ifprimitive is available.
 Package pdftexcmds Info: \pdfdraftmode found.
-)) (/usr/share/texlive/texmf-dist/tex/latex/hycolor/hycolor.sty
+))
+(/usr/share/texlive/texmf-dist/tex/latex/hycolor/hycolor.sty
 Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
-) (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2023-11-26 v2.56 Cross-referencing by name of section
- (/usr/share/texlive/texmf-dist/tex/latex/refcount/refcount.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/refcount/refcount.sty
 Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
-) (/usr/share/texlive/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
+)
+(/usr/share/texlive/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
- (/usr/share/texlive/texmf-dist/tex/latex/kvoptions/kvoptions.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/kvoptions/kvoptions.sty
 Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
 ))
 \c@section@level=\count286
-) (/usr/share/texlive/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/etoolbox/etoolbox.sty
 Package: etoolbox 2025/02/11 v2.5l e-TeX tools for LaTeX (JAW)
 \etb@tempcnta=\count287
-) (/usr/share/texlive/texmf-dist/tex/generic/stringenc/stringenc.sty
-Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO)
+)
+(/usr/share/texlive/texmf-dist/tex/generic/stringenc/stringenc.sty
+Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO
+)
 )
 \@linkdim=\dimen172
 \Hy@linkcounter=\count288
 \Hy@pagecounter=\count289
- (/usr/share/texlive/texmf-dist/tex/latex/hyperref/pd1enc.def
+
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/pd1enc.def
 File: pd1enc.def 2024-11-05 v7.01l Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
 ... no UTF-8 mapping file for font encoding PD1
-) (/usr/share/texlive/texmf-dist/tex/generic/intcalc/intcalc.sty
+)
+(/usr/share/texlive/texmf-dist/tex/generic/intcalc/intcalc.sty
 Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 )
 \Hy@SavedSpaceFactor=\count290
- (/usr/share/texlive/texmf-dist/tex/latex/hyperref/puenc.def
+
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/puenc.def
 File: puenc.def 2024-11-05 v7.01l Hyperref: PDF Unicode definition (HO)
 Now handling font encoding PU ...
 ... no UTF-8 mapping file for font encoding PU
@@ -214,16 +248,20 @@ Package hyperref Info: Backreferencing OFF on input line 4177.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4424.
 \c@Hy@tempcnt=\count291
- (/usr/share/texlive/texmf-dist/tex/latex/url/url.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip17
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
 LaTeX Info: Redefining \url on input line 4763.
 \XeTeXLinkMargin=\dimen173
- (/usr/share/texlive/texmf-dist/tex/generic/bitset/bitset.sty
+
+(/usr/share/texlive/texmf-dist/tex/generic/bitset/bitset.sty
 Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
- (/usr/share/texlive/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
-Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
+Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
+)
 ))
 \Fld@menulength=\count292
 \Field@Width=\dimen174
@@ -235,7 +273,8 @@ Package hyperref Info: backreferencing OFF on input line 6057.
 Package hyperref Info: Link coloring OFF on input line 6062.
 Package hyperref Info: Link coloring with OCG OFF on input line 6067.
 Package hyperref Info: PDF/A mode OFF on input line 6072.
- (/usr/share/texlive/texmf-dist/tex/latex/base/atbegshi-ltx.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/atbegshi-ltx.sty
 Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
 package with kernel methods
 )
@@ -244,20 +283,26 @@ package with kernel methods
 \c@Hfootnote=\count295
 )
 Package hyperref Info: Driver (autodetected): hpdftex.
- (/usr/share/texlive/texmf-dist/tex/latex/hyperref/hpdftex.def
+
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/hpdftex.def
 File: hpdftex.def 2024-11-05 v7.01l Hyperref driver for pdfTeX
- (/usr/share/texlive/texmf-dist/tex/latex/base/atveryend-ltx.sty
-Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atveryend package
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/atveryend-ltx.sty
+Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atveryend pac
+kage
 with kernel methods
 )
 \Fld@listcount=\count296
 \c@bookmark@seq@number=\count297
- (/usr/share/texlive/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty
 Package: rerunfilecheck 2022-07-10 v1.10 Rerun checks for auxiliary files (HO)
- (/usr/share/texlive/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty
+
+(/usr/share/texlive/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty
 Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
 )
-Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 285.
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+85.
 )
 \Hy@SectionHShift=\skip57
 )
@@ -265,8 +310,10 @@ Package hyperref Info: Option `colorlinks' set `true' on input line 1471.
 Package hyperref Info: Option `breaklinks' set `true' on input line 1471.
 Package hyperref Info: Option `plainpages' set `false' on input line 1471.
 Package hyperref Info: Option `bookmarksopen' set `true' on input line 1471.
-Package hyperref Info: Option `bookmarksnumbered' set `false' on input line 1471.
- (/usr/share/texlive/texmf-dist/tex/latex/wrapfig/wrapfig.sty
+Package hyperref Info: Option `bookmarksnumbered' set `false' on input line 147
+1.
+
+(/usr/share/texlive/texmf-dist/tex/latex/wrapfig/wrapfig.sty
 \wrapoverhang=\dimen176
 \WF@size=\dimen177
 \c@WF@wrappedlines=\count298
@@ -278,7 +325,8 @@ Package: wrapfig 2003/01/31  v 3.6
 \@authorfigbox=\box70
 \@authorfigboxdim=\skip58
 \biofigadjskip=\skip59
- (/usr/share/texlive/texmf-dist/tex/latex/amscls/amsthm.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/amscls/amsthm.sty
 Package: amsthm 2020/05/29 v2.20.6
 \thm@style=\toks24
 \thm@bodyfont=\toks25
@@ -289,38 +337,46 @@ Package: amsthm 2020/05/29 v2.20.6
 \thm@postskip=\skip61
 \thm@headsep=\skip62
 \dth@everypar=\toks29
-) (/usr/share/texlive/texmf-dist/tex/latex/base/fix-cm.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/base/fix-cm.sty
 Package: fix-cm 2020/11/24 v1.1t fixes to LaTeX
- (/usr/share/texlive/texmf-dist/tex/latex/base/ts1enc.def
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/ts1enc.def
 File: ts1enc.def 2001/06/05 v3.0e (jk/car/fm) Standard LaTeX file
 LaTeX Font Info:    Redeclaring font encoding TS1 on input line 47.
-)) (/usr/share/texlive/texmf-dist/tex/latex/natbib/natbib.sty
+))
+(/usr/share/texlive/texmf-dist/tex/latex/natbib/natbib.sty
 Package: natbib 2010/09/13 8.31b (PWD, AO)
 \bibhang=\skip63
 \bibsep=\skip64
 LaTeX Info: Redefining \cite on input line 694.
 \c@NAT@ctr=\count300
-)) (/usr/share/texlive/texmf-dist/tex/latex/multirow/multirow.sty
+))
+(/usr/share/texlive/texmf-dist/tex/latex/multirow/multirow.sty
 Package: multirow 2024/11/12 v2.9 Span multiple rows of a table
 \multirow@colwidth=\skip65
 \multirow@cntb=\count301
 \multirow@dima=\skip66
 \bigstrutjot=\dimen178
-) (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
 Package: amsmath 2024/11/05 v2.17t AMS math features
 \@mathmargin=\skip67
 
 For additional information on amsmath, use the `?' option.
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amstext.sty
 Package: amstext 2021/08/26 v2.01 AMS text
- (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsgen.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0 generic functions
 \@emptytoks=\toks30
 \ex@=\dimen179
-)) (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsbsy.sty
+))
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsbsy.sty
 Package: amsbsy 1999/11/29 v1.2d Bold Symbols
 \pmbraise@=\dimen180
-) (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsopn.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsopn.sty
 Package: amsopn 2022/04/08 v2.04 operator names
 )
 \inf@bad=\count302
@@ -370,18 +426,22 @@ LaTeX Info: Redefining \Relbar on input line 970.
 \mathdisplay@stack=\toks34
 LaTeX Info: Redefining \[ on input line 2953.
 LaTeX Info: Redefining \] on input line 2954.
-) (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amssymb.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amssymb.sty
 Package: amssymb 2013/01/14 v3.01 AMS font symbols
- (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amsfonts.sty
 Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
 \symAMSa=\mathgroup4
 \symAMSb=\mathgroup5
 LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
 LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 (Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
-)) (/usr/share/texlive/texmf-dist/tex/latex/base/textcomp.sty
+))
+(/usr/share/texlive/texmf-dist/tex/latex/base/textcomp.sty
 Package: textcomp 2024/04/24 v2.1b Standard LaTeX package
-) (/usr/share/texlive/texmf-dist/tex/latex/booktabs/booktabs.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/booktabs/booktabs.sty
 Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \heavyrulewidth=\dimen188
 \lightrulewidth=\dimen189
@@ -401,35 +461,75 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \@lastruleclass=\count317
 \@thisrulewidth=\dimen256
 )
+(/usr/share/texlive/texmf-dist/tex/latex/caption/subcaption.sty
+Package: subcaption 2023/07/28 v1.6b Sub-captions (AR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/caption/caption.sty
+Package: caption 2023/08/05 v3.6o Customizing captions (AR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/caption/caption3.sty
+Package: caption3 2023/07/31 v2.4d caption3 kernel (AR)
+\caption@tempdima=\dimen257
+\captionmargin=\dimen258
+\caption@leftmargin=\dimen259
+\caption@rightmargin=\dimen260
+\caption@width=\dimen261
+\caption@indent=\dimen262
+\caption@parindent=\dimen263
+\caption@hangindent=\dimen264
+Package caption Info: Unknown document class (or package),
+(caption)             standard defaults will be used.
+Package caption Info: \@makecaption = \long macro:#1#2->\ifx \FigName \@captype
+ \vskip \abovecaptionskip \@figurecaption {#1}{#2} \else \@tablecaption {#1}{#2
+} \vskip \belowcaptionskip \fi  on input line 1175.
+)
+
+Package caption Warning: Unknown document class (or package),
+(caption)                standard defaults will be used.
+See the caption package documentation for explanation.
+
+\c@caption@flags=\count318
+\c@continuedfloat=\count319
+Package caption Info: hyperref package is loaded.
+Package caption Info: rotating package is loaded.
+Package caption Info: threeparttable package is loaded.
+Package caption Info: wrapfig package is loaded.
+)
+Package caption Info: New subtype `subfigure' on input line 238.
+\c@subfigure=\count320
+Package caption Info: New subtype `subtable' on input line 238.
+\c@subtable=\count321
+)
 
 Package geometry Warning: Over-specification in `h'-direction.
     `width' (372.0pt) is ignored.
 
 (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count318
+\l__color_backend_stack_int=\count322
 \l__pdf_internal_box=\box73
-) (./bamnet-article.aux)
+)
+(./bamnet-article.aux)
 \openout1 = `bamnet-article.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -467,52 +567,67 @@ LaTeX Font Info:    ... okay on input line 29.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count319
-\scratchdimen=\dimen257
+\scratchcounter=\count323
+\scratchdimen=\dimen265
 \scratchbox=\box74
-\nofMPsegments=\count320
-\nofMParguments=\count321
+\nofMPsegments=\count324
+\nofMParguments=\count325
 \everyMPshowfont=\toks35
-\MPscratchCnt=\count322
-\MPscratchDim=\dimen258
-\MPnumerator=\count323
-\makeMPintoPDFobject=\count324
+\MPscratchCnt=\count326
+\MPscratchDim=\dimen266
+\MPnumerator=\count327
+\makeMPintoPDFobject=\count328
 \everyMPtoPDFconversion=\toks36
 ) (/usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
-Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
- (/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
-File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+85.
+
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
 ))
-LaTeX Info: Redefining \S on input line 29.
-LaTeX Font Info:    Redeclaring symbol font `AMSa' on input line 29.
+LaTeX Info: Redefining \S on input line 30.
+LaTeX Font Info:    Redeclaring symbol font `AMSa' on input line 30.
 LaTeX Font Info:    Overwriting symbol font `AMSa' in version `normal'
-(Font)                  U/msa/m/n --> U/msa/m/n on input line 29.
+(Font)                  U/msa/m/n --> U/msa/m/n on input line 30.
 LaTeX Font Info:    Overwriting symbol font `AMSa' in version `bold'
-(Font)                  U/msa/m/n --> U/msa/m/n on input line 29.
- (/usr/share/texlive/texmf-dist/tex/latex/graphics/color.sty
+(Font)                  U/msa/m/n --> U/msa/m/n on input line 30.
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/color.sty
 Package: color 2024/06/23 v1.3e Standard LaTeX Color (DPC)
- (/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/color.cfg
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/color.cfg
 File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
 Package color Info: Driver file: pdftex.def on input line 149.
- (/usr/share/texlive/texmf-dist/tex/latex/graphics/mathcolor.ltx))
-Package hyperref Info: Link coloring ON on input line 29.
- (./bamnet-article.out) (./bamnet-article.out)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/mathcolor.ltx))
+Package hyperref Info: Link coloring ON on input line 30.
+
+(./bamnet-article.out) (./bamnet-article.out)
 \@outlinefile=\write3
 \openout3 = `bamnet-article.out'.
 
-LaTeX Font Info:    Calculating math sizes for size <12.045> on input line 58.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 58.
- (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: End \AtBeginDocument code.
+LaTeX Font Info:    Calculating math sizes for size <12.045> on input line 59.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 59.
+
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 58.
- (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
+LaTeX Font Info:    Trying to load font information for U+msb on input line 59.
+
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Calculating math sizes for size <11.04124> on input line 58.
-LaTeX Font Info:    Calculating math sizes for size <9.03374> on input line 58.
+LaTeX Font Info:    Calculating math sizes for size <11.04124> on input line 59
+.
+LaTeX Font Info:    Calculating math sizes for size <9.03374> on input line 59.
+
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
@@ -524,7 +639,8 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
  [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-LaTeX Font Info:    Calculating math sizes for size <10.03749> on input line 58.
+LaTeX Font Info:    Calculating math sizes for size <10.03749> on input line 59
+.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
@@ -534,35 +650,63 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [2]
+<../fgure_article/orig_15_0025_004_029.png, id=136, 1027.84pt x 1027.84pt>
+File: ../fgure_article/orig_15_0025_004_029.png Graphic file (type png)
+<use ../fgure_article/orig_15_0025_004_029.png>
+Package pdftex.def Info: ../fgure_article/orig_15_0025_004_029.png  used on inp
+ut line 86.
+(pdftex.def)             Requested size: 179.15517pt x 179.15324pt.
+<../fgure_article/sample_15_0025_004_029.jpeg, id=137, 246.6816pt x 246.6816pt>
+
+File: ../fgure_article/sample_15_0025_004_029.jpeg Graphic file (type jpg)
+<use ../fgure_article/sample_15_0025_004_029.jpeg>
+Package pdftex.def Info: ../fgure_article/sample_15_0025_004_029.jpeg  used on 
+input line 93.
+(pdftex.def)             Requested size: 179.15517pt x 179.16139pt.
+<../fgure_article/orig_19_0019_008_031.png, id=138, 513.92pt x 513.92pt>
+File: ../fgure_article/orig_19_0019_008_031.png Graphic file (type png)
+<use ../fgure_article/orig_19_0019_008_031.png>
+Package pdftex.def Info: ../fgure_article/orig_19_0019_008_031.png  used on inp
+ut line 100.
+(pdftex.def)             Requested size: 179.15517pt x 179.15324pt.
+<../fgure_article/sample_19_0019_008_031.jpeg, id=139, 123.3408pt x 123.3408pt>
+
+File: ../fgure_article/sample_19_0019_008_031.jpeg Graphic file (type jpg)
+<use ../fgure_article/sample_19_0019_008_031.jpeg>
+Package pdftex.def Info: ../fgure_article/sample_19_0019_008_031.jpeg  used on 
+input line 107.
+(pdftex.def)             Requested size: 179.15517pt x 179.17267pt.
+
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [3]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [4]
-<../fgure_article/figeure_orginal/BAMNet.jpg, id=149, 4248.87375pt x 1936.23375pt>
+ [4 <../fgure_article/orig_15_0025_004_029.png (PNG copy)> <../fgure_article/sa
+mple_15_0025_004_029.jpeg> <../fgure_article/orig_19_0019_008_031.png (PNG copy
+)> <../fgure_article/sample_19_0019_008_031.jpeg>]
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [5]
+<../fgure_article/figeure_orginal/BAMNet.jpg, id=162, 4248.87375pt x 1936.23375
+pt>
 File: ../fgure_article/figeure_orginal/BAMNet.jpg Graphic file (type jpg)
 <use ../fgure_article/figeure_orginal/BAMNet.jpg>
-Package pdftex.def Info: ../fgure_article/figeure_orginal/BAMNet.jpg  used on input line 118.
+Package pdftex.def Info: ../fgure_article/figeure_orginal/BAMNet.jpg  used on i
+nput line 152.
 (pdftex.def)             Requested size: 373.24326pt x 170.08774pt.
 
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [5 <../fgure_article/figeure_orginal/BAMNet.jpg>]
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [6]
+ [6 <../fgure_article/figeure_orginal/BAMNet.jpg>]
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -578,11 +722,6 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [9]
-Underfull \hbox (badness 3758) in paragraph at lines 334--335
-[]\OT1/cmr/m/n/10 A sec-ond impor-tant aspect is valve posi-tion-ing accu-racy. Even mod-est
- []
-
-
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -593,31 +732,9 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [11]
-Underfull \hbox (badness 7649) in paragraph at lines 358--359
-[]\OT1/cmr/m/n/10 In patient-level 5-fold cross-validation, BAM-Net remained sta-ble, with
- []
-
-
-Package hyperref Warning: Difference (4) between bookmark levels is greater 
-(hyperref)                than one, level fixed on input line 364.
-
-
-Underfull \hbox (badness 2229) in paragraph at lines 364--365
- []\OT1/cmr/bx/n/10.03749 Supplementary infor-ma-tion.[][] \OT1/cmr/m/n/10 No sup-ple-men-tary files are included in this
- []
-
-
-Package hyperref Warning: Difference (3) between bookmark levels is greater 
-(hyperref)                than one, level fixed on input line 368.
-
-
-Underfull \hbox (badness 2073) in paragraph at lines 374--375
-\OT1/cmr/m/n/10 This study was sup-ported by the Rus-sian Sci-ence Foun-da-tion under Grant
- []
-
-
-Underfull \hbox (badness 1152) in paragraph at lines 374--375
-\OT1/cmr/m/n/10 No. 24-19-00084, titled \OT1/cmr/m/it/10.03749 ``Robotic Sys-tem for Med-i-cal Instru-ment Deliv-ery with
+Underfull \hbox (badness 3758) in paragraph at lines 368--369
+[]\OT1/cmr/m/n/10 A sec-ond impor-tant aspect is valve posi-tion-ing accu-racy.
+ Even mod-est
  []
 
 
@@ -625,19 +742,36 @@ Underfull \hbox (badness 1152) in paragraph at lines 374--375
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [12{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc}] (./bamnet-article.bbl
-Underfull \hbox (badness 10000) in paragraph at lines 80--87
-[]\OT1/cmr/m/n/10 Grand View Research: Tran-scatheter Aor-tic Valve Replace-ment
+ [12]
+Underfull \hbox (badness 7649) in paragraph at lines 392--393
+[]\OT1/cmr/m/n/10 In patient-level 5-fold cross-validation, BAM-Net remained st
+a-ble, with
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 80--87
-\OT1/cmr/m/n/10 Mar-ket Report, 2033. Mar-ket report web page. Accessed 2026-
+Package hyperref Warning: Difference (4) between bookmark levels is greater 
+(hyperref)                than one, level fixed on input line 398.
+
+
+Underfull \hbox (badness 2229) in paragraph at lines 398--399
+ []\OT1/cmr/bx/n/10.03749 Supplementary infor-ma-tion.[][] \OT1/cmr/m/n/10 No s
+up-ple-men-tary files are included in this
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 80--87
-\OT1/cmr/m/n/10 03-18 (2025). [][]$https : / / www . grandviewresearch . com / industry-[]analysis /
+Package hyperref Warning: Difference (3) between bookmark levels is greater 
+(hyperref)                than one, level fixed on input line 402.
+
+
+Underfull \hbox (badness 2073) in paragraph at lines 408--409
+\OT1/cmr/m/n/10 This study was sup-ported by the Rus-sian Sci-ence Foun-da-tion
+ under Grant
+ []
+
+
+Underfull \hbox (badness 1152) in paragraph at lines 408--409
+\OT1/cmr/m/n/10 No. 24-19-00084, titled \OT1/cmr/m/it/10.03749 ``Robotic Sys-te
+m for Med-i-cal Instru-ment Deliv-ery with
  []
 
 
@@ -646,6 +780,29 @@ Underfull \hbox (badness 10000) in paragraph at lines 80--87
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [13]
+(./bamnet-article.bbl
+Underfull \hbox (badness 10000) in paragraph at lines 76--83
+[]\OT1/cmr/m/n/10 Grand View Research: Tran-scatheter Aor-tic Valve Replace-men
+t
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 76--83
+\OT1/cmr/m/n/10 Mar-ket Report, 2033. Mar-ket report web page. Accessed 2026-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 76--83
+\OT1/cmr/m/n/10 03-18 (2025). [][]$https : / / www . grandviewresearch . com / 
+industry-[]analysis /
+ []
+
+
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [14{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
@@ -653,7 +810,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [14]
+ [15]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
@@ -661,32 +818,51 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [15])
+ [16])
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [16] (./bamnet-article.aux)
+ [17]
+(./bamnet-article.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
 Package rerunfilecheck Info: File `bamnet-article.out' has not changed.
-(rerunfilecheck)             Checksum: 3BE644220DA4D0E8AC236284B578E684;3941.
+(rerunfilecheck)             Checksum: E64524BD4BD66D8535B20137C31C57CA;3942.
  ) 
 Here is how much of TeX's memory you used:
- 12111 strings out of 473197
- 186606 string characters out of 5718605
- 598476 words of memory out of 5000000
- 35085 multiletter control sequences out of 15000+600000
- 581521 words of font info for 121 fonts, out of 8000000 for 9000
+ 13553 strings out of 473197
+ 215390 string characters out of 5718605
+ 624471 words of memory out of 5000000
+ 36517 multiletter control sequences out of 15000+600000
+ 581212 words of font info for 120 fonts, out of 8000000 for 9000
  1151 hyphenation exceptions out of 8191
- 90i,11n,93p,1578b,646s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1000.pfb>
-Output written on bamnet-article.pdf (16 pages, 946929 bytes).
+ 90i,11n,93p,1519b,644s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy10.pfb></u
+sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/sha
+re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/tex
+live/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/share/texlive/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texlive/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/font
+s/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmmib10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17
+.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></u
+sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/t
+ype1/public/amsfonts/symbols/msbm10.pfb></usr/share/texmf/fonts/type1/public/cm
+-super/sfrm1000.pfb>
+Output written on bamnet-article.pdf (17 pages, 2114652 bytes).
 PDF statistics:
- 385 PDF objects out of 1000 (max. 8388607)
- 322 compressed objects within 4 object streams
- 85 named destinations out of 1000 (max. 500000)
- 190 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 395 PDF objects out of 1000 (max. 8388607)
+ 327 compressed objects within 4 object streams
+ 87 named destinations out of 1000 (max. 500000)
+ 210 words of extra memory for PDF output out of 10000 (max. 10000000)
 

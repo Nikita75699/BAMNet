@@ -1,4 +1,4 @@
-architecture: boundary_aware_manet        # для имени эксперимента в логах
+architecture: boundary_aware_manet_v2        # v2: без boundary loss/guidance
 encoder_name: efficientnet_v2_m          # или _m/_l
 num_classes: 1
 warmup_epochs: 5
@@ -8,7 +8,7 @@ loss:
   w_bce: 1.0
   w_dice: 1.0
   w_pts: 0.8
-  w_bnd: 0.1
+  w_bnd: 0.0                 # v2: boundary loss отключён
   point_sigma: 2.0
   focal:
     use_focal_seg: false
@@ -48,3 +48,13 @@ attention:
 fusion:
   enabled: true           # <<< ВКЛ/ВЫКЛ deep+decoder fusion
   point_head_channels: 256
+
+boundary:
+  loss_enabled: false       # v2: полностью отключено
+  guidance_enabled: false   # v2: полностью отключено
+
+softargmax:
+  beta_mode: "schedule"
+  beta_start: 4.0
+  beta_end: 16.0            # v2: расширен диапазон (было 12)
+  beta_warmup_epochs: 12    # v2: плавный рост (было 8)

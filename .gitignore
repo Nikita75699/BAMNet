@@ -1,0 +1,10 @@
+./export_project/*
+export_project/*
+segmentation_point(v2)/*
+__pycache__/*
+publication/sn-article-template/bamnet-article.aux
+publication/sn-article-template/bamnet-article.bbl
+publication/sn-article-template/bamnet-article.log
+publication/sn-article-template/bamnet-article.fls
+publication/sn-article-template/bamnet-article.fdb_latexmk
+publication/sn-article-template/bamnet-article.out

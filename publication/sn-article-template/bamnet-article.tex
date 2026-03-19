@@ -5,6 +5,7 @@
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{textcomp}
 \usepackage{booktabs}
+\usepackage{subcaption}
 
 \makeatletter
 \@twosidefalse
@@ -76,7 +77,40 @@ To address this clinical and technological need, we developed BoundaryAwareMAnet
 
 The study used intraoperative fluoroscopic images acquired during TAVI procedures in patients with severe aortic stenosis. The present work builds on a previously published dataset of intraoperative angiographic images and extends it with additional patients and revised annotations. The final dataset comprised 2,925 grayscale images of size $1000 \times 1000$ pixels (8-bit) obtained from 83 patients between 2018 and 2024.
 
-The primary annotation task was binary segmentation of the aortic root. The expert mask represented the visible contour of the contrast-enhanced aortic root in the current frame. Guidewires, catheters, valve delivery system components, and other radiopaque instruments were deliberately excluded from the mask. Annotation was performed in the Supervisely web-based computer vision platform, consistent with the previous dataset release.
+The primary annotation task was binary segmentation of the aortic root. The expert mask represented the visible contour of the contrast-enhanced aortic root in the current frame. Guidewires, catheters, valve delivery system components, and other radiopaque instruments were deliberately excluded from the mask. Annotation was performed in the Supervisely web-based computer vision platform, consistent with the previous dataset release (Fig.~\ref{fig:annotation_examples}).
+
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../fgure_article/orig_15_0025_004_029.png}
+        \caption{}
+        \label{fig:orig1}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../fgure_article/sample_15_0025_004_029.jpeg}
+        \caption{}
+        \label{fig:annot1}
+    \end{subfigure}
+    \vskip\baselineskip
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../fgure_article/orig_19_0019_008_031.png}
+        \caption{}
+        \label{fig:orig2}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../fgure_article/sample_19_0019_008_031.jpeg}
+        \caption{}
+        \label{fig:annot2}
+    \end{subfigure}
+    \caption{Representative fluoroscopic images (a, c) and corresponding expert annotations (b, d) illustrating the aortic root mask and four anatomical landmarks (AA1, AA2, STJ1, STJ2).}
+    \label{fig:annotation_examples}
+\end{figure}
 
 In addition to binary masks, each image was annotated with four key anatomical landmarks: two points on the aortic annulus (AA1 and AA2) and two landmarks near the coronary ostia at the sinotubular junction (STJ1 and STJ2). For each landmark, two-dimensional coordinates $(x,y)$ and a binary visibility flag were stored. A landmark was considered visible only when its position could be identified reliably on the current frame. When anatomy was obscured by devices, contrast opacification was insufficient, or the anatomical configuration was ambiguous, the landmark was marked as invisible.
 
