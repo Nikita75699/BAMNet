@@ -8,7 +8,7 @@ loss:
   w_bce: 1.0
   w_dice: 1.0
   w_pts: 0.8
-  w_bnd: 0.0                 # v2: boundary loss отключён
+  w_bnd: 0.1
   point_sigma: 2.0
   focal:
     use_focal_seg: false
@@ -50,7 +50,7 @@ fusion:
   point_head_channels: 256
 
 boundary:
-  loss_enabled: false       # v2: полностью отключено
+  loss_enabled: true       # v2: полностью отключено
   guidance_enabled: false   # v2: полностью отключено
 
 softargmax:

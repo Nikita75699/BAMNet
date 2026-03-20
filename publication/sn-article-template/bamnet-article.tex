@@ -280,6 +280,29 @@ YOLO\_keypoints\_26m & 3.69 & \textbf{2.11} & 5.55 & 2.41 & 2.78 \\
 \end{tabular}}
 \end{table*}
 
+\subsection{Qualitative visualization of BAMNet outputs}\label{subsec:qualitative}
+
+Representative BAMNet outputs on fluoroscopic frames are shown in Fig.~\ref{fig:bamnet_qualitative}. In both examples, the model simultaneously recovers the aortic root contour and provides a geometrically consistent set of landmarks and derived guidance primitives. The semi-transparent mask follows the visible root anatomy despite low soft-tissue contrast and overlap by interventional devices, while the predicted landmarks define the annular and sinotubular reference lines. From these landmarks, the overlay further visualizes the estimated aortic axis and the predicted implantation zone, which are directly relevant for intraoperative valve positioning.
+
+These examples highlight an important practical feature of the proposed multitask formulation: BAMNet produces not only a segmentation mask, but also a clinically interpretable geometric overlay that can support visual guidance during TAVI. In this sense, the network output is already close to the type of augmented fluoroscopic display required for navigation assistance and future semi-automated deployment systems.
+
+\begin{figure}[htbp]
+\centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../figures/60687da9-a664-480a-8eaf-943dd3861d14.jpeg}
+        \caption{}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../figures/fc2fbaf7-c486-4596-b86e-64f8a1a10a86.jpeg}
+        \caption{}
+    \end{subfigure}
+    \caption{Representative BAMNet predictions on intraoperative fluoroscopic frames. The yellow contour and semi-transparent green region denote the predicted aortic root mask. Yellow points correspond to the four predicted landmarks (AA1, AA2, STJ1, STJ2). The blue arrow indicates the estimated aortic axis, and the central geometric overlay illustrates the predicted implantation zone derived from the landmark configuration.}
+    \label{fig:bamnet_qualitative}
+\end{figure}
+
 \subsection{Patient-level 5-fold cross-validation}\label{subsec:crossval}
 
 To assess robustness, strict patient-level 5-fold cross-validation was performed. Across all five folds, the number of prediction failures remained zero ($n_{\mathrm{pred\_failures}}=0$), indicating stable behavior across different patient subsets. Mean performance across folds reached a Dice score of $0.8974 \pm 0.0237$, an IoU of $0.8257 \pm 0.0329$, a Surface Dice@4~mm of $0.8074 \pm 0.0578$, a median localization error of $8.06 \pm 0.75$~px, and a mean localization error of $11.13 \pm 0.76$~px.
@@ -359,7 +382,14 @@ Ablation experiments reported in the source draft support the importance of thes
 
 Feature fusion and offset refinement were also important. Removing fusion reduced Dice to 0.8696, while removing offsets yielded Dice~=~0.8757 with a point error of 12.13~px, again worsening the overall balance. Boundary-guided supervision showed a more nuanced effect: removing boundary guidance reduced Dice to 0.8738 and increased point error to 11.46~px, whereas removing the explicit boundary loss reduced Dice to 0.8789 but slightly improved point error to 11.42~px. This pattern suggests that boundary supervision primarily improves anatomical consistency of the mask and contour regularity, while gains in coordinate accuracy may depend on checkpoint selection criteria and the overall training balance.
 
-The soft-argmax temperature schedule was another meaningful factor. In the draft ablation study, the $\beta$ schedule from 4 to 8 was inferior to a fixed $\beta=8$ setup, which indicates that the localization-segmentation trade-off is sensitive to how sharply heatmaps are converted to coordinates. From a deployment perspective, the main practical benefit is that BAMNet removes the need to run two separate models at inference time. The reported throughput of 43.9~FPS on an NVIDIA RTX4070 is compatible with real-time fluoroscopic assistance.
+The soft-argmax temperature schedule was another meaningful factor. In the draft ablation study, the $\beta$ schedule from 4 to 8 was inferior to a fixed $\beta=8$ setup, which indicates that the localization-segmentation trade-off is sensitive to how sharply heatmaps are converted to coordinates. The overall ranking of the main architectural variants is summarized in Fig.~\ref{fig:ablation_summary}. From a deployment perspective, the main practical benefit is that BAMNet removes the need to run two separate models at inference time. The reported throughput of 43.9~FPS on an NVIDIA RTX4070 is compatible with real-time fluoroscopic assistance.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{../figures/ablation_summary.png}
+\caption{Summary of the BAMNet ablation study across the main architectural variants. The figure highlights how global spatial attention, coordinate-aware refinement, feature fusion, boundary-related supervision, and the soft-argmax configuration affect the balance between segmentation quality and landmark localization accuracy.}
+\label{fig:ablation_summary}
+\end{figure}
 
 \subsection{Clinical relevance}\label{subsec:clinical}
 

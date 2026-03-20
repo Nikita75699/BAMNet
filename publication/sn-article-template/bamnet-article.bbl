@@ -61,7 +61,10 @@
 \bauthor{\bsnm{Sundt}, \binits{I.} \bsuffix{Thoralf~M.}},
 \bauthor{\bsnm{Thompson}, \binits{A.}},
 \bauthor{\bsnm{Toly}, \binits{C.}}:
-\batitle{2020 {ACC}/{AHA} guideline for the management of patients with valvular heart disease: Executive summary: A report of the american college of cardiology/american heart association joint committee on clinical practice guidelines}.
+\batitle{2020 {ACC}/{AHA} guideline for the management of patients with
+  valvular heart disease: Executive summary: A report of the american college
+  of cardiology/american heart association joint committee on clinical practice
+  guidelines}.
 \bjtitle{Circulation}
 \bvolume{143}(\bissue{5}),
 \bfpage{35}--\blpage{71}
@@ -71,7 +74,8 @@
 \endbibitem
 
 %%% 2
-\bibitem[\protect\citeauthoryear{{Grand View Research}}{2025}]{grandview2025_tavrmarket}
+\bibitem[\protect\citeauthoryear{{Grand View
+  Research}}{2025}]{grandview2025_tavrmarket}
 \begin{botherref}
 \oauthor{\bsnm{{Grand View Research}}}:
 Transcatheter Aortic Valve Replacement Market Report, 2033.
@@ -82,7 +86,8 @@ Market report web page. Accessed 2026-03-18
 \endbibitem
 
 %%% 3
-\bibitem[\protect\citeauthoryear{Vahanian et~al.}{2022}]{vahanian2021_guidelines}
+\bibitem[\protect\citeauthoryear{Vahanian
+  et~al.}{2022}]{vahanian2021_guidelines}
 \begin{barticle}
 \bauthor{\bsnm{Vahanian}, \binits{A.}},
 \bauthor{\bsnm{Beyersdorf}, \binits{F.}},
@@ -106,7 +111,8 @@ Market report web page. Accessed 2026-03-18
 \bauthor{\bsnm{Tribouilloy}, \binits{C.}},
 \bauthor{\bsnm{Wojakowski}, \binits{W.}},
 \bauthor{\bsnm{{{ESC/EACTS Scientific Document Group}}}}:
-\batitle{2021 {ESC}/{EACTS} guidelines for the management of valvular heart disease}.
+\batitle{2021 {ESC}/{EACTS} guidelines for the management of valvular heart
+  disease}.
 \bjtitle{European Heart Journal}
 \bvolume{43}(\bissue{7}),
 \bfpage{561}--\blpage{632}
@@ -141,7 +147,8 @@ Market report web page. Accessed 2026-03-18
 \bauthor{\bsnm{Reardon}, \binits{M.J.}},
 \bauthor{\bsnm{Smith}, \binits{C.R.}},
 \bauthor{\bsnm{investigators}, \binits{f.t.P..}}:
-\batitle{Transcatheter aortic-valve replacement with a balloon-expandable valve in low-risk patients}.
+\batitle{Transcatheter aortic-valve replacement with a balloon-expandable valve
+  in low-risk patients}.
 \bjtitle{New England Journal of Medicine}
 \bvolume{380}(\bissue{18}),
 \bfpage{1695}--\blpage{1705}
@@ -188,7 +195,8 @@ Market report web page. Accessed 2026-03-18
 \bauthor{\bsnm{Smith}, \binits{C.R.}},
 \bauthor{\bsnm{Leon}, \binits{M.B.}},
 \bauthor{\bsnm{{{PARTNER 2 Investigators}}}}:
-\batitle{Five-year outcomes of transcatheter or surgical aortic-valve replacement}.
+\batitle{Five-year outcomes of transcatheter or surgical aortic-valve
+  replacement}.
 \bjtitle{New England Journal of Medicine}
 \bvolume{382}(\bissue{9}),
 \bfpage{799}--\blpage{809}
@@ -215,7 +223,8 @@ Market report web page. Accessed 2026-03-18
 \bauthor{\bsnm{Thourani}, \binits{V.H.}},
 \bauthor{\bsnm{Pibarot}, \binits{P.}},
 \bauthor{\bsnm{Leon}, \binits{M.B.}}:
-\batitle{Paravalvular regurgitation after transcatheter aortic valve replacement in intermediate-risk patients: A pooled {PARTNER} 2 study}.
+\batitle{Paravalvular regurgitation after transcatheter aortic valve
+  replacement in intermediate-risk patients: A pooled {PARTNER} 2 study}.
 \bjtitle{EuroIntervention}
 \bvolume{17}(\bissue{13}),
 \bfpage{1053}--\blpage{1060}
@@ -247,7 +256,8 @@ Market report web page. Accessed 2026-03-18
 \bauthor{\bsnm{Serra}, \binits{V.}},
 \bauthor{\bsnm{Serra}, \binits{A.}},
 \bauthor{\bsnm{Nombela-Franco}, \binits{L.}}, \betal:
-\batitle{Coronary obstruction after transcatheter aortic valve replacement: Insights from the spanish {TAVI} registry}.
+\batitle{Coronary obstruction after transcatheter aortic valve replacement:
+  Insights from the spanish {TAVI} registry}.
 \bjtitle{JACC: Cardiovascular Interventions}
 \bvolume{16}(\bissue{10}),
 \bfpage{1208}--\blpage{1217}
@@ -266,7 +276,8 @@ Market report web page. Accessed 2026-03-18
 \bauthor{\bsnm{Seeger}, \binits{J.}},
 \bauthor{\bsnm{Rasche}, \binits{V.}},
 \bauthor{\bsnm{W{\"o}hrle}, \binits{J.}}:
-\batitle{Image-guidance for transcatheter aortic valve implantation ({TAVI}) and cerebral embolic protection}.
+\batitle{Image-guidance for transcatheter aortic valve implantation ({TAVI})
+  and cerebral embolic protection}.
 \bjtitle{International Journal of Cardiology}
 \bvolume{249},
 \bfpage{90}--\blpage{95}
@@ -284,7 +295,9 @@ Market report web page. Accessed 2026-03-18
 \bauthor{\bsnm{Gonska}, \binits{B.}},
 \bauthor{\bsnm{Rasche}, \binits{V.}},
 \bauthor{\bsnm{W{\"o}hrle}, \binits{J.}}:
-\batitle{Patient-specific registration of 3d {CT} angiography ({CTA}) with x-ray fluoroscopy for image fusion during transcatheter aortic valve implantation ({TAVI}) increases performance of the procedure}.
+\batitle{Patient-specific registration of 3d {CT} angiography ({CTA}) with
+  x-ray fluoroscopy for image fusion during transcatheter aortic valve
+  implantation ({TAVI}) increases performance of the procedure}.
 \bjtitle{Clinical Research in Cardiology}
 \bvolume{107}(\bissue{6}),
 \bfpage{507}--\blpage{516}
@@ -306,7 +319,9 @@ Market report web page. Accessed 2026-03-18
 \bauthor{\bsnm{Yamada}, \binits{M.}},
 \bauthor{\bsnm{Horibata}, \binits{Y.}},
 \bauthor{\bsnm{Nakao}, \binits{K.}}:
-\batitle{Transfemoral transcatheter aortic valve implantation by three-dimensional computed tomography/fluoroscopy fusion imaging guidance in a patient with right-sided aortic arch and chronic aortic dissection}.
+\batitle{Transfemoral transcatheter aortic valve implantation by
+  three-dimensional computed tomography/fluoroscopy fusion imaging guidance in
+  a patient with right-sided aortic arch and chronic aortic dissection}.
 \bjtitle{Cardiovascular Revascularization Medicine}
 \bvolume{40S},
 \bfpage{179}--\blpage{181}
@@ -324,7 +339,8 @@ Market report web page. Accessed 2026-03-18
 \bauthor{\bsnm{Vasilchenko}, \binits{E.E.}},
 \bauthor{\bsnm{Chernyavskiy}, \binits{M.A.}},
 \bauthor{\bsnm{Danilov}, \binits{V.V.}}:
-\batitle{Optimized aortic root segmentation during transcatheter aortic valve implantation}.
+\batitle{Optimized aortic root segmentation during transcatheter aortic valve
+  implantation}.
 \bjtitle{Frontiers in Cardiovascular Medicine}
 \bvolume{12},
 \bfpage{1602780}
@@ -349,7 +365,9 @@ Market report web page. Accessed 2026-03-18
 \bauthor{\bsnm{Hansen}, \binits{J.}},
 \bauthor{\bsnm{Sejor}, \binits{E.}},
 \bauthor{\bsnm{Berthet-Rayne}, \binits{P.}}:
-\batitle{Towards autonomous robot-assisted transcatheter heart valve implantation: In vivo teleoperation and phantom validation of {AI}-guided positioning}.
+\batitle{Towards autonomous robot-assisted transcatheter heart valve
+  implantation: In vivo teleoperation and phantom validation of {AI}-guided
+  positioning}.
 \bjtitle{Frontiers in Robotics and AI}
 \bvolume{12},
 \bfpage{1650228}
@@ -373,8 +391,10 @@ Official product page. Accessed 2026-03-18
 \bibitem[\protect\citeauthoryear{{ClinicalTrials.gov}}{2025}]{clinicaltrials_nct07152574}
 \begin{botherref}
 \oauthor{\bsnm{{ClinicalTrials.gov}}}:
-{ROTAO} 1 - Feasibility and Safety of the {TAVIPILOT} Tele-operated Robot During Transcatheter Aortic Valve Replacement ({TAVR}/{TAVI}).
-Identifier NCT07152574. Sponsor: Caranx Medical. Last update posted 2025-09-03. Accessed 2026-03-18
+{ROTAO} 1 - Feasibility and Safety of the {TAVIPILOT} Tele-operated Robot
+  During Transcatheter Aortic Valve Replacement ({TAVR}/{TAVI}).
+Identifier NCT07152574. Sponsor: Caranx Medical. Last update posted 2025-09-03.
+  Accessed 2026-03-18
 (2025).
 \url{https://clinicaltrials.gov/study/NCT07152574}
 \end{botherref}
@@ -393,7 +413,8 @@ Identifier NCT07152574. Sponsor: Caranx Medical. Last update posted 2025-09-03. 
 \bauthor{\bsnm{Benini}, \binits{A.}},
 \bauthor{\bsnm{Scarsini}, \binits{R.}},
 \bauthor{\bsnm{Ribichini}, \binits{F.L.}}:
-\batitle{Contrast-induced acute kidney injury in patients undergoing {TAVI} compared with coronary interventions}.
+\batitle{Contrast-induced acute kidney injury in patients undergoing {TAVI}
+  compared with coronary interventions}.
 \bjtitle{Journal of the American Heart Association}
 \bvolume{9}(\bissue{16}),
 \bfpage{017194}
@@ -454,7 +475,8 @@ Identifier NCT07152574. Sponsor: Caranx Medical. Last update posted 2025-09-03. 
 \bauthor{\bsnm{Thourani}, \binits{V.H.}},
 \bauthor{\bsnm{Pibarot}, \binits{P.}},
 \bauthor{\bsnm{Leon}, \binits{M.B.}}:
-\batitle{Paravalvular regurgitation after transcatheter aortic valve replacement in intermediate-risk patients: A pooled {PARTNER} 2 study}.
+\batitle{Paravalvular regurgitation after transcatheter aortic valve
+  replacement in intermediate-risk patients: A pooled {PARTNER} 2 study}.
 \bjtitle{EuroIntervention}
 \bvolume{17}(\bissue{13}),
 \bfpage{1053}--\blpage{1060}
@@ -486,7 +508,8 @@ Identifier NCT07152574. Sponsor: Caranx Medical. Last update posted 2025-09-03. 
 \bauthor{\bsnm{Serra}, \binits{V.}},
 \bauthor{\bsnm{Serra}, \binits{A.}},
 \bauthor{\bsnm{Nombela-Franco}, \binits{L.}}, \betal:
-\batitle{Coronary obstruction after transcatheter aortic valve replacement: Insights from the spanish {TAVI} registry}.
+\batitle{Coronary obstruction after transcatheter aortic valve replacement:
+  Insights from the spanish {TAVI} registry}.
 \bjtitle{JACC: Cardiovascular Interventions}
 \bvolume{16}(\bissue{10}),
 \bfpage{1208}--\blpage{1217}

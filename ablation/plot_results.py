@@ -3,21 +3,50 @@ import matplotlib.pyplot as plt
 import os
 import glob
 import numpy as np
+import seaborn as sns
+from matplotlib.ticker import MultipleLocator
 
-# Настройки стиля
-plt.style.use('bmh')
-COLORS = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf']
+# Общий стиль графиков
+sns.set(style='whitegrid')
+plt.rcParams.update({
+    'axes.titlesize': 18,
+    'axes.titleweight': 'bold',
+    'axes.labelsize': 16,
+    'xtick.labelsize': 13,
+    'ytick.labelsize': 13,
+    'legend.fontsize': 11,
+})
+
+PALETTE = sns.color_palette('muted', n_colors=10)
+COLORS = list(PALETTE)
 
 METRICS_DIR = 'ablation/metrics'
 OUTPUT_DIR = 'publication/figures'
 os.makedirs(OUTPUT_DIR, exist_ok=True)
+
+
+def _save_current_figure(name: str):
+    plt.tight_layout()
+    plt.savefig(os.path.join(OUTPUT_DIR, f'{name}.pdf'), dpi=300, bbox_inches='tight')
+    plt.savefig(os.path.join(OUTPUT_DIR, f'{name}.png'), dpi=300, bbox_inches='tight')
+
+
+def _style_axis(ax, xlabel: str = '', ylabel: str = '', y_locator=None, x_locator=None):
+    ax.set_xlabel(xlabel, fontsize=16)
+    ax.set_ylabel(ylabel, fontsize=16)
+    ax.tick_params(axis='both', labelsize=13)
+    if y_locator is not None:
+        ax.yaxis.set_major_locator(MultipleLocator(y_locator))
+    if x_locator is not None:
+        ax.xaxis.set_major_locator(MultipleLocator(x_locator))
+    sns.despine(ax=ax)
 
 def plot_ablation_learning_curves():
     print("Plotting ablation learning curves...")
     # Находим все CSV файлы
     files = glob.glob(os.path.join(METRICS_DIR, "*.csv"))
     
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 6))
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 7))
     
     # Сортируем файлы для стабильности цветов
     sorted_files = sorted(files)
@@ -55,7 +84,7 @@ def plot_ablation_learning_curves():
             
             color = COLORS[i % len(COLORS)]
             # Выделяем полную модель жирной линией
-            linewidth = 2.5 if 'Full' in display_name else 1.2
+            linewidth = 3.0 if 'Full' in display_name else 2.0
             alpha = 1.0 if 'Full' in display_name else 0.7
             
             ax1.plot(epochs, dice_smooth, label=display_name, color=color, linewidth=linewidth, alpha=alpha)
@@ -63,21 +92,15 @@ def plot_ablation_learning_curves():
         except Exception as e:
             print(f"Error processing {file_path}: {e}")
 
-    ax1.set_title('Validation Dice Score progression', fontsize=14, fontweight='bold')
-    ax1.set_xlabel('Epoch', fontsize=12)
-    ax1.set_ylabel('Dice', fontsize=12)
-    ax1.legend(fontsize=8, loc='lower right', frameon=True, facecolor='white')
-    ax1.grid(True, linestyle='--', alpha=0.6)
+    ax1.set_title('Validation Dice Progression')
+    _style_axis(ax1, xlabel='Epoch', ylabel='Dice', y_locator=0.02)
+    ax1.legend(loc='lower right', frameon=False)
 
-    ax2.set_title('Validation Landmark Error progression', fontsize=14, fontweight='bold')
-    ax2.set_xlabel('Epoch', fontsize=12)
-    ax2.set_ylabel('Error (px)', fontsize=12)
-    ax2.legend(fontsize=8, loc='upper right', frameon=True, facecolor='white')
-    ax2.grid(True, linestyle='--', alpha=0.6)
+    ax2.set_title('Validation Landmark Error Progression')
+    _style_axis(ax2, xlabel='Epoch', ylabel='Error (px)', y_locator=1.0)
+    ax2.legend(loc='upper right', frameon=False)
 
-    plt.tight_layout()
-    plt.savefig(os.path.join(OUTPUT_DIR, 'ablation_curves.pdf'), dpi=300)
-    plt.savefig(os.path.join(OUTPUT_DIR, 'ablation_curves.png'), dpi=300)
+    _save_current_figure('ablation_curves')
     print(f"Saved to {OUTPUT_DIR}/ablation_curves.pdf")
 
 def plot_comparison_bar_charts():
@@ -93,34 +116,32 @@ def plot_comparison_bar_charts():
     pt_errors = [5.32, 4.00, 5.94, 9.51, 3.69, 3.16]
 
     # 1. Segmentation Comparison
-    fig, ax = plt.subplots(figsize=(10, 6))
+    fig, ax = plt.subplots(figsize=(12, 8))
     x = np.arange(len(models_seg))
     width = 0.35
     
-    ax.bar(x - width/2, dice_scores, width, label='Dice Score', color='#1f77b4', alpha=0.9, edgecolor='black', linewidth=0.5)
-    ax.bar(x + width/2, iou_scores, width, label='IoU Score', color='#63b5f7', alpha=0.9, edgecolor='black', linewidth=0.5)
+    ax.bar(x - width/2, dice_scores, width, label='Dice Score', color=COLORS[0], alpha=0.9, edgecolor='black', linewidth=1.0)
+    ax.bar(x + width/2, iou_scores, width, label='IoU Score', color=COLORS[1], alpha=0.9, edgecolor='black', linewidth=1.0)
     
-    ax.set_ylabel('Metric Value', fontsize=12)
-    ax.set_title('Segmentation Performance Comparison', fontsize=14, fontweight='bold')
+    ax.set_title('Segmentation Performance Comparison')
     ax.set_xticks(x)
-    ax.set_xticklabels(models_seg)
-    ax.legend(loc='lower right')
+    ax.set_xticklabels(models_seg, rotation=20, ha='right')
+    ax.legend(loc='lower right', frameon=False)
     ax.set_ylim(0.65, 0.95)
-    ax.grid(axis='y', linestyle='--', alpha=0.6)
+    _style_axis(ax, ylabel='Metric Value', y_locator=0.05)
     
-    plt.tight_layout()
-    plt.savefig(os.path.join(OUTPUT_DIR, 'comparison_segmentation.pdf'), dpi=300)
-    plt.savefig(os.path.join(OUTPUT_DIR, 'comparison_segmentation.png'), dpi=300)
+    _save_current_figure('comparison_segmentation')
 
     # 2. Landmark Comparison
-    fig, ax = plt.subplots(figsize=(10, 6))
-    colors_pts = ['#95a5a6'] * (len(models_pts)-1) + ['#e74c3c'] # Highlight BAMNet
-    
-    bars = ax.bar(models_pts, pt_errors, color=colors_pts, alpha=0.9, edgecolor='black', linewidth=0.5)
-    ax.set_ylabel('Mean Euclidean Error (mm)', fontsize=12)
-    ax.set_title('Landmark Localization Accuracy (Lower is Better)', fontsize=14, fontweight='bold')
-    ax.set_xticklabels(models_pts, rotation=15)
-    ax.grid(axis='y', linestyle='--', alpha=0.6)
+    fig, ax = plt.subplots(figsize=(12, 8))
+    colors_pts = [COLORS[7]] * (len(models_pts)-1) + [COLORS[2]]
+    x_pts = np.arange(len(models_pts))
+
+    bars = ax.bar(x_pts, pt_errors, color=colors_pts, alpha=0.9, edgecolor='black', linewidth=1.0)
+    ax.set_title('Landmark Localization Accuracy (Lower is Better)')
+    ax.set_xticks(x_pts)
+    ax.set_xticklabels(models_pts, rotation=20, ha='right')
+    _style_axis(ax, ylabel='Mean Euclidean Error (mm)', y_locator=1.0)
     
     for bar in bars:
         height = bar.get_height()
@@ -128,11 +149,9 @@ def plot_comparison_bar_charts():
                     xy=(bar.get_x() + bar.get_width() / 2, height),
                     xytext=(0, 3), 
                     textcoords="offset points",
-                    ha='center', va='bottom', fontweight='bold')
+                    ha='center', va='bottom', fontsize=11, fontweight='bold')
 
-    plt.tight_layout()
-    plt.savefig(os.path.join(OUTPUT_DIR, 'comparison_landmarks.pdf'), dpi=300)
-    plt.savefig(os.path.join(OUTPUT_DIR, 'comparison_landmarks.png'), dpi=300)
+    _save_current_figure('comparison_landmarks')
 
 def plot_ablation_summary():
     print("Plotting ablation summary metrics...")
@@ -141,7 +160,7 @@ def plot_ablation_summary():
     
     for file_path in sorted(files):
         fname = os.path.basename(file_path)
-        name = fname.replace('ablation_', '').replace('_metrics.csv', '')
+        name = fname.replace('ablation_', '').replace('_metrics.csv', '').replace('.csv', '')
         if 'attentionmetrics' in name:
             name = name.replace('attentionmetrics', 'attention')
             
@@ -169,29 +188,34 @@ def plot_ablation_summary():
     
     res_df = pd.DataFrame(results).sort_values(by='Dice', ascending=True) # Снизу вверх для красоты
     
-    fig, ax1 = plt.subplots(figsize=(10, 8))
+    fig, ax1 = plt.subplots(figsize=(12, 9))
     
     y_pos = np.arange(len(res_df))
+    colors_summary = [COLORS[7]] * len(res_df)
+    bamnet_rows = res_df.index[res_df['Model'] == 'Full (BAMNet)'].tolist()
+    for idx in bamnet_rows:
+        colors_summary[list(res_df.index).index(idx)] = COLORS[2]
     
     # Горизонтальный график для Dice
-    ax1.barh(y_pos, res_df['Dice'], height=0.6, color='#3498db', alpha=0.8, label='Dice')
+    ax1.barh(y_pos, res_df['Dice'], height=0.65, color=colors_summary, alpha=0.9, edgecolor='black', linewidth=1.0, label='Dice')
     ax1.set_yticks(y_pos)
     ax1.set_yticklabels(res_df['Model'], fontweight='bold')
-    ax1.set_xlabel('Dice Score', fontsize=12, color='#3498db')
     ax1.set_xlim(0.8, 0.9)
-    ax1.set_title('Ablation Study: Summary Metrics', fontsize=15, fontweight='bold')
+    ax1.set_title('Ablation Study: Summary Metrics')
     
     # Добавляем точку для ошибки на ту же ось (scale другое)
     ax2 = ax1.twiny()
-    ax2.plot(res_df['Error'], y_pos, color='#e74c3c', marker='D', linestyle='', label='Error (px)')
-    ax2.set_xlabel('Mean Landmark Error (px)', fontsize=12, color='#e74c3c')
+    ax2.plot(res_df['Error'], y_pos, color=COLORS[3], marker='D', linestyle='', markersize=9, label='Error (px)')
     ax2.set_xlim(10, 22)
     
-    ax1.grid(axis='x', linestyle='--', alpha=0.4)
+    _style_axis(ax1, xlabel='Dice Score')
+    ax1.xaxis.set_major_locator(MultipleLocator(0.02))
+    ax2.set_xlabel('Mean Landmark Error (px)', fontsize=16, color='black')
+    ax2.tick_params(axis='x', labelsize=13, colors='black')
+    ax2.xaxis.set_major_locator(MultipleLocator(2))
+    sns.despine(ax=ax2, left=True, bottom=True)
     
-    plt.tight_layout()
-    plt.savefig(os.path.join(OUTPUT_DIR, 'ablation_summary.pdf'), dpi=300)
-    plt.savefig(os.path.join(OUTPUT_DIR, 'ablation_summary.png'), dpi=300)
+    _save_current_figure('ablation_summary')
 
 if __name__ == "__main__":
     plot_ablation_learning_curves()
