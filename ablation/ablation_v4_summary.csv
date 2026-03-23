@@ -1,0 +1,2 @@
+variant,status,config_path,run_dir,metrics_csv,metrics_snapshot,best_metric_key,best_metric_value,best_epoch,mean_dice,global_iou,surface_dice_4px,mean_err_px,median_err_px,pck_10,pck_5,pck_2,fps,latency_ms,gpu_mem_mb,params_m,val_dice,val_pt_err_px,val_balance_score,val_score,val_iter_fps,val_iter_time_s,val_gpu_peak_alloc_mb,val_gpu_peak_reserved_mb,train_iter_fps
+full_model,metrics_not_found,/mnt/ssd4tb/project/BAMNet/ablation/configs/ablation_v4/full_model.yaml,,,,,,,,,,,,,,,,,,,,,,,,,,,

@@ -1,0 +1,10 @@
+[
+  {
+    "variant": "full_model",
+    "status": "metrics_not_found",
+    "config_path": "/mnt/ssd4tb/project/BAMNet/ablation/configs/ablation_v4/full_model.yaml",
+    "run_dir": "",
+    "metrics_csv": "",
+    "metrics_snapshot": ""
+  }
+]

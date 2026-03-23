@@ -341,57 +341,6 @@ class ModifiedMAnetDecoder(nn.Module):
             print("NaN detected in seg_logits!")
         return logits, feats, intermediate
 
-# V7: Seg-Point Cross-Attention
-class SegPointCrossAttention(nn.Module):
-    """Cross-attention: point features attend to seg features.
-    Query = point_feat, Key/Value = seg_feat.
-    Помогает точкам «видеть» контур сегментации."""
-    def __init__(self, channels=256, num_heads=4, max_tokens=4096):
-        super().__init__()
-        self.max_tokens = max_tokens
-        self.norm_q = nn.LayerNorm(channels)
-        self.norm_kv = nn.LayerNorm(channels)
-        self.attn = nn.MultiheadAttention(channels, num_heads, batch_first=True)
-        self.ffn = nn.Sequential(
-            nn.Linear(channels, channels * 2),
-            nn.GELU(),
-            nn.Linear(channels * 2, channels),
-        )
-        self.gamma = nn.Parameter(torch.zeros(1))  # начинаем с нулевого вклада
-
-    def forward(self, point_feat, seg_feat):
-        B, C, H, W = point_feat.shape
-        hw = H * W
-        
-        # Приводим seg_feat к тому же пространственному размеру
-        if seg_feat.shape[-2:] != (H, W):
-            seg_feat = F.interpolate(seg_feat, size=(H, W), mode='bilinear', align_corners=False)
-        
-        # Если слишком много токенов — даунсемплируем
-        if hw > self.max_tokens:
-            scale = int(math.ceil(math.sqrt(hw / float(self.max_tokens))))
-            pf = F.avg_pool2d(point_feat, kernel_size=scale, stride=scale, ceil_mode=True)
-            sf = F.avg_pool2d(seg_feat, kernel_size=scale, stride=scale, ceil_mode=True)
-            out = self._attend(pf, sf)
-            out = F.interpolate(out, size=(H, W), mode='bilinear', align_corners=False)
-        else:
-            out = self._attend(point_feat, seg_feat)
-        
-        return point_feat + self.gamma * out  # residual с learnable gate
-    
-    def _attend(self, point_feat, seg_feat):
-        B, C, H, W = point_feat.shape
-        q = point_feat.flatten(2).transpose(1, 2)   # (B, HW, C)
-        kv = seg_feat.flatten(2).transpose(1, 2)    # (B, HW, C)
-        
-        q = self.norm_q(q)
-        kv = self.norm_kv(kv)
-        
-        out, _ = self.attn(q, kv, kv)
-        out = out + q  # внутренний residual
-        out = self.ffn(out) + out
-        
-        return out.transpose(1, 2).view(B, C, H, W)
 
 
 class DoublePointDetectionHead(nn.Module):
@@ -401,12 +350,11 @@ class DoublePointDetectionHead(nn.Module):
         num_points=4,
         use_coordinate_attention: bool = True,
         guidance_enabled: bool = False,
-        offsets_enabled: bool = True,
+        **kwargs,
     ):
         super().__init__()
         self.num_points = num_points
         self.guidance_enabled = guidance_enabled
-        self.offsets_enabled = offsets_enabled
         self.point_conv = nn.Sequential(
             nn.LazyConv2d(hidden_channels, 3, padding=1),
             nn.BatchNorm2d(hidden_channels),
@@ -415,49 +363,26 @@ class DoublePointDetectionHead(nn.Module):
             nn.BatchNorm2d(hidden_channels),
             nn.ReLU(inplace=True)
         )
-        # v2: двойной Coordinate Attention каскадом
-        self.ca = nn.Sequential(
-            CoordinateAttention(hidden_channels),
-            nn.Conv2d(hidden_channels, hidden_channels, 1, bias=False),
-            nn.BatchNorm2d(hidden_channels),
-            nn.ReLU(inplace=True),
-            CoordinateAttention(hidden_channels),
-        ) if use_coordinate_attention else nn.Identity()
+        # v4: Одинарный Coordinate Attention
+        self.ca = CoordinateAttention(hidden_channels) if use_coordinate_attention else nn.Identity()
         
-        # V7: Seg-Point Cross-Attention (point features attend to seg features)
-        self.seg_cross_attn = SegPointCrossAttention(hidden_channels, num_heads=4)
-        # V7: Projection для seg_feat (может иметь другое число каналов)
-        self.seg_proj = nn.LazyConv2d(hidden_channels, 1)
+        if self.guidance_enabled:
+            self.bnd_proj = nn.LazyConv2d(hidden_channels, 1)
         
         self.heatmap_conv = nn.Conv2d(hidden_channels, num_points, 1)
-        # v2: улучшенный Offset Head
-        self.offset_conv = nn.Sequential(
-            nn.Conv2d(hidden_channels, hidden_channels // 2, 3, padding=1),
-            nn.BatchNorm2d(hidden_channels // 2),
-            nn.ReLU(inplace=True),
-            nn.Conv2d(hidden_channels // 2, num_points * 2, 1),
-        ) if offsets_enabled else None
 
     def forward(self, x, seg_feat=None, guidance_weight: float = 0.0):
         f = self.point_conv(x)
         f = self.ca(f)
         
-        # V7: Cross-Attention с сегментационными фичами
-        if seg_feat is not None:
-            seg_proj = self.seg_proj(seg_feat)
-            f = self.seg_cross_attn(f, seg_proj)
+        # v4: Настоящее использование Guidance
+        if self.guidance_enabled and seg_feat is not None and guidance_weight > 0.0:
+            bnd_proj = self.bnd_proj(seg_feat)
+            f = f + guidance_weight * bnd_proj
 
         heat = self.heatmap_conv(f)
-        if self.offsets_enabled and self.offset_conv is not None:
-            offsets = torch.sigmoid(self.offset_conv(f))
-        else:
-            offsets = torch.full(
-                (f.shape[0], self.num_points * 2, f.shape[2], f.shape[3]),
-                0.5,
-                device=f.device,
-                dtype=f.dtype,
-            )
-        return heat, None, offsets
+        return heat, None, None
+
 
 class BoundaryAwareMAnet(nn.Module):
     def __init__(
@@ -504,12 +429,7 @@ class BoundaryAwareMAnet(nn.Module):
             nn.Conv2d(16, 1, 1),
         )
 
-        # V7: Multi-Scale Heatmap heads
-        # decoder_channels=[256, 128, 64, 32], берём последние 2 (64, 32)
-        self.ms_heatmap_heads = nn.ModuleList([
-            nn.Conv2d(64, num_points, 1),    # scale 1 (из decoder block 2, 64ch)
-            nn.Conv2d(32, num_points, 1),    # scale 2 (из decoder block 3, 32ch)
-        ])
+        # В V4 убрали Multi-Scale Heatmaps
 
     def forward(self, x, guidance_weight: float = 0.0):
         # --- Encoder ---
@@ -538,24 +458,14 @@ class BoundaryAwareMAnet(nn.Module):
         heatmaps, _, offsets = self.point_head(fused, seg_feat=seg_feats, guidance_weight=guidance_weight)
         boundary = self.bnd_head(seg_feats)
 
-        # V7: Multi-Scale Heatmaps из промежуточных фичей декодера
-        # dec_intermediates: [256ch, 128ch, 64ch, 32ch]
-        # Берём последние 2: 64ch (idx=2) и 32ch (idx=3)
-        ms_heatmaps = []
-        for i, head in enumerate(self.ms_heatmap_heads):
-            feat_idx = i + 2  # индексы 2 и 3 в dec_intermediates
-            if feat_idx < len(dec_intermediates):
-                ms_hm = head(dec_intermediates[feat_idx])
-                ms_heatmaps.append(ms_hm)
-
         return {
             "segmentation": seg_logits,
             "point_heatmaps": heatmaps,
             "boundary_weights": boundary,
-            "point_offsets": offsets,
+            "point_offsets": None,
             "fused_features": fused,
             "stride": x.shape[-1] // seg_logits.shape[-1],
-            "ms_heatmaps": ms_heatmaps,   # V7: multi-scale heatmaps
+            "ms_heatmaps": [],
         }   
 
 # -------------------------
@@ -729,15 +639,13 @@ class LitBoundaryAwareSystem(pl.LightningModule):
         self.use_improved_points = use_improved_points
         self.improved_point_loss = ImprovedPointLoss(alpha=ip_alpha, beta=ip_beta, gamma=ip_gamma)
 
-        # v3 Proposal B: Learnable Loss Weights (Uncertainty Weighting)
-        self.log_var_seg = nn.Parameter(torch.zeros(1))
-        self.log_var_pts = nn.Parameter(torch.zeros(1))
-        self.log_var_bnd = nn.Parameter(torch.zeros(1))
+        # v3 Proposal B: Learnable Loss Weights (Uncertainty Weighting) - REMOVED (caused instability)
+        # self.log_var_seg = nn.Parameter(torch.zeros(1))
+        # self.log_var_pts = nn.Parameter(torch.zeros(1))
+        # self.log_var_bnd = nn.Parameter(torch.zeros(1))
 
-        # v3 Proposal C: Learnable sigma per point
-        # Initial sigma from point_sigma param
-        init_sigma = float(point_sigma)
-        self.log_sigma = nn.Parameter(torch.full((num_points,), math.log(1.5)))
+        # v3 Proposal C: Learnable sigma per point - REMOVED (caused collapse)
+        # self.log_sigma = nn.Parameter(torch.full((num_points,), math.log(1.5)))
 
         self.max_val_saves = 5
         
@@ -757,13 +665,7 @@ class LitBoundaryAwareSystem(pl.LightningModule):
         return beta_start + (beta_end - beta_start) * progress
 
     def configure_optimizers(self):
-        sigma_params = [self.log_sigma]
-        other_params = [p for n, p in self.named_parameters() if 'log_sigma' not in n]
-        
-        optimizer = torch.optim.AdamW([
-            {'params': other_params, 'lr': self.hparams.lr},
-            {'params': sigma_params, 'lr': self.hparams.lr * 3},  # 3x LR (V5) вместо 10x
-        ], weight_decay=3e-4)
+        optimizer = torch.optim.AdamW(self.parameters(), lr=self.hparams.lr, weight_decay=3e-4)
         # V6: Адаптивный LR (ReduceLROnPlateau)
         # Уменьшаем LR в 2 раза, если val_balance_score не растет 5 эпох
         scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
@@ -794,9 +696,9 @@ class LitBoundaryAwareSystem(pl.LightningModule):
         epoch = int(self.current_epoch)
         beta = self._current_softargmax_beta(epoch)
         
-        # v3 Proposal C: Learnable Sigma
-        # v5: ужесточаем clamp до 2.5 (было 5.0)
-        sigma = torch.exp(self.log_sigma).clamp(0.5, 2.5)
+        # v3 Proposal C: Learnable Sigma - REVERTED to deterministic schedule
+        base_sigma = float(self.hparams.point_sigma)
+        sigma = max(1.5, base_sigma - (epoch / 20.0))
         
         # v3 Proposal B: Uncertainty Weights
         w_seg_bce = float(self.hparams.weight_seg_bce)
@@ -809,7 +711,7 @@ class LitBoundaryAwareSystem(pl.LightningModule):
         guidance_enabled = bool(getattr(self.hparams, "boundary_guidance_enabled", True))
         offsets_enabled = bool(getattr(self.hparams, "offsets_enabled", True))
 
-        guidance_weight = 0.0
+        guidance_weight = max(0.0, min(1.0, (epoch - 12.0) / 10.0)) if guidance_enabled else 0.0
         offset_gain = max(0.5, min(1.0, (epoch - 12.0) / 10.0)) if offsets_enabled else 0.0
 
         # ----- forward -----
@@ -838,35 +740,8 @@ class LitBoundaryAwareSystem(pl.LightningModule):
 
         # ----- координаты точек -----
         px_hm, py_hm = improved_softargmax2d(heat_pred, beta=beta, stable=True)
-        
         B, P, H, W = heat_pred.shape
-        
-        grid_x = (px_hm / max(1.0, float(W - 1))) * 2.0 - 1.0
-        grid_y = (py_hm / max(1.0, float(H - 1))) * 2.0 - 1.0
-        grid = torch.stack([grid_x, grid_y], dim=-1).unsqueeze(2).clamp(-1.0, 1.0) 
-        
-        offset_x_map = offsets_pred[:, 0::2, :, :] # (B, P, H, W)
-        offset_y_map = offsets_pred[:, 1::2, :, :] # (B, P, H, W)
-        
-        # grid_sample выдаст (B, Channels, Points, 1). После squeeze(-1) -> (B, P, P)
-        sample_x_all = F.grid_sample(offset_x_map, grid, mode='bilinear', align_corners=True).squeeze(-1)
-        sample_y_all = F.grid_sample(offset_y_map, grid, mode='bilinear', align_corners=True).squeeze(-1)
-        
-        # Нам нужно значение для i-й точки ИЗ i-го канала (берем диагональ по размерностям 1 и 2)
-        # Получаем итоговый размер (B, P)
-        sample_offset_x = torch.diagonal(sample_x_all, dim1=1, dim2=2)
-        sample_offset_y = torch.diagonal(sample_y_all, dim1=1, dim2=2)
-        
-        # Финальные координаты = Heatmap Coords + Offset Correction
-        # Поскольку в голове была sigmoid, значения лежат в [0, 1].
-        # Приводим их к диапазону [-1.0, 1.0] пикселя, чтобы модель могла двигать точку в любую сторону!
-        sample_offset_x = (sample_offset_x - 0.5) * 2.0 * offset_gain
-        sample_offset_y = (sample_offset_y - 0.5) * 2.0 * offset_gain
-        
-        final_px = px_hm + sample_offset_x
-        final_py = py_hm + sample_offset_y
-        
-        coords_pred = torch.stack([final_px, final_py], dim=-1)
+        coords_pred = torch.stack([px_hm, py_hm], dim=-1)
 
         B, P, W0, H0 = points.shape[0], self.hparams.num_points, w - 1, h - 1
         coords_tgt = torch.zeros((B, P, 2), device=heat_pred.device, dtype=heat_pred.dtype)
@@ -886,18 +761,7 @@ class LitBoundaryAwareSystem(pl.LightningModule):
             loss_pts_coord = torch.zeros(1, device=x.device, dtype=heat_pred.dtype)
             loss_pts_total = loss_pts_hm
 
-        # V7: Multi-Scale Heatmap Loss
-        ms_heatmaps = out.get("ms_heatmaps", [])
-        loss_ms_hm = torch.zeros((), device=x.device, dtype=heat_pred.dtype)
-        if ms_heatmaps:
-            for ms_hm in ms_heatmaps:
-                # Апсемплим таргет до размера промежуточной heatmap
-                ms_h, ms_w = ms_hm.shape[-2:]
-                ms_tgt = F.interpolate(heat_tgt, size=(ms_h, ms_w), mode='bilinear', align_corners=False)
-                loss_ms_hm += F.binary_cross_entropy_with_logits(ms_hm, ms_tgt)
-            
-            # Добавляем MS лосс к общему лоссу точек с небольшим весом
-            loss_pts_total = loss_pts_total + 0.5 * loss_ms_hm
+        # Убрано Multi-Scale Heatmap Loss в V4
 
         # ----- boundary-loss: v3 — СНОВА ВКЛЮЧЁН (через отдельную голову) -----
         if boundary_loss_enabled:
@@ -906,31 +770,17 @@ class LitBoundaryAwareSystem(pl.LightningModule):
         else:
             loss_bnd = torch.zeros((), device=x.device, dtype=heat_pred.dtype)
 
-        # ----- v3: Uncertainty Weighting (Proposal B) -----
-        # Считаем взвешенные лоссы с ограничением (clamp) для стабильности
-        lv_seg = self.log_var_seg.clamp(-2.0, 2.0)
-        lv_pts = self.log_var_pts.clamp(-2.0, 2.0)
-        lv_bnd = self.log_var_bnd.clamp(-2.0, 2.0)
-
-        precision_seg = torch.exp(-lv_seg)
-        precision_pts = torch.exp(-lv_pts)
-        precision_bnd = torch.exp(-lv_bnd)
-
-        loss_seg_combined = w_seg_bce * loss_seg_main + w_seg_dice * loss_dice
+        # ----- v3: Uncertainty Weighting (Proposal B) - REVERTED to manual weighting -----
+        w_pts = w_pts_init
+        if epoch > 20:
+            w_pts *= (1.0 - 0.5 * min(1.0, (epoch - 20) / 15.0))
         
-        # Основной лосс по Kendall et al.
-        # v5: используем exp(lv) вместо lv, чтобы лосс был всегда положительным
-        loss_main = (precision_seg * loss_seg_combined + torch.exp(lv_seg)) + \
-                    (precision_pts * (w_pts_init * loss_pts_total) + torch.exp(lv_pts)) + \
-                    (precision_bnd * (w_bnd_init * loss_bnd) + torch.exp(lv_bnd))
-        
-        # V4: L2-регуляризация на log_var для предотвращения дрейфа весов
-        loss_reg = 0.01 * (self.log_var_seg**2 + self.log_var_pts**2 + self.log_var_bnd**2)
-        
-        # V5: Штраф за слишком большую sigma (подталкиваем к 1.5)
-        loss_sigma_penalty = 0.1 * (sigma - 1.5).clamp(min=0).mean()
-        
-        loss = loss_main + loss_reg + loss_sigma_penalty
+        loss = (
+            w_seg_bce * loss_seg_main +
+            w_seg_dice * loss_dice +
+            w_pts * loss_pts_total +
+            w_bnd_init * loss_bnd
+        )
 
         d = dice_coef(seg_logits, mask_down)
 
@@ -939,12 +789,11 @@ class LitBoundaryAwareSystem(pl.LightningModule):
             "loss_seg": loss_seg_main, "loss_dice": loss_dice,
             "loss_pts": loss_pts_total, "loss_pts_hm": loss_pts_hm, "loss_pts_coord": loss_pts_coord,
             "loss_bnd": loss_bnd,
-            "w_pts_eff": precision_pts.detach(),
-            "w_bnd_eff": precision_bnd.detach(),
-            "w_seg_eff": precision_seg.detach(),
-            "sigma_min": sigma.min().detach(),
-            "sigma_max": sigma.max().detach(),
-            "offset_gain_eff": torch.tensor(offset_gain, device=self.device, dtype=torch.float32),
+            "w_pts_eff": torch.tensor(w_pts, device=self.device, dtype=torch.float32),
+            "w_bnd_eff": torch.tensor(w_bnd_init, device=self.device, dtype=torch.float32),
+            "w_seg_eff": torch.tensor(w_seg_bce, device=self.device, dtype=torch.float32),
+            "sigma_min": torch.tensor(sigma, device=self.device, dtype=torch.float32),
+            "sigma_max": torch.tensor(sigma, device=self.device, dtype=torch.float32),
         }
 
         if stage == "val":
@@ -957,39 +806,11 @@ class LitBoundaryAwareSystem(pl.LightningModule):
                     heat_pred, beta=beta, stable=True
                 )  # (B, P)
 
-                # 2) Уточнение координат через offsets_pred
-                grid_x = (px_hm / max(1.0, float(whm - 1))) * 2.0 - 1.0
-                grid_y = (py_hm / max(1.0, float(hhm - 1))) * 2.0 - 1.0
-                grid = torch.stack([grid_x, grid_y], dim=-1).unsqueeze(2).clamp(-1.0, 1.0)  # (B, P, 1, 2)
-
-                offset_x_map = offsets_pred[:, 0::2, :, :]  # (B, P, H, W)
-                offset_y_map = offsets_pred[:, 1::2, :, :]  # (B, P, H, W)
-
-                sample_x_all = F.grid_sample(
-                    offset_x_map, grid, mode='bilinear', align_corners=True
-                ).squeeze(-1)  # (B, P, P)
-
-                sample_y_all = F.grid_sample(
-                    offset_y_map, grid, mode='bilinear', align_corners=True
-                ).squeeze(-1)  # (B, P, P)
-
-                # Берём диагональ: i-я точка из i-го канала
-                sample_offset_x = torch.diagonal(sample_x_all, dim1=1, dim2=2)  # (B, P)
-                sample_offset_y = torch.diagonal(sample_y_all, dim1=1, dim2=2)  # (B, P)
-
-                # sigmoid -> [0,1], переводим в [-1,1] пикселя
-                sample_offset_x = (sample_offset_x - 0.5) * 2.0
-                sample_offset_y = (sample_offset_y - 0.5) * 2.0
-
-                # Финальные координаты в пространстве heatmap
-                final_px = px_hm + sample_offset_x
-                final_py = py_hm + sample_offset_y
-
                 # 3) Переводим финальные координаты в размер исходной маски
                 scale_x = (W0f - 1) / max(1.0, float(whm - 1))
                 scale_y = (H0f - 1) / max(1.0, float(hhm - 1))
-                pred_x = final_px * scale_x
-                pred_y = final_py * scale_y
+                pred_x = px_hm * scale_x
+                pred_y = py_hm * scale_y
 
                 # 4) GT-координаты
                 gt_x = torch.zeros_like(pred_x)
