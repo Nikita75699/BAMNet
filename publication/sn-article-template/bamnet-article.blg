@@ -1,69 +1,51 @@
 This is BibTeX, Version 0.99d (TeX Live 2025/dev/Debian)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: bamnet-article.aux
-The style file: sn-mathphys-num.bst
-Reallocated glb_str_ptr (elt_size=4) to 20 items from 10.
-Reallocated global_strs (elt_size=200001) to 20 items from 10.
-Reallocated glb_str_end (elt_size=4) to 20 items from 10.
-Reallocated singl_function (elt_size=4) to 100 items from 50.
-Reallocated singl_function (elt_size=4) to 100 items from 50.
-Reallocated singl_function (elt_size=4) to 100 items from 50.
-Reallocated singl_function (elt_size=4) to 100 items from 50.
-Reallocated singl_function (elt_size=4) to 100 items from 50.
-Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
-Reallocated singl_function (elt_size=4) to 100 items from 50.
-Reallocated singl_function (elt_size=4) to 100 items from 50.
-Reallocated singl_function (elt_size=4) to 100 items from 50.
-Reallocated singl_function (elt_size=4) to 100 items from 50.
-Reallocated singl_function (elt_size=4) to 100 items from 50.
-Reallocated singl_function (elt_size=4) to 100 items from 50.
-Reallocated singl_function (elt_size=4) to 100 items from 50.
-Reallocated singl_function (elt_size=4) to 100 items from 50.
-Database file #1: bamnet.bib
-sn-mathphys-num.bst [2024/07/19 v1.1  bibliography style]
-Reallocated wiz_functions (elt_size=4) to 9000 items from 6000.
-Reallocated singl_function (elt_size=4) to 100 items from 50.
-Reallocated singl_function (elt_size=4) to 100 items from 50.
-Reallocated singl_function (elt_size=4) to 100 items from 50.
-Reallocated singl_function (elt_size=4) to 100 items from 50.
-You've used 18 entries,
-            7485 wiz_defined-function locations,
-            1297 strings with 17375 characters,
-and the built_in function-call counts, 175267 in all, are:
-= -- 19737
-> -- 1415
-< -- 334
-+ -- 1877
-- -- 536
-* -- 15582
-:= -- 35104
-add.period$ -- 21
-call.type$ -- 18
-change.case$ -- 87
-chr.to.int$ -- 957
-cite$ -- 18
-duplicate$ -- 1653
-empty$ -- 13803
-format.name$ -- 1536
-if$ -- 37300
-int.to.chr$ -- 1
-int.to.str$ -- 19
+I couldn't open style file sn-mathphys-num.bst
+---line 2 of file bamnet-article.aux
+ : \bibstyle{sn-mathphys-num
+ :                          }
+I'm skipping whatever remains of this command
+I found no style file---while reading file bamnet-article.aux
+You've used 13 entries,
+            0 wiz_defined-function locations,
+            98 strings with 802 characters,
+and the built_in function-call counts, 0 in all, are:
+= -- 0
+> -- 0
+< -- 0
++ -- 0
+- -- 0
+* -- 0
+:= -- 0
+add.period$ -- 0
+call.type$ -- 0
+change.case$ -- 0
+chr.to.int$ -- 0
+cite$ -- 0
+duplicate$ -- 0
+empty$ -- 0
+format.name$ -- 0
+if$ -- 0
+int.to.chr$ -- 0
+int.to.str$ -- 0
 missing$ -- 0
-newline$ -- 498
-num.names$ -- 90
-pop$ -- 1071
-preamble$ -- 1
-purify$ -- 72
+newline$ -- 0
+num.names$ -- 0
+pop$ -- 0
+preamble$ -- 0
+purify$ -- 0
 quote$ -- 0
-skip$ -- 8214
+skip$ -- 0
 stack$ -- 0
-substring$ -- 31763
-swap$ -- 910
-text.length$ -- 201
+substring$ -- 0
+swap$ -- 0
+text.length$ -- 0
 text.prefix$ -- 0
-top$ -- 1
-type$ -- 759
+top$ -- 0
+type$ -- 0
 warning$ -- 0
-while$ -- 1083
+while$ -- 0
 width$ -- 0
-write$ -- 606
+write$ -- 0
+(There were 2 error messages)

@@ -4,6 +4,8 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -36,7 +38,7 @@ NAME_MAP = {
     "beta_schedule_4_8": "Soft-argmax: schedule 4->8",
 }
 SUMMARY_NAME_MAP = {
-    "full_model": "Full (v4)",
+    "full_model": "Full model",
     "no_position_attention": "No Pos Attn",
     "no_coordinate_attention": "No Coord Attn",
     "no_fusion": "No Fusion",
@@ -156,6 +158,26 @@ def _collect_metric_frames(metrics_dir: Path, exp_prefix: str) -> list[dict[str,
     return ordered_frames
 
 
+def _balance_score_from_series(df: pd.DataFrame) -> pd.Series:
+    pt_score = 1.0 / (1.0 + (df["val_pt_err_px"] / 10.0))
+    return 0.6 * df["val/dice"] + 0.4 * pt_score
+
+
+def _select_best_summary_row(df: pd.DataFrame) -> pd.Series:
+    required_cols = ["val/dice", "val_pt_err_px"]
+    valid_df = df.dropna(subset=required_cols).copy()
+    if valid_df.empty:
+        raise ValueError("No rows with both val/dice and val_pt_err_px available.")
+
+    if "val_balance_score" in valid_df.columns:
+        balance_score = valid_df["val_balance_score"].fillna(_balance_score_from_series(valid_df))
+    else:
+        balance_score = _balance_score_from_series(valid_df)
+
+    best_idx = balance_score.idxmax()
+    return valid_df.loc[best_idx]
+
+
 def plot_ablation_learning_curves(metrics_dir: Path, output_dir: Path, exp_prefix: str) -> None:
     print("Plotting ablation learning curves...")
     frames = _collect_metric_frames(metrics_dir, exp_prefix)
@@ -256,12 +278,13 @@ def plot_ablation_summary(metrics_dir: Path, output_dir: Path, exp_prefix: str) 
     results = []
     for frame in frames:
         df = frame["df"]
+        best_row = _select_best_summary_row(df)
         results.append(
             {
                 "Model": frame["summary_name"],
                 "Variant": frame["variant"],
-                "Dice": df["val/dice"].tail(5).mean(),
-                "Error": df["val_pt_err_px"].tail(5).mean(),
+                "Dice": float(best_row["val/dice"]),
+                "Error": float(best_row["val_pt_err_px"]),
             }
         )
 
@@ -289,14 +312,16 @@ def plot_ablation_summary(metrics_dir: Path, output_dir: Path, exp_prefix: str) 
     ax1.set_yticklabels(res_df["Model"], fontweight="bold")
     ax1.set_title("Ablation Study: Summary Metrics")
 
-    dice_min = max(0.0, float(res_df["Dice"].min()) - 0.03)
-    dice_max = min(1.0, float(res_df["Dice"].max()) + 0.02)
+    # Use fixed limits for better visual comparison and less exaggeration
+    dice_min = 0.88
+    dice_max = 0.91
     ax1.set_xlim(dice_min, dice_max)
 
     ax2 = ax1.twiny()
     ax2.plot(res_df["Error"], y_pos, color=COLORS[3], marker="D", linestyle="", markersize=9, label="Error (px)")
-    err_min = max(0.0, float(res_df["Error"].min()) - 1.0)
-    err_max = float(res_df["Error"].max()) + 1.0
+    # Use fixed limits for error
+    err_min = 10.0
+    err_max = 12.0
     ax2.set_xlim(err_min, err_max)
 
     _style_axis(ax1, xlabel="Dice Score")

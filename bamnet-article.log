@@ -1,12 +1,12 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) (preloaded format=pdflatex 2026.3.17)  24 MAR 2026 15:22
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) (preloaded format=pdflatex 2026.3.17)  24 MAR 2026 15:11
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**bamnet-article.tex
-(./bamnet-article.tex
+**publication/sn-article-template/bamnet-article.tex
+(./publication/sn-article-template/bamnet-article.tex
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
-(./sn-jnl.cls
+(publication/sn-article-template/sn-jnl.cls
 Document Class: sn-jnl 2019/11/18 v0.1: An authoring template for Springer Jour
 nal articles
 (/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
@@ -605,7 +605,8 @@ Package color Info: Driver file: pdftex.def on input line 149.
 (/usr/share/texlive/texmf-dist/tex/latex/graphics/mathcolor.ltx))
 Package hyperref Info: Link coloring ON on input line 30.
 
-(./bamnet-article.out) (./bamnet-article.out)
+(publication/sn-article-template/bamnet-article.out)
+(publication/sn-article-template/bamnet-article.out)
 \@outlinefile=\write3
 \openout3 = `bamnet-article.out'.
 
@@ -631,6 +632,19 @@ LaTeX Font Info:    Calculating math sizes for size <9.03374> on input line 57.
 LaTeX Font Info:    Calculating math sizes for size <10.03749> on input line 57
 .
 
+
+Package natbib Warning: Citation `otto2020_guideline' on page 1 undefined on in
+put line 60.
+
+
+Package natbib Warning: Citation `vahanian2021_guidelines' on page 1 undefined 
+on input line 60.
+
+
+Package natbib Warning: Citation `leon2019_partner3' on page 1 undefined on inp
+ut line 60.
+
+
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
@@ -641,6 +655,39 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
  [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+
+Package natbib Warning: Citation `pibarot2021_pvl' on page 2 undefined on input
+ line 62.
+
+
+Package natbib Warning: Citation `jilaihawi2022_coronary' on page 2 undefined o
+n input line 62.
+
+
+Package natbib Warning: Citation `kammler2016_implantdepth' on page 2 undefined
+ on input line 62.
+
+
+Package natbib Warning: Citation `vernikouskaya2017_imageguidance' on page 2 un
+defined on input line 64.
+
+
+Package natbib Warning: Citation `vernikouskaya2018_registration' on page 2 und
+efined on input line 64.
+
+
+Package natbib Warning: Citation `laptev2025_aorticroot' on page 2 undefined on
+ input line 66.
+
+
+Package natbib Warning: Citation `smits2025_autonomous' on page 2 undefined on 
+input line 68.
+
+
+Package natbib Warning: Citation `clinicaltrials_nct07152574' on page 2 undefin
+ed on input line 68.
+
+
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
@@ -649,264 +696,31 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [2]
-<../fgure_article/orig_15_0025_004_029.png, id=140, 1027.84pt x 1027.84pt>
-File: ../fgure_article/orig_15_0025_004_029.png Graphic file (type png)
-<use ../fgure_article/orig_15_0025_004_029.png>
-Package pdftex.def Info: ../fgure_article/orig_15_0025_004_029.png  used on inp
-ut line 84.
-(pdftex.def)             Requested size: 179.15517pt x 179.15324pt.
-<../fgure_article/sample_15_0025_004_029.jpeg, id=141, 246.6816pt x 246.6816pt>
 
-File: ../fgure_article/sample_15_0025_004_029.jpeg Graphic file (type jpg)
-<use ../fgure_article/sample_15_0025_004_029.jpeg>
-Package pdftex.def Info: ../fgure_article/sample_15_0025_004_029.jpeg  used on 
-input line 91.
-(pdftex.def)             Requested size: 179.15517pt x 179.16139pt.
-<../fgure_article/orig_19_0019_008_031.png, id=142, 513.92pt x 513.92pt>
-File: ../fgure_article/orig_19_0019_008_031.png Graphic file (type png)
-<use ../fgure_article/orig_19_0019_008_031.png>
-Package pdftex.def Info: ../fgure_article/orig_19_0019_008_031.png  used on inp
-ut line 98.
-(pdftex.def)             Requested size: 179.15517pt x 179.15324pt.
-<../fgure_article/sample_19_0019_008_031.jpeg, id=143, 123.3408pt x 123.3408pt>
+LaTeX Warning: Reference `fig:annotation_examples' on page 3 undefined on input
+ line 78.
 
-File: ../fgure_article/sample_19_0019_008_031.jpeg Graphic file (type jpg)
-<use ../fgure_article/sample_19_0019_008_031.jpeg>
-Package pdftex.def Info: ../fgure_article/sample_19_0019_008_031.jpeg  used on 
-input line 105.
-(pdftex.def)             Requested size: 179.15517pt x 179.17267pt.
 
+LaTeX Warning: File `../fgure_article/orig_15_0025_004_029.png' not found on in
+put line 84.
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+! Package pdftex.def Error: File `../fgure_article/orig_15_0025_004_029.png' no
+t found: using draft setting.
 
- [3]
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [4 <../fgure_article/orig_15_0025_004_029.png (PNG copy)> <../fgure_article/sa
-mple_15_0025_004_029.jpeg> <../fgure_article/orig_19_0019_008_031.png (PNG copy
-)> <../fgure_article/sample_19_0019_008_031.jpeg>]
-<../fgure_article/figeure_orginal/BAMNet.jpg, id=158, 4248.87375pt x 1936.23375
-pt>
-File: ../fgure_article/figeure_orginal/BAMNet.jpg Graphic file (type jpg)
-<use ../fgure_article/figeure_orginal/BAMNet.jpg>
-Package pdftex.def Info: ../fgure_article/figeure_orginal/BAMNet.jpg  used on i
-nput line 145.
-(pdftex.def)             Requested size: 373.24326pt x 170.08774pt.
-
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [5]
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [6 <../fgure_article/figeure_orginal/BAMNet.jpg>]
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [7]
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [8]
-<../figures/60687da9-a664-480a-8eaf-943dd3861d14.jpeg, id=197, 1027.84pt x 1027
-.84pt>
-File: ../figures/60687da9-a664-480a-8eaf-943dd3861d14.jpeg Graphic file (type j
-pg)
-<use ../figures/60687da9-a664-480a-8eaf-943dd3861d14.jpeg>
-Package pdftex.def Info: ../figures/60687da9-a664-480a-8eaf-943dd3861d14.jpeg  
-used on input line 280.
-(pdftex.def)             Requested size: 179.15517pt x 179.15324pt.
-<../figures/fc2fbaf7-c486-4596-b86e-64f8a1a10a86.jpeg, id=198, 1027.84pt x 1027
-.84pt>
-File: ../figures/fc2fbaf7-c486-4596-b86e-64f8a1a10a86.jpeg Graphic file (type j
-pg)
-<use ../figures/fc2fbaf7-c486-4596-b86e-64f8a1a10a86.jpeg>
-Package pdftex.def Info: ../figures/fc2fbaf7-c486-4596-b86e-64f8a1a10a86.jpeg  
-used on input line 286.
-(pdftex.def)             Requested size: 179.15517pt x 179.15324pt.
-
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [9]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [10 <../figures/60687da9-a664-480a-8eaf-943dd3861d14.jpeg> <../figures/fc2fbaf
-7-c486-4596-b86e-64f8a1a10a86.jpeg>]
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [11]
-<../figures/ablation_summary.png, id=217, 856.3995pt x 640.3122pt>
-File: ../figures/ablation_summary.png Graphic file (type png)
-<use ../figures/ablation_summary.png>
-Package pdftex.def Info: ../figures/ablation_summary.png  used on input line 37
-2.
-(pdftex.def)             Requested size: 373.24326pt x 279.07092pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [12 <../figures/ablation_summary.png>]
-Underfull \hbox (badness 3758) in paragraph at lines 403--404
-[]\OT1/cmr/m/n/10 A sec-ond impor-tant aspect is valve posi-tion-ing accu-racy.
- Even mod-est
- []
-
-
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [13]
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [14]
-
-Package hyperref Warning: Difference (4) between bookmark levels is greater 
-(hyperref)                than one, level fixed on input line 435.
-
-
-Underfull \hbox (badness 2229) in paragraph at lines 435--436
- []\OT1/cmr/bx/n/10.03749 Supplementary infor-ma-tion.[][] \OT1/cmr/m/n/10 No s
-up-ple-men-tary files are included in this
- []
-
-
-Underfull \hbox (badness 2073) in paragraph at lines 444--445
-\OT1/cmr/m/n/10 This study was sup-ported by the Rus-sian Sci-ence Foun-da-tion
- under Grant
- []
-
-
-Underfull \hbox (badness 1152) in paragraph at lines 444--445
-\OT1/cmr/m/n/10 No. 24-19-00084, titled \OT1/cmr/m/it/10.03749 ``Robotic Sys-te
-m for Med-i-cal Instru-ment Deliv-ery with
- []
-
-
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [15{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc}] (./bamnet-art
-icle.bbl)
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [16]
-(./bamnet-article.aux)
- ***********
-LaTeX2e <2024-11-01> patch level 2
-L3 programming layer <2025-01-18>
- ***********
-
-
-Package rerunfilecheck Warning: File `bamnet-article.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `bamnet-article.out':
-(rerunfilecheck)             Before: 70EFF6826569C6BC790D94B53C90444F;4228
-(rerunfilecheck)             After:  D7E3A8586C1C80E38FDE3B7AF96EB4D4;4092.
- ) 
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.84 ...../fgure_article/orig_15_0025_004_029.png}
+                                                   
 Here is how much of TeX's memory you used:
- 13477 strings out of 473197
- 214770 string characters out of 5718605
- 623321 words of memory out of 5000000
- 36451 multiletter control sequences out of 15000+600000
- 581212 words of font info for 120 fonts, out of 8000000 for 9000
+ 13306 strings out of 473197
+ 211392 string characters out of 5718605
+ 612524 words of memory out of 5000000
+ 36335 multiletter control sequences out of 15000+600000
+ 580232 words of font info for 117 fonts, out of 8000000 for 9000
  1151 hyphenation exceptions out of 8191
- 90i,11n,93p,1275b,540s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 90i,7n,93p,1307b,442s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-pdfTeX warning (dest): name{cite.yamamoto2021_tavi} has been referenced but doe
-s not exist, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{cite.dangas2020_tavi} has been referenced but does 
-not exist, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{cite.clinicaltrials_nct07152574} has been reference
-d but does not exist, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{cite.smits2025_autonomous} has been referenced but 
-does not exist, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{cite.laptev2025_aorticroot} has been referenced but
- does not exist, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{cite.vernikouskaya2018_registration} has been refer
-enced but does not exist, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{cite.vernikouskaya2017_imageguidance} has been refe
-renced but does not exist, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{cite.kammler2016_implantdepth} has been referenced 
-but does not exist, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{cite.pibarot2021_pvl} has been referenced but does 
-not exist, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{cite.leon2019_partner3} has been referenced but doe
-s not exist, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{cite.otto2020_guideline} has been referenced but do
-es not exist, replaced by a fixed one
-
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy10.pfb></usr
-/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share
-/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texli
-ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/share/texlive/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texlive/texmf-dist/
-fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmmib10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfo
-nts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.p
-fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr
-/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/t
-exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-d
-ist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fon
-ts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/typ
-e1/public/amsfonts/symbols/msbm10.pfb></usr/share/texmf/fonts/type1/public/cm-s
-uper/sfrm1000.pfb>
-Output written on bamnet-article.pdf (16 pages, 2448145 bytes).
-PDF statistics:
- 366 PDF objects out of 1000 (max. 8388607)
- 296 compressed objects within 3 object streams
- 77 named destinations out of 1000 (max. 500000)
- 233 words of extra memory for PDF output out of 10000 (max. 10000000)
-
+!  ==> Fatal error occurred, no output PDF file produced!
