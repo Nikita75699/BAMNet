@@ -1,6 +1,6 @@
-# BoundaryAwareMAnet (BAMNet)
+# BoundaryAwareMAnet: Multi-Task FluoroscopicSegmentation of the Aortic Root and LandmarkLocalization for TAVI Guidance
 
-`BoundaryAwareMAnet (BAMNet)` is a multitask deep learning project for fluoroscopic guidance during transcatheter aortic valve implantation (TAVI). The model predicts the aortic root mask and four anatomical landmarks in one forward pass:
+This repository accompanies the manuscript `BoundaryAwareMAnet: Multi-Task FluoroscopicSegmentation of the Aortic Root and LandmarkLocalization for TAVI Guidance`. `BoundaryAwareMAnet (BAMNet)` is a multitask deep learning project for fluoroscopic guidance during transcatheter aortic valve implantation (TAVI). The model predicts the aortic root mask and four anatomical landmarks in one forward pass:
 
 - `AA1`
 - `AA2`
@@ -10,7 +10,7 @@
 BAMNet is designed for low-contrast intraoperative fluoroscopy, where the anatomy is partially occluded by catheters, guidewires, and valve delivery systems.
 
 <p align="center">
-  <img src="publication/fgure_article/figeure_orginal/BAMNet.jpg" width="960" alt="BAMNet architecture">
+  <img src="publication/figures/BAMNet.jpg" width="960" alt="BoundaryAwareMAnet architecture">
 </p>
 
 ## Highlights
@@ -30,7 +30,7 @@ BAMNet is designed for low-contrast intraoperative fluoroscopy, where the anatom
 
 ## Qualitative Examples
 
-Representative BoundaryAwareMAnet (BAMNet) outputs on intraoperative fluoroscopic frames:
+Representative predictions from `BoundaryAwareMAnet: Multi-Task FluoroscopicSegmentation of the Aortic Root and LandmarkLocalization for TAVI Guidance` on intraoperative fluoroscopic frames:
 
 <table>
   <tr>
@@ -38,12 +38,12 @@ Representative BoundaryAwareMAnet (BAMNet) outputs on intraoperative fluoroscopi
     <th>BAMNet prediction</th>
   </tr>
   <tr>
-    <td><img src="publication/fgure_article/orig_19_0019_008_031.png" width="340" alt="Input fluoroscopy example 1"></td>
-    <td><img src="publication/fgure_article/sample_19_0019_008_031.jpeg" width="340" alt="BAMNet overlay example 1"></td>
+    <td><img src="publication/figures/orig_0019_008_030.png" width="340" alt="Input fluoroscopy example 1"></td>
+    <td><img src="publication/figures/orig_0019_008_030_implant_zone.png" width="340" alt="BoundaryAwareMAnet prediction example 1"></td>
   </tr>
   <tr>
-    <td><img src="publication/fgure_article/orig_15_0025_004_029.png" width="340" alt="Input fluoroscopy example 2"></td>
-    <td><img src="publication/fgure_article/sample_15_0025_004_029.jpeg" width="340" alt="BAMNet overlay example 2"></td>
+    <td><img src="publication/figures/orig_0019_013_027.png" width="340" alt="Input fluoroscopy example 2"></td>
+    <td><img src="publication/figures/orig_0019_013_027_implant_zone.png" width="340" alt="BoundaryAwareMAnet prediction example 2"></td>
   </tr>
 </table>
 
@@ -51,7 +51,7 @@ The green overlay shows the predicted aortic root mask, and the labeled points c
 
 ## Results from the Publication
 
-The current manuscript and summary tables are stored under [publication/](./publication/). The core BoundaryAwareMAnet (BAMNet) results reported in the paper are:
+The current manuscript for `BoundaryAwareMAnet: Multi-Task FluoroscopicSegmentation of the Aortic Root and LandmarkLocalization for TAVI Guidance` and its summary tables are stored under [publication/](./publication/). The core `BoundaryAwareMAnet (BAMNet)` results reported in the paper are:
 
 | Protocol                |                 Dice |                  IoU |    Surface Dice@4 mm |         Median err. |            Mean err. |
 | ----------------------- | -------------------: | -------------------: | -------------------: | ------------------: | -------------------: |

@@ -33,7 +33,7 @@
 
 \author*[1]{\fnm{Nikita V.} \sur{Laptev}}\email{nikitalaptev77@gmail.com}
 
-\author[2]{\fnm{Olga M.} \sur{Gerget}}
+\author*[2]{\fnm{Olga M.} \sur{Gerget}}\email{gergetolgagerget@mail.ru}
 
 \author[3]{\fnm{Julia K.} \sur{Panteleeva}}
 
@@ -49,7 +49,13 @@
 
 \affil[4]{\orgname{Pompeu Fabra University}, \orgaddress{\city{Barcelona}, \country{Spain}}}
 
-\abstract{Accurate intraoperative visualization of the aortic root during transcatheter aortic valve implantation (TAVI) is essential for safe valve positioning, yet fluoroscopy remains challenging because of low soft-tissue contrast, motion artifacts, and occlusion by endovascular devices. Repeated contrast injections further increase the risk of renal complications, particularly in patients with pre-existing chronic kidney disease. We present BoundaryAwareMAnet (BAMNet), a multitask neural network for simultaneous aortic root segmentation and localization of four key anatomical landmarks on fluoroscopic images. The model combines an EfficientNet-V2 encoder, a modified MA-Net decoder with global spatial attention, a dedicated landmark head with coordinate-aware feature modulation and heatmap prediction, and an auxiliary boundary pathway used for boundary-guided supervision. In patient-level 5-fold cross-validation, the model achieved a Dice score of $0.92 \pm 0.01$ and a mean localization error of $10.02 \pm 0.17$~px. These findings indicate that joint segmentation and landmark localization on fluoroscopy is feasible and may provide a practical foundation for contrast-sparing visual guidance and future robot-assisted TAVI systems.}
+\abstract{\textbf{Purpose} Accurate intraoperative delineation of the aortic root and localization of key anatomical landmarks during transcatheter aortic valve implantation (TAVI) remain difficult because fluoroscopy provides low soft-tissue contrast and is frequently degraded by motion and overlap from catheters and delivery systems. This study developed and validated a multitask deep learning model for simultaneous aortic root segmentation and landmark localization on fluoroscopic images to support image-guided TAVI.
+
+\textbf{Methods} A retrospective dataset of 2,925 fully anonymized fluoroscopic frames from 83 patients who underwent TAVI between 2018 and 2024 was used. Expert annotations included binary masks of the contrast-enhanced aortic root and four anatomical landmarks: AA1, AA2, STJ1, and STJ2. We developed BoundaryAwareMAnet (BAMNet), a multitask architecture combining an EfficientNet-V2 encoder, a MA-Net-inspired decoder, a coordinate-aware landmark head, and an auxiliary boundary-guidance pathway. Model performance was evaluated using patient-level five-fold cross-validation. Segmentation quality was assessed with Dice, intersection-over-union (IoU), and Surface Dice at 4 mm, while landmark localization was evaluated using median and mean point localization error.
+
+\textbf{Results} Across five folds, BAMNet achieved a Dice score of $0.92 \pm 0.01$, an IoU of $0.85 \pm 0.02$, and a Surface Dice@4 mm of $0.84 \pm 0.03$. Landmark localization performance reached a median error of $7.64 \pm 0.33$~px and a mean error of $10.02 \pm 0.17$~px. The model produced both segmentation masks and landmark coordinates in a single forward pass and maintained real-time inference performance of 62.5 FPS.
+
+\textbf{Conclusion} Joint segmentation of the aortic root and localization of anatomical landmarks on intraoperative fluoroscopy is feasible. BAMNet provides a practical foundation for anatomical overlay during TAVI and may support future contrast-sparing, image-guided, and robot-assisted valve implantation workflows.}
 
 \keywords{TAVI, aortic root segmentation, landmark localization, multitask learning, fluoroscopy}
 
@@ -106,7 +112,7 @@ The primary annotation task was binary segmentation of the aortic root. The expe
         \caption{}
         \label{fig:annot2}
     \end{subfigure}
-    \caption{Representative fluoroscopic images (a, c) and corresponding expert annotations (b, d) illustrating the aortic root mask and four anatomical landmarks (AA1, AA2, STJ1, STJ2).}
+    \caption{Representative fluoroscopic images (a, c) and corresponding expert annotations (b, d) illustrating the aortic root mask and four anatomical landmarks (AA1, AA2, STJ1, STJ2)}
     \label{fig:annotation_examples}
 \end{figure}
 
@@ -143,7 +149,7 @@ This design allows the model to exploit both global root morphology and local co
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{../figures/BAMNet.jpg}
-\caption{Overview of the proposed BoundaryAwareMAnet (BAMNet) architecture for joint aortic root segmentation and anatomical landmark localization on fluoroscopic images. The network combines an EfficientNet-V2 encoder, a segmentation-oriented decoder, a dedicated landmark branch with Coordinate Attention, and an auxiliary boundary pathway used for boundary-guided supervision.}
+\caption{Overview of the proposed BoundaryAwareMAnet (BAMNet) architecture for joint aortic root segmentation and anatomical landmark localization on fluoroscopic images. The network combines an EfficientNet-V2 encoder, a segmentation-oriented decoder, a dedicated landmark branch with Coordinate Attention, and an auxiliary boundary pathway used for boundary-guided supervision}
 \label{fig:bamnet_architecture}
 \end{figure}
 
@@ -231,7 +237,7 @@ BAMNet delivered the most balanced performance among the evaluated methods by co
 Table~\ref{tab:seg_baselines} summarizes the comparison with segmentation-oriented baselines. In terms of absolute segmentation metrics, the strongest result in this table was achieved by Swin-Unet, with Dice 0.91 and IoU 0.83. However, its inference speed was only about 2~FPS, which substantially limits practical deployment in real-time intraoperative navigation. BAMNet remained slightly below the best single-task segmentation baseline in these metrics, but preserved competitive segmentation quality while simultaneously solving landmark localization and providing substantially higher throughput (63~FPS). Compared with the MA-Net variant shown in the table, BAMNet demonstrated slightly higher Dice, IoU, and Surface Dice@4~mm together with better boundary agreement in terms of HD95 and ASSD. Relative to YOLO-seg-26m, BAMNet showed similar Dice and IoU, but stronger Surface Dice@4~mm and noticeably better boundary-sensitive metrics. Our previous publication \cite{laptev2025_aorticroot} provides additional context for interpreting these results, as it includes a broader comparison of convolutional aortic-root segmentation architectures on intraoperative TAVI frames.
 
 \begin{table*}[htbp]
-\caption{Comparison of BAMNet with segmentation baselines. Evaluated on fold-1 fixed hold-out test set.}\label{tab:seg_baselines}
+\caption{Comparison of BAMNet with segmentation baselines. Evaluated on fold-1 fixed hold-out test set}\label{tab:seg_baselines}
 \centering
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{lcccccc}
@@ -250,7 +256,7 @@ MA-Net & 0.90 & 0.82 & 0.81 & 10.27 & 2.63 & \textbf{101} \\
 Table~\ref{tab:landmark_baselines} compares BAMNet with detection-only and keypoint-only approaches. Among single-task keypoint models, the strongest result was achieved by YOLO-keypoints-26m, with a mean localization error of 3.48~mm and a median error of 2.66~mm. BAMNet provided a lower mean localization error (3.22~mm) and a comparable median error (2.57~mm) while simultaneously producing a full segmentation mask. The best median error in the table was obtained by RT-DETR (2.47~mm), whereas BAMNet achieved the lowest angle error, the lowest length error, and the highest inference speed among all evaluated methods. Taken together, these results indicate that BAMNet offers the most balanced combination of localization accuracy, geometric consistency, and computational efficiency for intraoperative use.
 
 \begin{table*}[htbp]
-\caption{Comparison of BAMNet with landmark localization baselines. Evaluated on fold-1 fixed hold-out test set.}\label{tab:landmark_baselines}
+\caption{Comparison of BAMNet with landmark localization baselines. Evaluated on fold-1 fixed hold-out test set}\label{tab:landmark_baselines}
 \centering
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{lcccccc}
@@ -286,7 +292,7 @@ These examples highlight an important practical feature of the proposed multitas
         \includegraphics[width=\textwidth]{../figures/orig_0019_013_027_implant_zone.png}
         \caption{}
     \end{subfigure}
-    \caption{Representative BAMNet predictions on intraoperative fluoroscopic frames. The yellow contour and semi-transparent green region denote the predicted aortic root mask. Yellow points correspond to the four predicted landmarks (AA1, AA2, STJ1, STJ2). The blue arrow indicates the estimated aortic axis, and the central geometric overlay illustrates the predicted implantation zone derived from the landmark configuration.}
+    \caption{Representative BAMNet predictions on intraoperative fluoroscopic frames. The yellow contour and semi-transparent green region denote the predicted aortic root mask. Yellow points correspond to the four predicted landmarks (AA1, AA2, STJ1, STJ2). The blue arrow indicates the estimated aortic axis, and the central geometric overlay illustrates the predicted implantation zone derived from the landmark configuration}
     \label{fig:bamnet_qualitative}
 \end{figure}
 
@@ -297,7 +303,7 @@ To assess robustness, strict patient-level 5-fold cross-validation was performed
 The best segmentation quality was observed on fold~4, where Dice reached 0.93 and IoU 0.88. The smallest median localization error was obtained on fold~5 (7.32~px), whereas the smallest mean localization error was observed on fold~3 (9.91~px). Even the least favorable fold remained comparable to the others, supporting good inter-patient generalization.
 
 \begin{table*}[htbp]
-\caption{Patient-level 5-fold cross-validation results for BAMNet.}\label{tab:crossval}
+\caption{Patient-level 5-fold cross-validation results for BAMNet}\label{tab:crossval}
 \centering
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{lcccccc}
@@ -319,7 +325,7 @@ Mean $\pm$ SD & 247.2 & $0.92 \pm 0.01$ & $0.85 \pm 0.02$ & $0.84 \pm 0.03$ & $7
 Landmark-specific analysis showed that AA1 was localized most accurately, with a mean error of $7.96 \pm 0.73$~px and a median error of $5.92 \pm 0.40$~px across folds. The most difficult point was AA2, for which the mean error reached $11.89 \pm 0.62$~px and the median error $9.95 \pm 1.37$~px. STJ1 and STJ2 showed intermediate performance, with STJ2 exhibiting greater inter-fold variability in mean error. Overall, all four landmarks were localized with clinically relevant precision, but the results suggest greater difficulty for landmarks affected by projection variability, incomplete contrast filling, and partial device overlap.
 
 \begin{table*}[htbp]
-\caption{Landmark-wise localization accuracy aggregated over five folds.}\label{tab:landmark_summary}
+\caption{Landmark-wise localization accuracy aggregated over five folds}\label{tab:landmark_summary}
 \centering
 \resizebox{0.9\textwidth}{!}{%
 \begin{tabular}{lccc}
@@ -337,7 +343,7 @@ STJ2 & $10.02 \pm 1.46$ & $7.73 \pm 0.93$ & $8.28 \pm 2.01$ \\
 The per-fold breakdown in Table~\ref{tab:landmark_folds} confirms this pattern. AA2 remained the most difficult landmark in terms of absolute error, whereas STJ2 showed the greatest between-fold variability in mean error. AA1 remained the most stable in median accuracy.
 
 \begin{table*}[htbp]
-\caption{Per-fold landmark localization errors for BAMNet.}\label{tab:landmark_folds}
+\caption{Per-fold landmark localization errors for BAMNet}\label{tab:landmark_folds}
 \centering
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{lcccc}
@@ -370,14 +376,14 @@ The ablation study therefore focused on PositionAttention in the decoder, Coordi
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{../figures/ablation_summary.png}
-\caption{Summary of the BAMNet ablation study across the main architectural variants. The figure highlights how global spatial attention, coordinate-aware modulation, feature fusion, boundary-related supervision, and the soft-argmax configuration affect the balance between segmentation quality and landmark localization accuracy.}
+\caption{Summary of the BAMNet ablation study across the main architectural variants. The figure highlights how global spatial attention, coordinate-aware modulation, feature fusion, boundary-related supervision, and the soft-argmax configuration affect the balance between segmentation quality and landmark localization accuracy}
 \label{fig:ablation_summary}
 \end{figure}
 
 Numerical ablation results are summarized in Table~\ref{tab:ablation_results}. The variant with a fixed soft-argmax temperature of 8 achieved the highest Dice, IoU, and Surface Dice@4~mm, indicating particularly strong segmentation performance. However, the full BAMNet v4 configuration yielded the lowest mean and median landmark localization errors together with the best PCK@10, and therefore provided the most balanced combination of segmentation quality and landmark localization accuracy.
 
 \begin{table*}[htbp]
-\caption{Numerical results of the BAMNet ablation study across the main architectural variants. Evaluated on fold-1 fixed hold-out test set.}\label{tab:ablation_results}
+\caption{Numerical results of the BAMNet ablation study across the main architectural variants. Evaluated on fold-1 fixed hold-out test set}\label{tab:ablation_results}
 \centering
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{lccccccc}
@@ -455,13 +461,15 @@ All essential components of the study, including curated source code, data, and 
 
 Authors declare that the research was conducted in the absence of any commercial or financial relationships that could be construed as a potential conflict of interest.
 
-\noindent\textbf{Ethics approval and consent to participate} TODO.
+\noindent\textbf{Ethics approval} Formal ethics committee approval was not required for this retrospective study because it used fully anonymized archival fluoroscopic images and did not involve access to directly identifiable patient information, in accordance with institutional policy and applicable local regulations.
 
-\noindent\textbf{Consent for publication} TODO.
+\noindent\textbf{Consent to participate} Informed consent to participate was waived because this study used fully anonymized retrospective archival imaging data and no patient-identifiable information was accessed.
+
+\noindent\textbf{Consent for publication} The manuscript contains only fully anonymized fluoroscopic images and does not include any information that could identify individual participants. Consent for publication was therefore not required.
 
 \noindent\textbf{Data availability} See the Data Availability Statement above.
 
-\noindent\textbf{Materials availability} TODO.
+\noindent\textbf{Materials availability} All materials required to reproduce the study are publicly available through the dataset, model, and source code links provided in the Data Availability Statement.
 
 \noindent\textbf{Code availability} See the Data Availability Statement above.
 

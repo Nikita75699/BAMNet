@@ -101,6 +101,13 @@ def parse_args() -> argparse.Namespace:
         default=None,
         help="Inference resize; defaults to config img_size or original image size.",
     )
+    parser.add_argument(
+        "--export-size",
+        type=int,
+        default=None,
+        help="Target size of the longer output side for publication rendering. "
+             "If omitted, preserves the source image size.",
+    )
     return parser.parse_args()
 
 
@@ -307,7 +314,11 @@ def as_int_points(points: np.ndarray) -> np.ndarray:
     return np.round(points).astype(np.int32).reshape((-1, 1, 2))
 
 
-def draw_zone_geometry(canvas: np.ndarray, points_xy: np.ndarray) -> np.ndarray:
+def scaled_thickness(base: int, render_scale: float) -> int:
+    return max(1, int(round(base * render_scale)))
+
+
+def draw_zone_geometry(canvas: np.ndarray, points_xy: np.ndarray, render_scale: float = 1.0) -> np.ndarray:
     aa1, aa2, stj1, stj2 = [points_xy[idx].astype(np.float32) for idx in range(4)]
     annulus_mid = (aa1 + aa2) * 0.5
     stj_mid = (stj1 + stj2) * 0.5
@@ -362,7 +373,13 @@ def draw_zone_geometry(canvas: np.ndarray, points_xy: np.ndarray) -> np.ndarray:
     mask_layer = canvas.copy()
     cv2.fillPoly(mask_layer, [as_int_points(root_polygon)], color=(170, 220, 40))
     canvas = cv2.addWeighted(mask_layer, 0.22, canvas, 0.78, 0.0)
-    cv2.polylines(canvas, [as_int_points(root_polygon)], isClosed=True, color=(170, 220, 40), thickness=2)
+    cv2.polylines(
+        canvas,
+        [as_int_points(root_polygon)],
+        isClosed=True,
+        color=(170, 220, 40),
+        thickness=scaled_thickness(2, render_scale),
+    )
 
     zone_layer = canvas.copy()
     cv2.fillPoly(zone_layer, [as_int_points(zone_polygon)], color=(80, 235, 50))
@@ -372,45 +389,56 @@ def draw_zone_geometry(canvas: np.ndarray, points_xy: np.ndarray) -> np.ndarray:
 
     axis_start = annulus_mid - root_axis_direction * axis_before_ring_px
     axis_end = stj_mid + root_axis_direction * axis_beyond_stj_px
-    cv2.line(canvas, tuple(np.round(aa1).astype(int)), tuple(np.round(aa2).astype(int)), (220, 0, 255), 3)
+    cv2.line(
+        canvas,
+        tuple(np.round(aa1).astype(int)),
+        tuple(np.round(aa2).astype(int)),
+        (220, 0, 255),
+        scaled_thickness(3, render_scale),
+    )
     cv2.line(
         canvas,
         tuple(np.round(zone_lower_seg[0]).astype(int)),
         tuple(np.round(zone_lower_seg[1]).astype(int)),
         (70, 70, 255),
-        2,
+        scaled_thickness(2, render_scale),
     )
     cv2.line(
         canvas,
         tuple(np.round(zone_upper_seg[0]).astype(int)),
         tuple(np.round(zone_upper_seg[1]).astype(int)),
         (70, 70, 255),
-        2,
+        scaled_thickness(2, render_scale),
     )
     cv2.arrowedLine(
         canvas,
         tuple(np.round(axis_start).astype(int)),
         tuple(np.round(axis_end).astype(int)),
         (255, 120, 40),
-        3,
+        scaled_thickness(3, render_scale),
         tipLength=0.08,
     )
     return canvas
 
 
-def draw_points(canvas: np.ndarray, points_xy: np.ndarray) -> np.ndarray:
+def draw_points(canvas: np.ndarray, points_xy: np.ndarray, render_scale: float = 1.0) -> np.ndarray:
+    radius = scaled_thickness(6, render_scale)
+    outline = scaled_thickness(2, render_scale)
+    offset = scaled_thickness(8, render_scale)
+    font_scale = 0.52 * render_scale
+    text_thickness = scaled_thickness(1, render_scale)
     for idx, name in enumerate(POINT_NAMES):
         x, y = np.round(points_xy[idx]).astype(int)
-        cv2.circle(canvas, (x, y), 6, (30, 230, 255), thickness=-1, lineType=cv2.LINE_AA)
-        cv2.circle(canvas, (x, y), 6, (20, 20, 20), thickness=2, lineType=cv2.LINE_AA)
+        cv2.circle(canvas, (x, y), radius, (30, 230, 255), thickness=-1, lineType=cv2.LINE_AA)
+        cv2.circle(canvas, (x, y), radius, (20, 20, 20), thickness=outline, lineType=cv2.LINE_AA)
         cv2.putText(
             canvas,
             name,
-            (x + 8, y - 8),
+            (x + offset, y - offset),
             cv2.FONT_HERSHEY_SIMPLEX,
-            0.52,
+            font_scale,
             (255, 255, 255),
-            1,
+            text_thickness,
             cv2.LINE_AA,
         )
     return canvas
@@ -420,15 +448,26 @@ def render_overlay(
     image_bgr: np.ndarray,
     mask_binary: np.ndarray,
     points_xy: np.ndarray,
+    render_scale: float = 1.0,
 ) -> np.ndarray:
     overlay = image_bgr.copy()
     color_mask = mask_to_overlay(mask_binary)
     overlay = cv2.addWeighted(color_mask, 0.24, overlay, 0.76, 0.0)
     contours, _ = cv2.findContours(mask_binary, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-    cv2.drawContours(overlay, contours, -1, (40, 220, 170), 2)
-    overlay = draw_zone_geometry(overlay, points_xy)
-    overlay = draw_points(overlay, points_xy)
+    cv2.drawContours(overlay, contours, -1, (40, 220, 170), scaled_thickness(2, render_scale))
+    overlay = draw_zone_geometry(overlay, points_xy, render_scale=render_scale)
+    overlay = draw_points(overlay, points_xy, render_scale=render_scale)
     return overlay
+
+
+def compute_render_scale(orig_size: Tuple[int, int], export_size: int | None) -> float:
+    if not export_size:
+        return 1.0
+    orig_h, orig_w = orig_size
+    longest_side = max(orig_h, orig_w)
+    if longest_side <= 0:
+        return 1.0
+    return float(export_size) / float(longest_side)
 
 
 def resolve_images(path: Path) -> List[Path]:
@@ -475,6 +514,7 @@ def run_inference(
     image_path: Path,
     output_dir: Path,
     img_size: int,
+    export_size: int | None,
     threshold: float,
     device: torch.device,
     softargmax_beta: float,
@@ -496,7 +536,19 @@ def run_inference(
     mask_binary = (seg_prob[0, 0].detach().cpu().numpy() >= threshold).astype(np.uint8) * 255
     points_xy = predict_points(heatmaps, orig_size, beta=softargmax_beta)
 
-    rendered = render_overlay(image_bgr, mask_binary, points_xy)
+    render_scale = compute_render_scale(orig_size, export_size)
+    if abs(render_scale - 1.0) > 1e-6:
+        target_w = max(1, int(round(orig_w * render_scale)))
+        target_h = max(1, int(round(orig_h * render_scale)))
+        render_image = cv2.resize(image_bgr, (target_w, target_h), interpolation=cv2.INTER_CUBIC)
+        render_mask = cv2.resize(mask_binary, (target_w, target_h), interpolation=cv2.INTER_NEAREST)
+        render_points = points_xy * render_scale
+    else:
+        render_image = image_bgr
+        render_mask = mask_binary
+        render_points = points_xy
+
+    rendered = render_overlay(render_image, render_mask, render_points, render_scale=render_scale)
     output_dir.mkdir(parents=True, exist_ok=True)
     output_path = output_dir / f"{image_path.stem}_implant_zone.png"
     cv2.imwrite(str(output_path), rendered)
@@ -563,6 +615,7 @@ def main() -> int:
             image_path=image_path,
             output_dir=output_dir,
             img_size=img_size,
+            export_size=args.export_size,
             threshold=args.mask_threshold,
             device=device,
             softargmax_beta=softargmax_beta,

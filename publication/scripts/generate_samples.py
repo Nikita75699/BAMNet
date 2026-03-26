@@ -23,6 +23,7 @@ DEFAULT_DATASET_ROOT = str(get_data_path("export_project", "segmentation_point")
 OUTPUT_DIR = str(ROOT_DIR / "publication" / "generated_samples")
 NUM_SAMPLES = 25
 DPI = 300
+DEFAULT_EXPORT_SIZE = None
 
 # Цвета из meta.json (Supervisely)
 CLASS_COLORS = {
@@ -59,7 +60,11 @@ def decode_supervisely_bitmap(data):
     return Image.open(io.BytesIO(decompressed)).convert("L")
 
 
-def load_font():
+def scale_px(value, render_scale, minimum=1):
+    return max(minimum, int(round(value * render_scale)))
+
+
+def load_font(font_size):
     """Загрузка шрифта для меток."""
     font_paths = [
         "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
@@ -67,7 +72,7 @@ def load_font():
     ]
     for fp in font_paths:
         if os.path.exists(fp):
-            return ImageFont.truetype(fp, BADGE_FONT_SIZE)
+            return ImageFont.truetype(fp, font_size)
     return ImageFont.load_default()
 
 
@@ -90,7 +95,7 @@ def draw_supervisely_icon(draw, cx, cy, color_rgb, size=8):
                  fill=color_rgb + (255,))
 
 
-def draw_supervisely_badge(draw, x, y, label, color_rgb, font, anchor="left", show_icon=True):
+def draw_supervisely_badge(draw, x, y, label, color_rgb, font, style, anchor="left", show_icon=True):
     """
     Рисует бейдж-метку в стиле Supervisely:
     [тёмный фон со скруглёнными углами] [цветная иконка (опционально)] [белый текст]
@@ -99,25 +104,31 @@ def draw_supervisely_badge(draw, x, y, label, color_rgb, font, anchor="left", sh
     text_w = text_bbox[2] - text_bbox[0]
     text_h = text_bbox[3] - text_bbox[1]
 
-    badge_h = max(text_h, BADGE_ICON_SIZE) + BADGE_PADDING_Y * 2
+    badge_h = max(text_h, style["badge_icon_size"]) + style["badge_padding_y"] * 2
     if show_icon:
-        badge_w = BADGE_PADDING_X + BADGE_ICON_SIZE + BADGE_ICON_GAP + text_w + BADGE_PADDING_X
+        badge_w = (
+            style["badge_padding_x"]
+            + style["badge_icon_size"]
+            + style["badge_icon_gap"]
+            + text_w
+            + style["badge_padding_x"]
+        )
     else:
-        badge_w = BADGE_PADDING_X + text_w + BADGE_PADDING_X
+        badge_w = style["badge_padding_x"] + text_w + style["badge_padding_x"]
 
     if anchor == "center":
         x = x - badge_w // 2
 
     bg_rect = [x, y, x + badge_w, y + badge_h]
-    draw.rounded_rectangle(bg_rect, radius=BADGE_RADIUS, fill=BADGE_BG)
+    draw.rounded_rectangle(bg_rect, radius=style["badge_radius"], fill=BADGE_BG)
 
     if show_icon:
-        icon_cx = x + BADGE_PADDING_X + BADGE_ICON_SIZE // 2
+        icon_cx = x + style["badge_padding_x"] + style["badge_icon_size"] // 2
         icon_cy = y + badge_h // 2
-        draw_supervisely_icon(draw, icon_cx, icon_cy, color_rgb, BADGE_ICON_SIZE)
-        text_x = x + BADGE_PADDING_X + BADGE_ICON_SIZE + BADGE_ICON_GAP
+        draw_supervisely_icon(draw, icon_cx, icon_cy, color_rgb, style["badge_icon_size"])
+        text_x = x + style["badge_padding_x"] + style["badge_icon_size"] + style["badge_icon_gap"]
     else:
-        text_x = x + BADGE_PADDING_X
+        text_x = x + style["badge_padding_x"]
 
     text_y = y + (badge_h - text_h) // 2 - 1
     draw.text((text_x, text_y), label, fill=(255, 255, 255, 255), font=font)
@@ -169,10 +180,38 @@ def get_single_sample(input_path, dataset_root):
     }
 
 
-def draw_supervisely_style(img, ann_data):
+def compute_render_scale(img_size, export_size):
+    if not export_size:
+        return 1.0
+    longest_side = max(img_size)
+    if longest_side <= 0:
+        return 1.0
+    return float(export_size) / float(longest_side)
+
+
+def draw_supervisely_style(img, ann_data, export_size=None):
     """Отрисовка аннотаций в стиле Supervisely."""
-    font = load_font()
+    orig_w, orig_h = img.size
+    render_scale = compute_render_scale((orig_w, orig_h), export_size)
+    if abs(render_scale - 1.0) > 1e-6:
+        target_size = (
+            max(1, int(round(orig_w * render_scale))),
+            max(1, int(round(orig_h * render_scale))),
+        )
+        img = img.resize(target_size, Image.Resampling.LANCZOS)
     W, H = img.size
+
+    style = {
+        "badge_radius": scale_px(BADGE_RADIUS, render_scale),
+        "badge_padding_x": scale_px(BADGE_PADDING_X, render_scale),
+        "badge_padding_y": scale_px(BADGE_PADDING_Y, render_scale),
+        "badge_icon_size": scale_px(BADGE_ICON_SIZE, render_scale),
+        "badge_icon_gap": scale_px(BADGE_ICON_GAP, render_scale),
+        "badge_font_size": scale_px(BADGE_FONT_SIZE, render_scale, minimum=8),
+        "point_radius": scale_px(POINT_RADIUS, render_scale),
+        "mask_contour_width": scale_px(MASK_CONTOUR_WIDTH, render_scale),
+    }
+    font = load_font(style["badge_font_size"])
 
     # --- Слой 1: маски (заливка + контур) ---
     overlay = Image.new("RGBA", (W, H), (0, 0, 0, 0))
@@ -193,8 +232,17 @@ def draw_supervisely_style(img, ann_data):
             continue
 
         mask_pil = decode_supervisely_bitmap(data)
+        if abs(render_scale - 1.0) > 1e-6:
+            mask_pil = mask_pil.resize(
+                (
+                    max(1, int(round(mask_pil.size[0] * render_scale))),
+                    max(1, int(round(mask_pil.size[1] * render_scale))),
+                ),
+                Image.Resampling.NEAREST,
+            )
         mask_np = np.array(mask_pil)
-        x0, y0 = origin[0], origin[1]
+        x0 = int(round(origin[0] * render_scale))
+        y0 = int(round(origin[1] * render_scale))
 
         # Заливка маски
         fill_layer = Image.new("RGBA", mask_pil.size, rgb + (MASK_FILL_OPACITY,))
@@ -209,7 +257,7 @@ def draw_supervisely_style(img, ann_data):
             pts = cnt_shifted.reshape(-1, 2).tolist()
             if len(pts) > 1:
                 point_list = [tuple(p) for p in pts] + [tuple(pts[0])]
-                overlay_draw.line(point_list, fill=rgb + (255,), width=MASK_CONTOUR_WIDTH)
+                overlay_draw.line(point_list, fill=rgb + (255,), width=style["mask_contour_width"])
 
         # Запоминаем позицию для бейджа маски (нижний-левый угол видимой области)
         ys, xs = np.where(mask_np > 0)
@@ -219,8 +267,8 @@ def draw_supervisely_style(img, ann_data):
             label_x = x0 + int(xs[np.argmin(xs)]) - 10
             label_y = y0 + int(np.max(ys)) + 5
             # Ограничиваем позицию
-            label_x = max(5, min(label_x, W - 80))
-            label_y = min(label_y, H - 25)
+            label_x = max(5, min(label_x, W - scale_px(80, render_scale)))
+            label_y = min(label_y, H - scale_px(25, render_scale))
             mask_labels.append((class_title, rgb, label_x, label_y))
 
     # Комбинирование
@@ -230,7 +278,7 @@ def draw_supervisely_style(img, ann_data):
 
     # --- Слой 2: бейджи масок ---
     for class_title, rgb, lx, ly in mask_labels:
-        draw_supervisely_badge(draw, lx, ly, class_title, rgb, font)
+        draw_supervisely_badge(draw, lx, ly, class_title, rgb, font, style)
 
     # --- Слой 3: точки + бейджи точек ---
     for obj in ann_data.get("objects", []):
@@ -243,10 +291,11 @@ def draw_supervisely_style(img, ann_data):
         if not pts:
             continue
 
-        x, y = pts[0][0], pts[0][1]
+        x = int(round(pts[0][0] * render_scale))
+        y = int(round(pts[0][1] * render_scale))
 
         # Точка: чёрная обводка + цветная заливка + белый центр
-        r = POINT_RADIUS
+        r = style["point_radius"]
         draw.ellipse([x-r-1, y-r-1, x+r+1, y+r+1],
                      fill=(0, 0, 0, 255))
         draw.ellipse([x-r, y-r, x+r, y+r],
@@ -256,10 +305,10 @@ def draw_supervisely_style(img, ann_data):
 
         # Бейдж справа от точки
         badge_x = x + r + 5
-        badge_y = y - 10
+        badge_y = y - scale_px(10, render_scale)
         # Ограничиваем
         badge_y = max(2, badge_y)
-        draw_supervisely_badge(draw, badge_x, badge_y, class_title, rgb, font, show_icon=False)
+        draw_supervisely_badge(draw, badge_x, badge_y, class_title, rgb, font, style, show_icon=False)
 
     return combined.convert("RGB")
 
@@ -280,6 +329,13 @@ def main():
     )
     parser.add_argument("--output", type=str, default=OUTPUT_DIR, help="Куда сохранить JPEG-примеры.")
     parser.add_argument("--num-samples", type=int, default=NUM_SAMPLES, help="Сколько примеров сохранить.")
+    parser.add_argument(
+        "--export-size",
+        type=int,
+        default=DEFAULT_EXPORT_SIZE,
+        help="Целевой размер большей стороны итогового изображения. "
+             "Если не задан, сохраняется исходный размер.",
+    )
     args = parser.parse_args()
 
     if not os.path.exists(args.output):
@@ -306,7 +362,18 @@ def main():
             with open(sample['ann_path'], 'r') as f:
                 ann_data = json.load(f)
 
-            result = draw_supervisely_style(img, ann_data)
+            result = draw_supervisely_style(img, ann_data, export_size=args.export_size)
+
+            if args.export_size:
+                render_scale = compute_render_scale(img.size, args.export_size)
+                if abs(render_scale - 1.0) > 1e-6:
+                    img = img.resize(
+                        (
+                            max(1, int(round(img.size[0] * render_scale))),
+                            max(1, int(round(img.size[1] * render_scale))),
+                        ),
+                        Image.Resampling.LANCZOS,
+                    )
 
             if len(selected) == 1:
                 out_name = f"sample_{sample['name'].replace('.png', '.jpeg')}"
@@ -319,7 +386,10 @@ def main():
 
             # Копируем оригинальный файл
             orig_path = os.path.join(args.output, orig_name)
-            shutil.copy2(sample['img_path'], orig_path)
+            if args.export_size:
+                img.save(orig_path, dpi=(DPI, DPI))
+            else:
+                shutil.copy2(sample['img_path'], orig_path)
         except Exception as e:
             print(f"  ERROR: {e}")
 
