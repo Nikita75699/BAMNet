@@ -53,8 +53,8 @@ The green overlay shows the predicted aortic root mask, and the labeled points c
 
 The current manuscript and summary tables are stored under [publication/](./publication/). The core BoundaryAwareMAnet (BAMNet) results reported in the paper are:
 
-| Protocol | Dice | IoU | Surface Dice@4 mm | Median err. | Mean err. |
-| --- | ---: | ---: | ---: | ---: | ---: |
+| Protocol                |                 Dice |                  IoU |    Surface Dice@4 mm |         Median err. |            Mean err. |
+| ----------------------- | -------------------: | -------------------: | -------------------: | ------------------: | -------------------: |
 | Patient-level 5-fold CV | `0.9163 ± 0.0108` | `0.8500 ± 0.0177` | `0.8446 ± 0.0312` | `7.64 ± 0.33 px` | `10.02 ± 0.17 px` |
 
 Best fold in the current cross-validation summary:
@@ -65,10 +65,10 @@ Best fold in the current cross-validation summary:
 
 Landmark-wise localization summary:
 
-| Landmark | Mean err. (px) | Median err. (px) |
-| --- | ---: | ---: |
-| `AA1` | `7.96 ± 0.73` | `5.92 ± 0.40` |
-| `AA2` | `11.89 ± 0.62` | `9.95 ± 1.37` |
+| Landmark |    Mean err. (px) | Median err. (px) |
+| -------- | ----------------: | ---------------: |
+| `AA1`  |  `7.96 ± 0.73` | `5.92 ± 0.40` |
+| `AA2`  | `11.89 ± 0.62` | `9.95 ± 1.37` |
 | `STJ1` | `10.20 ± 0.87` | `7.66 ± 0.14` |
 | `STJ2` | `10.02 ± 1.46` | `7.73 ± 0.93` |
 
@@ -319,10 +319,6 @@ tensorboard --logdir "$BAMNET_DATA_ROOT/runs"
 
 ## Publications and Related Material
 
-- BoundaryAwareMAnet (BAMNet) manuscript source: [publication/sn-article-template/bamnet-article.tex](./publication/sn-article-template/bamnet-article.tex)
-- Russian manuscript draft: [publication/sn-article-template/bamnet-article-ru.md](./publication/sn-article-template/bamnet-article-ru.md)
-- Fold summary table: [publication/patient_folds_summary.csv](./publication/patient_folds_summary.csv)
-- Landmark summary table: [publication/patient_folds_points_summary.csv](./publication/patient_folds_points_summary.csv)
 - Previous published segmentation study:
   - Laptev NV, Gerget OM, Belova JK, Vasilchenko EE, Chernyavskiy MA, Danilov VV.
   - *Optimized aortic root segmentation during transcatheter aortic valve implantation*.
