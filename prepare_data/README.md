@@ -1,6 +1,57 @@
 # Dataset Preparation
 
-Этот каталог содержит утилиты для подготовки датасета под публикацию на Zenodo и под обучение моделей BAMNet/YOLO.
+Этот каталог содержит утилиты для подготовки датасета под публикацию на Zenodo и под обучение моделей BoundaryAwareMAnet (BAMNet) и YOLO.
+
+## Быстрый путь: Zenodo -> обучение BAMNet
+
+Публикуемый датасет по ссылке `https://zenodo.org/uploads/19219901` — это raw `Supervisely` export. Он подходит для архивации и обмена данными, но `train.py` ожидает уже конвертированный BAMNet-формат `images/masks/points`.
+
+Минимальный сценарий для запуска обучения:
+
+```bash
+export BAMNET_DATA_ROOT=/mnt/ssd4tb/data/BAMNet-data
+mkdir -p "$BAMNET_DATA_ROOT/export_project"
+
+# Если с Zenodo скачан zip-архив:
+unzip /path/to/segmentation_point.zip -d "$BAMNET_DATA_ROOT/export_project"
+
+# Если скачан tar.gz:
+tar -xzf /path/to/segmentation_point.tar.gz -C "$BAMNET_DATA_ROOT/export_project"
+```
+
+После распаковки ожидается структура:
+
+```text
+$BAMNET_DATA_ROOT/export_project/segmentation_point/
+├── meta.json
+├── README.md
+├── 001/
+├── 002/
+└── ...
+```
+
+Дальше конвертация в BAMNet-формат:
+
+```bash
+python prepare_data/convert_data.py \
+  --input "$BAMNET_DATA_ROOT/export_project/segmentation_point" \
+  --output "$BAMNET_DATA_ROOT/export_project/segpoint_holdout" \
+  --train-patients 70 \
+  --val-patients 13
+```
+
+После этого есть два рабочих варианта запуска обучения:
+
+- простой holdout запуск: в `config.yaml` поставить `data_path: ${BAMNET_DATA_ROOT}/export_project/segpoint_holdout`
+- запуск по patient-level folds: использовать уже подготовленный `segpoint_folds/fold_01` и оставить текущий `config.yaml` без изменений
+
+Старт обучения:
+
+```bash
+python train.py --config config.yaml
+```
+
+Если в архиве с Zenodo по какой-то причине отсутствуют папки `img/` внутри папок пациентов, см. раздел ниже про восстановление изображений из полного источника.
 
 ## 1. Что публиковать на Zenodo
 

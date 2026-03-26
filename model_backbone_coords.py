@@ -321,12 +321,17 @@ class ModifiedMAnetDecoder(nn.Module):
         features: список после feats[::-1]:
         [low_res, ..., high_res], длина, как правило, 5.
         decoder_channels, например, [256, 128, 64, 32] → 4 блока.
+        
+        Returns: logits, feats, intermediate_feats
+        intermediate_feats: list of decoder block outputs (for multi-scale HM)
         """
         x = features[0]  # самый глубоко-сжатый фичемап
+        intermediate = []
 
         for i, block in enumerate(self.blocks):
             skip = features[i + 1] if (i + 1) < len(features) else None
             x = block(x, skip)  # внутри блока x апсемплится до размера skip
+            intermediate.append(x)
 
         # x сейчас имеет spatial размер примерно как самый high-res skip
         feats = self.pre_final(x)
@@ -334,7 +339,9 @@ class ModifiedMAnetDecoder(nn.Module):
         logits = self.head(feats)
         if torch.isnan(logits).any():
             print("NaN detected in seg_logits!")
-        return logits, feats
+        return logits, feats, intermediate
+
+
 
 class DoublePointDetectionHead(nn.Module):
     def __init__(
@@ -342,13 +349,12 @@ class DoublePointDetectionHead(nn.Module):
         hidden_channels=256,
         num_points=4,
         use_coordinate_attention: bool = True,
-        guidance_enabled: bool = True,
-        offsets_enabled: bool = True,
+        guidance_enabled: bool = False,
+        **kwargs,
     ):
         super().__init__()
         self.num_points = num_points
         self.guidance_enabled = guidance_enabled
-        self.offsets_enabled = offsets_enabled
         self.point_conv = nn.Sequential(
             nn.LazyConv2d(hidden_channels, 3, padding=1),
             nn.BatchNorm2d(hidden_channels),
@@ -357,34 +363,26 @@ class DoublePointDetectionHead(nn.Module):
             nn.BatchNorm2d(hidden_channels),
             nn.ReLU(inplace=True)
         )
+        # v4: Одинарный Coordinate Attention
         self.ca = CoordinateAttention(hidden_channels) if use_coordinate_attention else nn.Identity()
+        
+        if self.guidance_enabled:
+            self.bnd_proj = nn.LazyConv2d(hidden_channels, 1)
+        
         self.heatmap_conv = nn.Conv2d(hidden_channels, num_points, 1)
-        self.offset_conv = nn.Conv2d(hidden_channels, num_points * 2, 1) if offsets_enabled else None
-        self.boundary_weights = nn.Conv2d(hidden_channels, 1, 1)
 
-    def forward(self, x, guidance_weight: float = 0.0):
+    def forward(self, x, seg_feat=None, guidance_weight: float = 0.0):
         f = self.point_conv(x)
         f = self.ca(f)
+        
+        # v4: Настоящее использование Guidance
+        if self.guidance_enabled and seg_feat is not None and guidance_weight > 0.0:
+            bnd_proj = self.bnd_proj(seg_feat)
+            f = f + guidance_weight * bnd_proj
 
-        bnd = self.boundary_weights(f)
-        if self.guidance_enabled:
-            bnd_prob = torch.sigmoid(bnd).detach()
-            # Аддитивное усиление: фичи остаются (1.0), а на границах получают бонус
-            f_guided = f * (1.0 + bnd_prob * guidance_weight * 0.25)
-        else:
-            f_guided = f
+        heat = self.heatmap_conv(f)
+        return heat, None, None
 
-        heat = self.heatmap_conv(f_guided)
-        if self.offsets_enabled and self.offset_conv is not None:
-            offsets = torch.sigmoid(self.offset_conv(f_guided))
-        else:
-            offsets = torch.full(
-                (f_guided.shape[0], self.num_points * 2, f_guided.shape[2], f_guided.shape[3]),
-                0.5,
-                device=f_guided.device,
-                dtype=f_guided.dtype,
-            )
-        return heat, bnd, offsets
 
 class BoundaryAwareMAnet(nn.Module):
     def __init__(
@@ -423,6 +421,16 @@ class BoundaryAwareMAnet(nn.Module):
             offsets_enabled=offsets_enabled,
         )
 
+        # v3 Proposal A: Отдельная голова для границ от seg_feats (decoupling)
+        self.bnd_head = nn.Sequential(
+            nn.Conv2d(32, 16, 3, padding=1),
+            nn.BatchNorm2d(16),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(16, 1, 1),
+        )
+
+        # В V4 убрали Multi-Scale Heatmaps
+
     def forward(self, x, guidance_weight: float = 0.0):
         # --- Encoder ---
         feats = []
@@ -433,12 +441,10 @@ class BoundaryAwareMAnet(nn.Module):
             if i in keep_idx:
                 feats.append(h)
 
-        # feats: [feat_1, feat_3, feat_5, feat_7, feat_9] (от более крупного к более мелкому)
-        # feats[::-1]: [low_res, ..., high_res]
         feats = feats[::-1]
 
-        # --- Decoder ---
-        seg_logits, seg_feats = self.decoder(feats)   # seg_feats: high-res фичемап (32 каналов)
+        # --- Decoder (V7: теперь возвращает промежуточные фичи) ---
+        seg_logits, seg_feats, dec_intermediates = self.decoder(feats)
 
         if self.fusion_enabled:
             deep = F.interpolate(feats[0], size=seg_feats.shape[-2:], mode="bilinear", align_corners=False)
@@ -448,15 +454,18 @@ class BoundaryAwareMAnet(nn.Module):
         fused = self.point_input_proj(point_input)
 
         # --- Голова точек и границы ---
-        heatmaps, boundary, offsets = self.point_head(fused, guidance_weight=guidance_weight)
+        # V7: передаём seg_feats в point_head для cross-attention
+        heatmaps, _, offsets = self.point_head(fused, seg_feat=seg_feats, guidance_weight=guidance_weight)
+        boundary = self.bnd_head(seg_feats)
 
         return {
             "segmentation": seg_logits,
             "point_heatmaps": heatmaps,
             "boundary_weights": boundary,
-            "point_offsets": offsets,
+            "point_offsets": None,
             "fused_features": fused,
             "stride": x.shape[-1] // seg_logits.shape[-1],
+            "ms_heatmaps": [],
         }   
 
 # -------------------------
@@ -501,6 +510,10 @@ def make_gaussian_heatmaps(points_vec, H, W, num_points=4, sigma=2.0, device=Non
     y = torch.arange(H, device=device).float().view(1, 1, H, 1)
     x = torch.arange(W, device=device).float().view(1, 1, 1, W)
 
+    # v3: sigma can be a scalar or a tensor of shape (num_points,)
+    if not isinstance(sigma, torch.Tensor):
+        sigma = torch.full((num_points,), float(sigma), device=device)
+
     for j in range(num_points):
         px = points_vec[:, 3*j + 0].clamp(0, 1) * (W - 1)
         py = points_vec[:, 3*j + 1].clamp(0, 1) * (H - 1)
@@ -508,8 +521,9 @@ def make_gaussian_heatmaps(points_vec, H, W, num_points=4, sigma=2.0, device=Non
 
         px = px.view(B, 1, 1, 1)
         py = py.view(B, 1, 1, 1)
+        sj = sigma[j].view(1, 1, 1, 1)
 
-        g = torch.exp(-((x - px)**2 + (y - py)**2) / (2 * sigma * sigma))
+        g = torch.exp(-((x - px)**2 + (y - py)**2) / (2 * sj * sj))
         g = g.view(B, 1, H, W)
         heat[:, j, :, :] = g[:, 0, :, :] * v.view(B, 1, 1)
     return heat.clamp(0, 1)
@@ -625,6 +639,14 @@ class LitBoundaryAwareSystem(pl.LightningModule):
         self.use_improved_points = use_improved_points
         self.improved_point_loss = ImprovedPointLoss(alpha=ip_alpha, beta=ip_beta, gamma=ip_gamma)
 
+        # v3 Proposal B: Learnable Loss Weights (Uncertainty Weighting) - REMOVED (caused instability)
+        # self.log_var_seg = nn.Parameter(torch.zeros(1))
+        # self.log_var_pts = nn.Parameter(torch.zeros(1))
+        # self.log_var_bnd = nn.Parameter(torch.zeros(1))
+
+        # v3 Proposal C: Learnable sigma per point - REMOVED (caused collapse)
+        # self.log_sigma = nn.Parameter(torch.full((num_points,), math.log(1.5)))
+
         self.max_val_saves = 5
         
         # Списки для сбора метрик на каждой эпохе
@@ -637,22 +659,31 @@ class LitBoundaryAwareSystem(pl.LightningModule):
             return float(getattr(self.hparams, "softargmax_beta_fixed", 10.0))
 
         beta_start = float(getattr(self.hparams, "softargmax_beta_start", 4.0))
-        beta_end = float(getattr(self.hparams, "softargmax_beta_end", 12.0))
-        beta_warm = max(1, int(getattr(self.hparams, "softargmax_beta_warmup_epochs", 8)))
+        beta_end = float(getattr(self.hparams, "softargmax_beta_end", 16.0))        # v2: 12→16
+        beta_warm = max(1, int(getattr(self.hparams, "softargmax_beta_warmup_epochs", 12)))  # v2: 8→12
         progress = min(1.0, max(0.0, epoch / float(beta_warm)))
         return beta_start + (beta_end - beta_start) * progress
 
     def configure_optimizers(self):
         optimizer = torch.optim.AdamW(self.parameters(), lr=self.hparams.lr, weight_decay=3e-4)
-        # Используем CosineAnnealingLR без рестартов или с мягким рестартом
-        # Вариант 1: Обычный косинус (самый надежный)
-        scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=50, eta_min=1e-6)
-
-        # Вариант 2 (если очень нужны рестарты): Warm Restart с ограничением.
-        # Нужно переопределить шедулер или просто увеличить T_0, чтобы рестарт был позже.
-        # scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(optimizer, T_0=20, T_mult=2, eta_min=1e-6)
-
-        return {"optimizer": optimizer, "lr_scheduler": {"scheduler": scheduler, "interval": "epoch"}}
+        # V6: Адаптивный LR (ReduceLROnPlateau)
+        # Уменьшаем LR в 2 раза, если val_balance_score не растет 5 эпох
+        scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
+            optimizer, 
+            mode='max', 
+            factor=0.5, 
+            patience=5, 
+            min_lr=1e-6
+        )
+ 
+        return {
+            "optimizer": optimizer, 
+            "lr_scheduler": {
+                "scheduler": scheduler, 
+                "monitor": "val_balance_score", 
+                "interval": "epoch"
+            }
+        }
 
     def forward(self, x):
         return self.model(x)
@@ -664,15 +695,22 @@ class LitBoundaryAwareSystem(pl.LightningModule):
         mask = torch.nan_to_num(mask, nan=0.0)
         epoch = int(self.current_epoch)
         beta = self._current_softargmax_beta(epoch)
+        
+        # v3 Proposal C: Learnable Sigma - REVERTED to deterministic schedule
         base_sigma = float(self.hparams.point_sigma)
         sigma = max(1.5, base_sigma - (epoch / 20.0))
-        w_pts = float(self.hparams.weight_pts)
+        
+        # v3 Proposal B: Uncertainty Weights
+        w_seg_bce = float(self.hparams.weight_seg_bce)
+        w_seg_dice = float(self.hparams.weight_seg_dice)
+        w_pts_init = float(self.hparams.weight_pts)
+        w_bnd_init = float(self.hparams.weight_bnd)
+
+        # v3: boundary loss и guidance снова включены, но безопасно!
         boundary_loss_enabled = bool(getattr(self.hparams, "boundary_loss_enabled", True))
         guidance_enabled = bool(getattr(self.hparams, "boundary_guidance_enabled", True))
         offsets_enabled = bool(getattr(self.hparams, "offsets_enabled", True))
-        w_bnd = float(self.hparams.weight_bnd) if boundary_loss_enabled else 0.0
 
-        # Расписание для аддитивного внимания к границам (включаем плавно с 6 по 16 эпоху)
         guidance_weight = max(0.0, min(1.0, (epoch - 12.0) / 10.0)) if guidance_enabled else 0.0
         offset_gain = max(0.5, min(1.0, (epoch - 12.0) / 10.0)) if offsets_enabled else 0.0
 
@@ -702,35 +740,8 @@ class LitBoundaryAwareSystem(pl.LightningModule):
 
         # ----- координаты точек -----
         px_hm, py_hm = improved_softargmax2d(heat_pred, beta=beta, stable=True)
-        
         B, P, H, W = heat_pred.shape
-        
-        grid_x = (px_hm / max(1.0, float(W - 1))) * 2.0 - 1.0
-        grid_y = (py_hm / max(1.0, float(H - 1))) * 2.0 - 1.0
-        grid = torch.stack([grid_x, grid_y], dim=-1).unsqueeze(2).clamp(-1.0, 1.0) 
-        
-        offset_x_map = offsets_pred[:, 0::2, :, :] # (B, P, H, W)
-        offset_y_map = offsets_pred[:, 1::2, :, :] # (B, P, H, W)
-        
-        # grid_sample выдаст (B, Channels, Points, 1). После squeeze(-1) -> (B, P, P)
-        sample_x_all = F.grid_sample(offset_x_map, grid, mode='bilinear', align_corners=True).squeeze(-1)
-        sample_y_all = F.grid_sample(offset_y_map, grid, mode='bilinear', align_corners=True).squeeze(-1)
-        
-        # Нам нужно значение для i-й точки ИЗ i-го канала (берем диагональ по размерностям 1 и 2)
-        # Получаем итоговый размер (B, P)
-        sample_offset_x = torch.diagonal(sample_x_all, dim1=1, dim2=2)
-        sample_offset_y = torch.diagonal(sample_y_all, dim1=1, dim2=2)
-        
-        # Финальные координаты = Heatmap Coords + Offset Correction
-        # Поскольку в голове была sigmoid, значения лежат в [0, 1].
-        # Приводим их к диапазону [-1.0, 1.0] пикселя, чтобы модель могла двигать точку в любую сторону!
-        sample_offset_x = (sample_offset_x - 0.5) * 2.0 * offset_gain
-        sample_offset_y = (sample_offset_y - 0.5) * 2.0 * offset_gain
-        
-        final_px = px_hm + sample_offset_x
-        final_py = py_hm + sample_offset_y
-        
-        coords_pred = torch.stack([final_px, final_py], dim=-1)
+        coords_pred = torch.stack([px_hm, py_hm], dim=-1)
 
         B, P, W0, H0 = points.shape[0], self.hparams.num_points, w - 1, h - 1
         coords_tgt = torch.zeros((B, P, 2), device=heat_pred.device, dtype=heat_pred.dtype)
@@ -750,21 +761,25 @@ class LitBoundaryAwareSystem(pl.LightningModule):
             loss_pts_coord = torch.zeros(1, device=x.device, dtype=heat_pred.dtype)
             loss_pts_total = loss_pts_hm
 
-        # ----- boundary-loss (SmoothL1) -----
+        # Убрано Multi-Scale Heatmap Loss в V4
+
+        # ----- boundary-loss: v3 — СНОВА ВКЛЮЧЁН (через отдельную голову) -----
         if boundary_loss_enabled:
             bnd_pred_sig = torch.sigmoid(bnd_pred)
             loss_bnd = F.smooth_l1_loss(bnd_pred_sig, bnd_tgt)
         else:
             loss_bnd = torch.zeros((), device=x.device, dtype=heat_pred.dtype)
-        w_pts = float(self.hparams.weight_pts)
+
+        # ----- v3: Uncertainty Weighting (Proposal B) - REVERTED to manual weighting -----
+        w_pts = w_pts_init
         if epoch > 20:
             w_pts *= (1.0 - 0.5 * min(1.0, (epoch - 20) / 15.0))
-        # ----- общий лосс -----
+        
         loss = (
-            self.hparams.weight_seg_bce * loss_seg_main +
-            self.hparams.weight_seg_dice * loss_dice +
+            w_seg_bce * loss_seg_main +
+            w_seg_dice * loss_dice +
             w_pts * loss_pts_total +
-            w_bnd * loss_bnd
+            w_bnd_init * loss_bnd
         )
 
         d = dice_coef(seg_logits, mask_down)
@@ -774,11 +789,11 @@ class LitBoundaryAwareSystem(pl.LightningModule):
             "loss_seg": loss_seg_main, "loss_dice": loss_dice,
             "loss_pts": loss_pts_total, "loss_pts_hm": loss_pts_hm, "loss_pts_coord": loss_pts_coord,
             "loss_bnd": loss_bnd,
-            "beta_eff": torch.tensor(beta, device=self.device, dtype=torch.float32),
-            "sigma_eff": torch.tensor(sigma, device=self.device, dtype=torch.float32),
             "w_pts_eff": torch.tensor(w_pts, device=self.device, dtype=torch.float32),
-            "w_bnd_eff": torch.tensor(w_bnd, device=self.device, dtype=torch.float32),
-            "offset_gain_eff": torch.tensor(offset_gain, device=self.device, dtype=torch.float32),
+            "w_bnd_eff": torch.tensor(w_bnd_init, device=self.device, dtype=torch.float32),
+            "w_seg_eff": torch.tensor(w_seg_bce, device=self.device, dtype=torch.float32),
+            "sigma_min": torch.tensor(sigma, device=self.device, dtype=torch.float32),
+            "sigma_max": torch.tensor(sigma, device=self.device, dtype=torch.float32),
         }
 
         if stage == "val":
@@ -791,39 +806,11 @@ class LitBoundaryAwareSystem(pl.LightningModule):
                     heat_pred, beta=beta, stable=True
                 )  # (B, P)
 
-                # 2) Уточнение координат через offsets_pred
-                grid_x = (px_hm / max(1.0, float(whm - 1))) * 2.0 - 1.0
-                grid_y = (py_hm / max(1.0, float(hhm - 1))) * 2.0 - 1.0
-                grid = torch.stack([grid_x, grid_y], dim=-1).unsqueeze(2).clamp(-1.0, 1.0)  # (B, P, 1, 2)
-
-                offset_x_map = offsets_pred[:, 0::2, :, :]  # (B, P, H, W)
-                offset_y_map = offsets_pred[:, 1::2, :, :]  # (B, P, H, W)
-
-                sample_x_all = F.grid_sample(
-                    offset_x_map, grid, mode='bilinear', align_corners=True
-                ).squeeze(-1)  # (B, P, P)
-
-                sample_y_all = F.grid_sample(
-                    offset_y_map, grid, mode='bilinear', align_corners=True
-                ).squeeze(-1)  # (B, P, P)
-
-                # Берём диагональ: i-я точка из i-го канала
-                sample_offset_x = torch.diagonal(sample_x_all, dim1=1, dim2=2)  # (B, P)
-                sample_offset_y = torch.diagonal(sample_y_all, dim1=1, dim2=2)  # (B, P)
-
-                # sigmoid -> [0,1], переводим в [-1,1] пикселя
-                sample_offset_x = (sample_offset_x - 0.5) * 2.0
-                sample_offset_y = (sample_offset_y - 0.5) * 2.0
-
-                # Финальные координаты в пространстве heatmap
-                final_px = px_hm + sample_offset_x
-                final_py = py_hm + sample_offset_y
-
                 # 3) Переводим финальные координаты в размер исходной маски
                 scale_x = (W0f - 1) / max(1.0, float(whm - 1))
                 scale_y = (H0f - 1) / max(1.0, float(hhm - 1))
-                pred_x = final_px * scale_x
-                pred_y = final_py * scale_y
+                pred_x = px_hm * scale_x
+                pred_y = py_hm * scale_y
 
                 # 4) GT-координаты
                 gt_x = torch.zeros_like(pred_x)
@@ -1011,7 +998,6 @@ def build_system(cfg: dict):
         use_focal_seg=bool(focal_cfg.get("use_focal_seg", True)),
         focal_alpha=float(focal_cfg.get("alpha", 0.25)),
         focal_gamma=float(focal_cfg.get("gamma", 2.0)),
-        # NEW toggles/params
         use_improved_points=bool(ip_cfg.get("enabled", True)),
         ip_alpha=float(ip_cfg.get("alpha", 0.25)),
         ip_beta=float(ip_cfg.get("beta", 0.1)),
@@ -1027,6 +1013,6 @@ def build_system(cfg: dict):
         softargmax_beta_mode=str(softargmax_cfg.get("beta_mode", "schedule")),
         softargmax_beta_fixed=float(softargmax_cfg.get("beta_fixed", 10.0)),
         softargmax_beta_start=float(softargmax_cfg.get("beta_start", 4.0)),
-        softargmax_beta_end=float(softargmax_cfg.get("beta_end", 12.0)),
-        softargmax_beta_warmup_epochs=int(softargmax_cfg.get("beta_warmup_epochs", 8)),
+        softargmax_beta_end=float(softargmax_cfg.get("beta_end", 16.0)),
+        softargmax_beta_warmup_epochs=int(softargmax_cfg.get("beta_warmup_epochs", 12)),
     )

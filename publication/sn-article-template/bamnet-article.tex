@@ -49,7 +49,7 @@
 
 \affil[4]{\orgname{Pompeu Fabra University}, \orgaddress{\city{Barcelona}, \country{Spain}}}
 
-\abstract{Accurate intraoperative visualization of the aortic root during transcatheter aortic valve implantation (TAVI) is essential for safe valve positioning, yet fluoroscopy remains challenging because of low soft-tissue contrast, motion artifacts, and occlusion by endovascular devices. Repeated contrast injections further increase the risk of renal complications, particularly in patients with pre-existing chronic kidney disease. We present BoundaryAwareMAnet (BAMNet), a multitask neural network for simultaneous aortic root segmentation and localization of four key anatomical landmarks on fluoroscopic images. The model combines an EfficientNet-V2 encoder, a modified MA-Net decoder with global spatial attention, a dedicated landmark head with coordinate-aware feature modulation and heatmap prediction, and an auxiliary boundary pathway used for boundary-guided supervision. In patient-level 5-fold cross-validation, the model achieved a Dice score of $0.916 \pm 0.011$ and a mean localization error of $10.02 \pm 0.17$~px. These findings indicate that joint segmentation and landmark localization on fluoroscopy is feasible and may provide a practical foundation for contrast-sparing visual guidance and future robot-assisted TAVI systems.}
+\abstract{Accurate intraoperative visualization of the aortic root during transcatheter aortic valve implantation (TAVI) is essential for safe valve positioning, yet fluoroscopy remains challenging because of low soft-tissue contrast, motion artifacts, and occlusion by endovascular devices. Repeated contrast injections further increase the risk of renal complications, particularly in patients with pre-existing chronic kidney disease. We present BoundaryAwareMAnet (BAMNet), a multitask neural network for simultaneous aortic root segmentation and localization of four key anatomical landmarks on fluoroscopic images. The model combines an EfficientNet-V2 encoder, a modified MA-Net decoder with global spatial attention, a dedicated landmark head with coordinate-aware feature modulation and heatmap prediction, and an auxiliary boundary pathway used for boundary-guided supervision. In patient-level 5-fold cross-validation, the model achieved a Dice score of $0.92 \pm 0.01$ and a mean localization error of $10.02 \pm 0.17$~px. These findings indicate that joint segmentation and landmark localization on fluoroscopy is feasible and may provide a practical foundation for contrast-sparing visual guidance and future robot-assisted TAVI systems.}
 
 \keywords{TAVI, aortic root segmentation, landmark localization, multitask learning, fluoroscopy}
 
@@ -63,7 +63,7 @@ Despite this expansion, optimal valve positioning during deployment remains a ma
 
 In current clinical practice, operators rely primarily on fluoroscopy, often supplemented by repeated contrast aortography to delineate the aortic root, annular plane, and coronary ostia. Fluoroscopy offers high temporal resolution, but it also suffers from low soft-tissue contrast, noise, respiratory and cardiac motion, and frequent occlusion by guidewires, catheters, and delivery systems. These limitations increase dependence on contrast administration and operator experience. Hybrid approaches based on preoperative CT and CT-fluoroscopy fusion have been explored for procedural guidance, but their accuracy may be limited by cardiorespiratory motion, deformation from stiff guidewires, and the lack of continuous real-time updating during valve deployment \cite{vernikouskaya2017_imageguidance,vernikouskaya2018_registration}.
 
-In our previous work, we performed a large-scale comparison of six modern convolutional architectures for automatic aortic root segmentation on intraoperative TAVI frames. On a dataset of 2,925 images from 83 patients with strict patient-level 5-fold cross-validation, the best single-task model, MA-Net with an EfficientNet-B4 encoder, achieved a median Dice score of 0.942 and an ASSD of 4.07~mm \cite{laptev2025_aorticroot}. These results showed that high-quality segmentation is possible even under low-contrast fluoroscopic conditions. However, a segmentation mask alone is insufficient when sub-pixel landmark coordinates are needed for automated or robotic valve positioning.
+In our previous work, we performed a large-scale comparison of six modern convolutional architectures for automatic aortic root segmentation on intraoperative TAVI frames. On a dataset of 2,925 images from 83 patients with strict patient-level 5-fold cross-validation, the best single-task model, MA-Net with an EfficientNet-B4 encoder, achieved a median Dice score of 0.94 and an ASSD of 4.07~mm \cite{laptev2025_aorticroot}. These results showed that high-quality segmentation is possible even under low-contrast fluoroscopic conditions. However, a segmentation mask alone is insufficient when sub-pixel landmark coordinates are needed for automated or robotic valve positioning.
 
 The next stage in TAVI guidance is the transition toward robot-assisted and potentially autonomous delivery platforms. Early translational robotic systems are already emerging, including AI-guided positioning studies and the ongoing feasibility evaluation of the TAVIPILOT platform \cite{smits2025_autonomous,clinicaltrials_nct07152574}. Such systems require not only a contour of the aortic root, but also reliable and temporally stable localization of key landmarks, especially the two annular points (AA1 and AA2) and the two sinotubular-junction landmarks near the coronary ostia (STJ1 and STJ2).
 
@@ -228,7 +228,7 @@ where $d_k$ is the Euclidean error for landmark $k$ and $\mathbb{I}$ is the indi
 
 BAMNet delivered the most balanced performance among the evaluated methods by combining high-quality aortic root segmentation with accurate landmark localization in a single inference pass. This joint output is particularly attractive for intraoperative overlay generation and for integration into navigation or robotic positioning systems.
 
-Table~\ref{tab:seg_baselines} summarizes the comparison with segmentation-oriented baselines. In terms of absolute segmentation metrics, the strongest result in this table was achieved by Swin-Unet, with Dice 0.908 and IoU 0.832. However, its inference speed was only about 2~FPS, which substantially limits practical deployment in real-time intraoperative navigation. BAMNet remained slightly below the best single-task segmentation baseline in these metrics, but preserved competitive segmentation quality while simultaneously solving landmark localization and providing substantially higher throughput (63~FPS). Compared with the MA-Net variant shown in the table, BAMNet demonstrated slightly higher Dice, IoU, and Surface Dice@4~mm together with better boundary agreement in terms of HD95 and ASSD. Relative to YOLO-seg-26m, BAMNet showed similar Dice and IoU, but stronger Surface Dice@4~mm and noticeably better boundary-sensitive metrics. Our previous publication \cite{laptev2025_aorticroot} provides additional context for interpreting these results, as it includes a broader comparison of convolutional aortic-root segmentation architectures on intraoperative TAVI frames.
+Table~\ref{tab:seg_baselines} summarizes the comparison with segmentation-oriented baselines. In terms of absolute segmentation metrics, the strongest result in this table was achieved by Swin-Unet, with Dice 0.91 and IoU 0.83. However, its inference speed was only about 2~FPS, which substantially limits practical deployment in real-time intraoperative navigation. BAMNet remained slightly below the best single-task segmentation baseline in these metrics, but preserved competitive segmentation quality while simultaneously solving landmark localization and providing substantially higher throughput (63~FPS). Compared with the MA-Net variant shown in the table, BAMNet demonstrated slightly higher Dice, IoU, and Surface Dice@4~mm together with better boundary agreement in terms of HD95 and ASSD. Relative to YOLO-seg-26m, BAMNet showed similar Dice and IoU, but stronger Surface Dice@4~mm and noticeably better boundary-sensitive metrics. Our previous publication \cite{laptev2025_aorticroot} provides additional context for interpreting these results, as it includes a broader comparison of convolutional aortic-root segmentation architectures on intraoperative TAVI frames.
 
 \begin{table*}[htbp]
 \caption{Comparison of BAMNet with segmentation baselines. Evaluated on fold-1 fixed hold-out test set.}\label{tab:seg_baselines}
@@ -292,9 +292,9 @@ These examples highlight an important practical feature of the proposed multitas
 
 \subsection{Patient-level 5-fold cross-validation}\label{subsec:crossval}
 
-To assess robustness, strict patient-level 5-fold cross-validation was performed. Across all five folds, the number of prediction failures remained zero ($n_{\mathrm{pred\_failures}}=0$), indicating stable behavior across different patient subsets. Mean performance across folds reached a Dice score of $0.9163 \pm 0.0108$, an IoU of $0.8500 \pm 0.0177$, a Surface Dice@4~mm of $0.8446 \pm 0.0312$, a median localization error of $7.64 \pm 0.33$~px, and a mean localization error of $10.02 \pm 0.17$~px.
+To assess robustness, strict patient-level 5-fold cross-validation was performed. Across all five folds, the number of prediction failures remained zero ($n_{\mathrm{pred\_failures}}=0$), indicating stable behavior across different patient subsets. Mean performance across folds reached a Dice score of $0.92 \pm 0.01$, an IoU of $0.85 \pm 0.02$, a Surface Dice@4~mm of $0.84 \pm 0.03$, a median localization error of $7.64 \pm 0.33$~px, and a mean localization error of $10.02 \pm 0.17$~px.
 
-The best segmentation quality was observed on fold~4, where Dice reached 0.9319 and IoU 0.8761. The smallest median localization error was obtained on fold~5 (7.32~px), whereas the smallest mean localization error was observed on fold~3 (9.91~px). Even the least favorable fold remained comparable to the others, supporting good inter-patient generalization.
+The best segmentation quality was observed on fold~4, where Dice reached 0.93 and IoU 0.88. The smallest median localization error was obtained on fold~5 (7.32~px), whereas the smallest mean localization error was observed on fold~3 (9.91~px). Even the least favorable fold remained comparable to the others, supporting good inter-patient generalization.
 
 \begin{table*}[htbp]
 \caption{Patient-level 5-fold cross-validation results for BAMNet.}\label{tab:crossval}
@@ -304,12 +304,12 @@ The best segmentation quality was observed on fold~4, where Dice reached 0.9319 
 \toprule
 Fold & $n_{samples}$ & Dice & IoU & Surface Dice@4~mm & Median err.\ (px) & Mean err.\ (px) \\
 \midrule
-1 & 243 & 0.9065 & 0.8341 & 0.8374 & 8.17 & 10.30 \\
-2 & 250 & 0.9055 & 0.8328 & 0.8103 & 7.59 & 9.92 \\
-3 & 244 & 0.9189 & 0.8534 & 0.8276 & 7.70 & 9.91 \\
-4 & 249 & 0.9319 & 0.8761 & 0.8921 & 7.45 & 10.05 \\
-5 & 250 & 0.9188 & 0.8538 & 0.8557 & 7.32 & 9.92 \\
-Mean $\pm$ SD & 247.2 & $0.9163 \pm 0.0108$ & $0.8500 \pm 0.0177$ & $0.8446 \pm 0.0312$ & $7.64 \pm 0.33$ & $10.02 \pm 0.17$ \\
+1 & 243 & 0.91 & 0.83 & 0.84 & 8.17 & 10.30 \\
+2 & 250 & 0.91 & 0.83 & 0.81 & 7.59 & 9.92 \\
+3 & 244 & 0.92 & 0.85 & 0.83 & 7.70 & 9.91 \\
+4 & 249 & 0.93 & 0.88 & 0.89 & 7.45 & 10.05 \\
+5 & 250 & 0.92 & 0.85 & 0.86 & 7.32 & 9.92 \\
+Mean $\pm$ SD & 247.2 & $0.92 \pm 0.01$ & $0.85 \pm 0.02$ & $0.84 \pm 0.03$ & $7.64 \pm 0.33$ & $10.02 \pm 0.17$ \\
 \bottomrule
 \end{tabular}}
 \end{table*}
@@ -359,7 +359,7 @@ Taken together, the results indicate that BAMNet is the most balanced model amon
 
 \section{Discussion}\label{sec:discussion}
 
-This study introduced BAMNet, a multitask architecture specifically designed for simultaneous dense segmentation of the aortic root and localization of four anatomical landmarks directly on intraoperative fluoroscopic images acquired during TAVI. In patient-level 5-fold cross-validation, the model demonstrated stable performance, reaching Dice~=~$0.916 \pm 0.011$, IoU~=~$0.850 \pm 0.018$, Surface Dice@4~mm~=~$0.845 \pm 0.031$, median localization error~=~$7.64 \pm 0.33$~px, and mean localization error~=~$10.02 \pm 0.17$~px. These results support the practicality of the approach for intraoperative visual guidance.
+This study introduced BAMNet, a multitask architecture specifically designed for simultaneous dense segmentation of the aortic root and localization of four anatomical landmarks directly on intraoperative fluoroscopic images acquired during TAVI. In patient-level 5-fold cross-validation, the model demonstrated stable performance, reaching Dice~=~$0.92 \pm 0.01$, IoU~=~$0.85 \pm 0.02$, Surface Dice@4~mm~=~$0.84 \pm 0.03$, median localization error~=~$7.64 \pm 0.33$~px, and mean localization error~=~$10.02 \pm 0.17$~px. These results support the practicality of the approach for intraoperative visual guidance.
 
 \subsection{Technical implications and architectural contribution}\label{subsec:technical}
 
@@ -384,14 +384,14 @@ Numerical ablation results are summarized in Table~\ref{tab:ablation_results}. T
 \toprule
 Variant & Dice & IoU & Surface Dice@4~mm & Mean err.\ (px) & Median err.\ (px) & PCK@10 (\%) & FPS \\
 \midrule
-Full (v4) & 0.907 & 0.834 & 0.837 & \textbf{10.30} & \textbf{8.17} & \textbf{59.88} & 63 \\
-No Pos Attn & 0.910 & 0.838 & 0.830 & 11.29 & 9.51 & 52.98 & \textbf{69} \\
-No Coord Attn & 0.902 & 0.827 & 0.827 & 10.62 & 8.47 & 57.41 & 67 \\
-No Fusion & 0.905 & 0.830 & 0.829 & 10.84 & 9.01 & 55.76 & 65 \\
-No Bnd Guid & 0.900 & 0.824 & 0.824 & 11.04 & 9.21 & 53.70 & 66 \\
-No Bnd Loss & 0.907 & 0.835 & 0.833 & 10.96 & 8.82 & 54.73 & 64 \\
-Fixed 8 & \textbf{0.912} & \textbf{0.841} & \textbf{0.840} & 10.88 & 8.77 & 56.69 & 66 \\
-Sched 4$\rightarrow$8 & 0.910 & 0.838 & 0.832 & 11.37 & 9.46 & 53.29 & 66 \\
+Full (v4) & 0.91 & 0.83 & 0.84 & \textbf{10.30} & \textbf{8.17} & \textbf{59.88} & 63 \\
+No Pos Attn & 0.91 & 0.84 & 0.83 & 11.29 & 9.51 & 52.98 & \textbf{69} \\
+No Coord Attn & 0.90 & 0.83 & 0.83 & 10.62 & 8.47 & 57.41 & 67 \\
+No Fusion & 0.91 & 0.83 & 0.83 & 10.84 & 9.01 & 55.76 & 65 \\
+No Bnd Guid & 0.90 & 0.82 & 0.82 & 11.04 & 9.21 & 53.70 & 66 \\
+No Bnd Loss & 0.91 & 0.84 & 0.83 & 10.96 & 8.82 & 54.73 & 64 \\
+Fixed 8 & \textbf{0.91} & \textbf{0.84} & \textbf{0.84} & 10.88 & 8.77 & 56.69 & 66 \\
+Sched 4$\rightarrow$8 & 0.91 & 0.84 & 0.83 & 11.37 & 9.46 & 53.29 & 66 \\
 \bottomrule
 \end{tabular}}
 \end{table*}
@@ -424,7 +424,7 @@ Several natural extensions follow from the present work. The first is a move tow
 
 BoundaryAwareMAnet (BAMNet) is a multitask deep learning architecture for simultaneous segmentation of the aortic root and localization of four key anatomical landmarks on intraoperative fluoroscopic images acquired during TAVI. Unlike single-task formulations, the proposed approach produces both a dense anatomical mask and a set of geometrically meaningful landmarks within one forward pass, making it especially attractive for intraoperative visual guidance.
 
-In patient-level 5-fold cross-validation, BAMNet demonstrated stable performance with Dice~=~$0.916 \pm 0.011$, IoU~=~$0.850 \pm 0.018$, Surface Dice@4~mm~=~$0.845 \pm 0.031$, median localization error~=~$7.64 \pm 0.33$~px, and mean localization error~=~$10.02 \pm 0.17$~px. These findings indicate that the model maintains high segmentation accuracy and reproducible landmark localization across different patient subsets, which is particularly important for clinically realistic assessment of generalization.
+In patient-level 5-fold cross-validation, BAMNet demonstrated stable performance with Dice~=~$0.92 \pm 0.01$, IoU~=~$0.85 \pm 0.02$, Surface Dice@4~mm~=~$0.84 \pm 0.03$, median localization error~=~$7.64 \pm 0.33$~px, and mean localization error~=~$10.02 \pm 0.17$~px. These findings indicate that the model maintains high segmentation accuracy and reproducible landmark localization across different patient subsets, which is particularly important for clinically realistic assessment of generalization.
 
 Thus, BAMNet can be regarded as a practical foundation for anatomical overlay during TAVI, a potential reduction in reliance on repeated contrast aortography, and the further development of semi-automated and robot-assisted valve implantation systems. Promising future directions include external multicenter validation, modeling of temporal consistency between neighboring frames, and integration of the model into a closed-loop intraoperative navigation pipeline.
 
@@ -434,8 +434,6 @@ Thus, BAMNet can be regarded as a practical foundation for anatomical overlay du
 
 No supplementary files are included in this manuscript version.
 
-% Removed Acknowledgements
-TODO.
 
 \section*{Declarations}
 

@@ -1,0 +1,58 @@
+architecture: boundary_aware_manet_v4
+encoder_name: efficientnet_v2_m
+num_classes: 1
+warmup_epochs: 5
+lr: 5e-4
+loss:
+  w_bce: 1.0
+  w_dice: 1.0
+  w_pts: 0.5
+  w_bnd: 0.0
+  point_sigma: 3.0
+  focal:
+    use_focal_seg: false
+    alpha: 0.25
+    gamma: 2.0
+  improved_points:
+    enabled: true
+    alpha: 0.25
+    beta: 0.1
+    gamma: 2.0
+data_path: ${BAMNET_DATA_ROOT}/export_project/segpoint_folds/fold_01
+batch_size: 14
+img_size: 640
+num_workers: 6
+augment: true
+num_points: 4
+point_names:
+- AA1
+- AA2
+- STJ1
+- STJ2
+logging:
+  save_dir: ${BAMNET_DATA_ROOT}/ablation_runs
+  experiment_name: ablation_v4_no_boundary_loss
+trainer:
+  epochs: 35
+  devices: 1
+  precision: auto
+  monitor: val/dice
+  mode: max
+attention:
+  coordinate: true
+  decoder: true
+  decoder_attn_levels: 2
+  max_attn_tokens: 4096
+fusion:
+  enabled: true
+  point_head_channels: 256
+boundary:
+  loss_enabled: false
+  guidance_enabled: true
+offsets:
+  enabled: false
+softargmax:
+  beta_mode: schedule
+  beta_start: 2.0
+  beta_end: 12
+  beta_warmup_epochs: 12

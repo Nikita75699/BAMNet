@@ -1,15 +1,15 @@
-architecture: boundary_aware_manet_v2        # v2: без boundary loss/guidance
+architecture: boundary_aware_manet_v4        # v4: упрощенная архитектура точек
 encoder_name: efficientnet_v2_m          # или _m/_l
 num_classes: 1
 warmup_epochs: 5
 
-lr: 2e-4
+lr: 5e-4                               # Optuna Best
 loss:
   w_bce: 1.0
   w_dice: 1.0
-  w_pts: 0.8
-  w_bnd: 0.1
-  point_sigma: 2.0
+  w_pts: 0.5                  # Optuna Best
+  w_bnd: 10.0                 # Optuna Best
+  point_sigma: 3.0            # Optuna Best
   focal:
     use_focal_seg: false
     alpha: 0.25
@@ -21,7 +21,7 @@ loss:
     gamma: 2.0  
 
 data_path: ${BAMNET_DATA_ROOT}/export_project/segpoint_folds/fold_01
-batch_size: 16
+batch_size: 14
 img_size: 640
 num_workers: 6
 augment: true
@@ -30,7 +30,7 @@ point_names: ["AA1", "AA2", "STJ1", "STJ2"]
 
 logging:
   save_dir: ${BAMNET_DATA_ROOT}/runs
-  experiment_name: aortic_ring
+  experiment_name: aortic_ring_v4
 
 trainer:
   epochs: 35
@@ -50,11 +50,14 @@ fusion:
   point_head_channels: 256
 
 boundary:
-  loss_enabled: true       # v2: полностью отключено
-  guidance_enabled: false   # v2: полностью отключено
+  loss_enabled: true       # v4: включено
+  guidance_enabled: true   # v4: включено настоящее использование
+
+offsets:
+  enabled: false           # v4: отключено (не нужно при softargmax)
 
 softargmax:
   beta_mode: "schedule"
-  beta_start: 4.0
-  beta_end: 16.0            # v2: расширен диапазон (было 12)
-  beta_warmup_epochs: 12    # v2: плавный рост (было 8)
+  beta_start: 2.0
+  beta_end: 12       # Optuna Best
+  beta_warmup_epochs: 12 # Optuna Best

@@ -15,6 +15,8 @@ __pycache__/
 /debug_inspect/
 /output_samples/
 /pred_out/
+/baselines/**/model_out/
+/baselines/**/pretrained_ckpt/
 
 # Agent-local state
 /.agent/

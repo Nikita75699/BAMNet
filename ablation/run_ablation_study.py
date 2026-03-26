@@ -5,9 +5,11 @@ import argparse
 import copy
 import csv
 import json
+import os
 import shlex
 import shutil
 import subprocess
+import sys
 from pathlib import Path
 from typing import Any
 
@@ -16,6 +18,12 @@ import yaml
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 ROOT_DIR = SCRIPT_DIR.parent
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
+
+from bamnet_paths import expand_config_tree
+
+DEFAULT_ABLATION_SAVE_DIR = "${BAMNET_DATA_ROOT}/ablation_runs"
 ACTIVE_VARIANTS = (
     "full_model",
     "no_position_attention",
@@ -32,10 +40,16 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Generate/run BAMNet v4 ablation experiments and collect summary metrics."
     )
-    parser.add_argument("--base-config", type=Path, default=SCRIPT_DIR / "config_v4.yaml")
-    parser.add_argument("--train-script", type=Path, default=SCRIPT_DIR / "train_v4.py")
+    parser.add_argument("--base-config", type=Path, default=ROOT_DIR / "config.yaml")
+    parser.add_argument("--train-script", type=Path, default=ROOT_DIR / "train.py")
     parser.add_argument("--python-bin", type=str, default="python3")
     parser.add_argument("--output-dir", type=Path, default=SCRIPT_DIR)
+    parser.add_argument(
+        "--save-dir",
+        type=str,
+        default=DEFAULT_ABLATION_SAVE_DIR,
+        help="Override logging.save_dir for generated ablation configs.",
+    )
     parser.add_argument(
         "--variants",
         type=str,
@@ -78,6 +92,10 @@ def dump_yaml(path: Path, data: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8") as f:
         yaml.safe_dump(data, f, allow_unicode=True, sort_keys=False)
+
+
+def materialize_config(cfg: dict[str, Any]) -> dict[str, Any]:
+    return expand_config_tree(copy.deepcopy(cfg))
 
 
 def set_nested(cfg: dict[str, Any], dotted_key: str, value: Any) -> None:
@@ -174,6 +192,7 @@ def build_variant_config(
     variant: str,
     overrides: dict[str, Any],
     exp_prefix: str,
+    save_dir: str | None,
 ) -> tuple[dict[str, Any], str]:
     cfg = copy.deepcopy(base_cfg)
     for dotted_key, value in overrides.items():
@@ -181,6 +200,8 @@ def build_variant_config(
 
     exp_name = f"{exp_prefix}_{variant}"
     set_nested(cfg, "logging.experiment_name", exp_name)
+    if save_dir:
+        set_nested(cfg, "logging.save_dir", save_dir)
     return cfg, exp_name
 
 
@@ -196,6 +217,8 @@ def resolve_relative_config_paths(cfg: dict[str, Any], base_dir: Path) -> None:
         value = get_nested(cfg, dotted_key)
         if not isinstance(value, str) or value.strip() == "":
             continue
+        if "$" in value:
+            continue
         path = Path(value).expanduser()
         if not path.is_absolute():
             path = (base_dir / path).resolve()
@@ -204,7 +227,7 @@ def resolve_relative_config_paths(cfg: dict[str, Any], base_dir: Path) -> None:
 
 def make_command_path(path: Path, base_dir: Path) -> str:
     try:
-        return str(path.resolve().relative_to(base_dir.resolve()))
+        return os.path.relpath(path.resolve(), base_dir.resolve())
     except Exception:
         return str(path.resolve())
 
@@ -383,6 +406,7 @@ def main() -> None:
                 variant=variant,
                 overrides=all_overrides[variant],
                 exp_prefix=args.exp_prefix,
+                save_dir=args.save_dir,
             )
             resolve_relative_config_paths(cfg_variant, output_dir)
             cfg_path = cfg_dir / f"{variant}.yaml"
@@ -417,6 +441,7 @@ def main() -> None:
                 variant=variant,
                 overrides=all_overrides[variant],
                 exp_prefix=args.exp_prefix,
+                save_dir=args.save_dir,
             )
             resolve_relative_config_paths(cfg_variant, output_dir)
 
@@ -433,9 +458,10 @@ def main() -> None:
             )
             continue
 
-        exp_name = str(get_nested(cfg_variant, "logging.experiment_name", f"{args.exp_prefix}_{variant}"))
-        save_dir = Path(str(get_nested(cfg_variant, "logging.save_dir", "runs"))).expanduser().resolve()
-        architecture = str(get_nested(cfg_variant, "architecture", "unknown"))
+        cfg_runtime = materialize_config(cfg_variant)
+        exp_name = str(get_nested(cfg_runtime, "logging.experiment_name", f"{args.exp_prefix}_{variant}"))
+        save_dir = Path(str(get_nested(cfg_runtime, "logging.save_dir", "runs"))).expanduser().resolve()
+        architecture = str(get_nested(cfg_runtime, "architecture", "unknown"))
         run_dir, metrics_path = find_latest_metrics_file(save_dir=save_dir, exp_name=exp_name, architecture=architecture)
 
         if metrics_path is None:

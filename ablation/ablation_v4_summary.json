@@ -6,5 +6,61 @@
     "run_dir": "",
     "metrics_csv": "",
     "metrics_snapshot": ""
+  },
+  {
+    "variant": "no_position_attention",
+    "status": "metrics_not_found",
+    "config_path": "/mnt/ssd4tb/project/BAMNet/ablation/configs/ablation_v4/no_position_attention.yaml",
+    "run_dir": "",
+    "metrics_csv": "",
+    "metrics_snapshot": ""
+  },
+  {
+    "variant": "no_coordinate_attention",
+    "status": "metrics_not_found",
+    "config_path": "/mnt/ssd4tb/project/BAMNet/ablation/configs/ablation_v4/no_coordinate_attention.yaml",
+    "run_dir": "",
+    "metrics_csv": "",
+    "metrics_snapshot": ""
+  },
+  {
+    "variant": "no_fusion",
+    "status": "metrics_not_found",
+    "config_path": "/mnt/ssd4tb/project/BAMNet/ablation/configs/ablation_v4/no_fusion.yaml",
+    "run_dir": "",
+    "metrics_csv": "",
+    "metrics_snapshot": ""
+  },
+  {
+    "variant": "no_boundary_guidance",
+    "status": "metrics_not_found",
+    "config_path": "/mnt/ssd4tb/project/BAMNet/ablation/configs/ablation_v4/no_boundary_guidance.yaml",
+    "run_dir": "",
+    "metrics_csv": "",
+    "metrics_snapshot": ""
+  },
+  {
+    "variant": "no_boundary_loss",
+    "status": "metrics_not_found",
+    "config_path": "/mnt/ssd4tb/project/BAMNet/ablation/configs/ablation_v4/no_boundary_loss.yaml",
+    "run_dir": "",
+    "metrics_csv": "",
+    "metrics_snapshot": ""
+  },
+  {
+    "variant": "beta_fixed_8",
+    "status": "metrics_not_found",
+    "config_path": "/mnt/ssd4tb/project/BAMNet/ablation/configs/ablation_v4/beta_fixed_8.yaml",
+    "run_dir": "",
+    "metrics_csv": "",
+    "metrics_snapshot": ""
+  },
+  {
+    "variant": "beta_schedule_4_8",
+    "status": "metrics_not_found",
+    "config_path": "/mnt/ssd4tb/project/BAMNet/ablation/configs/ablation_v4/beta_schedule_4_8.yaml",
+    "run_dir": "",
+    "metrics_csv": "",
+    "metrics_snapshot": ""
   }
 ]
