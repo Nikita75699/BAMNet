@@ -32,3 +32,4 @@ __pycache__/
 /publication/sn-article-template/*.out
 /publication/sn-article-template/*.synctex.gz
 /publication/sn-article-template/*.pdf
+/boundary_aware_manet_v4/*

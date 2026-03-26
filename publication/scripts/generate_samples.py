@@ -8,12 +8,19 @@ import numpy as np
 import cv2
 import shutil
 import argparse
+import sys
+from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
+
+ROOT_DIR = Path(__file__).resolve().parents[2]
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
+
 from bamnet_paths import get_data_path
 
 # Константы
-ROOT_DIR = str(get_data_path("segmentation_point(v2)"))
-OUTPUT_DIR = str(get_data_path("output_samples"))
+DEFAULT_DATASET_ROOT = str(get_data_path("export_project", "segmentation_point"))
+OUTPUT_DIR = str(ROOT_DIR / "publication" / "generated_samples")
 NUM_SAMPLES = 25
 DPI = 300
 
@@ -139,6 +146,29 @@ def get_all_samples(root_dir):
     return samples
 
 
+def patient_dir_from_image_name(image_name):
+    patient_token = image_name.split("_", 1)[0]
+    if not patient_token.isdigit():
+        raise ValueError(f"Cannot derive patient id from image name: {image_name}")
+    return f"{int(patient_token):03d}"
+
+
+def get_single_sample(input_path, dataset_root):
+    """Собирает одну пару image+annotation по имени файла."""
+    image_name = os.path.basename(input_path)
+    patient_dir = patient_dir_from_image_name(image_name)
+    ann_path = os.path.join(dataset_root, patient_dir, "ann", image_name + ".json")
+
+    if not os.path.exists(ann_path):
+        raise FileNotFoundError(f"Annotation not found for {image_name}: {ann_path}")
+
+    return {
+        "img_path": input_path,
+        "ann_path": ann_path,
+        "name": image_name,
+    }
+
+
 def draw_supervisely_style(img, ann_data):
     """Отрисовка аннотаций в стиле Supervisely."""
     font = load_font()
@@ -236,7 +266,18 @@ def draw_supervisely_style(img, ann_data):
 
 def main():
     parser = argparse.ArgumentParser(description="Генерация примеров аннотированных изображений.")
-    parser.add_argument("--input", type=str, default=ROOT_DIR, help="Путь к Supervisely-датасету.")
+    parser.add_argument(
+        "--input",
+        type=str,
+        default=DEFAULT_DATASET_ROOT,
+        help="Путь к Supervisely-датасету или к одному PNG-файлу.",
+    )
+    parser.add_argument(
+        "--dataset-root",
+        type=str,
+        default=DEFAULT_DATASET_ROOT,
+        help="Корень raw Supervisely-датасета для поиска ann/<image>.json в single-image режиме.",
+    )
     parser.add_argument("--output", type=str, default=OUTPUT_DIR, help="Куда сохранить JPEG-примеры.")
     parser.add_argument("--num-samples", type=int, default=NUM_SAMPLES, help="Сколько примеров сохранить.")
     args = parser.parse_args()
@@ -245,14 +286,18 @@ def main():
         os.makedirs(args.output)
         print(f"Created output directory: {args.output}")
 
-    print("Finding samples...")
-    all_samples = get_all_samples(args.input)
-    print(f"Found {len(all_samples)} samples.")
-
-    if len(all_samples) < args.num_samples:
-        selected = all_samples
+    if os.path.isfile(args.input):
+        selected = [get_single_sample(args.input, args.dataset_root)]
+        print(f"Single-image mode: {selected[0]['name']}")
     else:
-        selected = random.sample(all_samples, args.num_samples)
+        print("Finding samples...")
+        all_samples = get_all_samples(args.input)
+        print(f"Found {len(all_samples)} samples.")
+
+        if len(all_samples) < args.num_samples:
+            selected = all_samples
+        else:
+            selected = random.sample(all_samples, args.num_samples)
 
     for i, sample in enumerate(selected):
         print(f"[{i+1}/{len(selected)}] Processing {sample['name']}...")
@@ -263,12 +308,16 @@ def main():
 
             result = draw_supervisely_style(img, ann_data)
 
-            out_name = f"sample_{i+1:02d}_{sample['name'].replace('.png', '.jpeg')}"
+            if len(selected) == 1:
+                out_name = f"sample_{sample['name'].replace('.png', '.jpeg')}"
+                orig_name = f"orig_{sample['name']}"
+            else:
+                out_name = f"sample_{i+1:02d}_{sample['name'].replace('.png', '.jpeg')}"
+                orig_name = f"orig_{i+1:02d}_{sample['name']}"
             out_path = os.path.join(args.output, out_name)
             result.save(out_path, "JPEG", dpi=(DPI, DPI), quality=95)
 
             # Копируем оригинальный файл
-            orig_name = f"orig_{i+1:02d}_{sample['name']}"
             orig_path = os.path.join(args.output, orig_name)
             shutil.copy2(sample['img_path'], orig_path)
         except Exception as e:

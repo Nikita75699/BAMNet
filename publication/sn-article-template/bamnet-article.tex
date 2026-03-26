@@ -81,28 +81,28 @@ The primary annotation task was binary segmentation of the aortic root. The expe
     \centering
     \begin{subfigure}[b]{0.48\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{../fgure_article/orig_15_0025_004_029.png}
+        \includegraphics[width=\textwidth]{../figures/orig_0019_008_030.png}
         \caption{}
         \label{fig:orig1}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.48\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{../fgure_article/sample_15_0025_004_029.jpeg}
+        \includegraphics[width=\textwidth]{../figures/sample_0019_008_030.jpeg}
         \caption{}
         \label{fig:annot1}
     \end{subfigure}
     \vskip\baselineskip
     \begin{subfigure}[b]{0.48\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{../fgure_article/orig_19_0019_008_031.png}
+        \includegraphics[width=\textwidth]{../figures/orig_0019_013_027.png}
         \caption{}
         \label{fig:orig2}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.48\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{../fgure_article/sample_19_0019_008_031.jpeg}
+        \includegraphics[width=\textwidth]{../figures/sample_0019_013_027.jpeg}
         \caption{}
         \label{fig:annot2}
     \end{subfigure}
@@ -142,7 +142,7 @@ This design allows the model to exploit both global root morphology and local co
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=\textwidth]{../fgure_article/figeure_orginal/BAMNet.jpg}
+\includegraphics[width=\textwidth]{../figures/BAMNet.jpg}
 \caption{Overview of the proposed BoundaryAwareMAnet (BAMNet) architecture for joint aortic root segmentation and anatomical landmark localization on fluoroscopic images. The network combines an EfficientNet-V2 encoder, a segmentation-oriented decoder, a dedicated landmark branch with Coordinate Attention, and an auxiliary boundary pathway used for boundary-guided supervision.}
 \label{fig:bamnet_architecture}
 \end{figure}
@@ -277,13 +277,13 @@ These examples highlight an important practical feature of the proposed multitas
 \centering
     \begin{subfigure}[b]{0.48\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{../figures/60687da9-a664-480a-8eaf-943dd3861d14.jpeg}
+        \includegraphics[width=\textwidth]{../figures/orig_0019_008_030_implant_zone.png}
         \caption{}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.48\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{../figures/fc2fbaf7-c486-4596-b86e-64f8a1a10a86.jpeg}
+        \includegraphics[width=\textwidth]{../figures/orig_0019_013_027_implant_zone.png}
         \caption{}
     \end{subfigure}
     \caption{Representative BAMNet predictions on intraoperative fluoroscopic frames. The yellow contour and semi-transparent green region denote the predicted aortic root mask. Yellow points correspond to the four predicted landmarks (AA1, AA2, STJ1, STJ2). The blue arrow indicates the estimated aortic axis, and the central geometric overlay illustrates the predicted implantation zone derived from the landmark configuration.}
@@ -446,8 +446,8 @@ This study was supported by the Russian Science Foundation under Grant No.~24-19
 All essential components of the study, including curated source code, data, and trained models, have been made publicly available:
 
 \begin{itemize}
-\item \textbf{Source code:} \url{https://github.com/Nikita75699/segmentation_tavi}
-\item \textbf{Dataset:} \url{https://doi.org/10.5281/zenodo.15094600}
+\item \textbf{Source code:} \url{https://github.com/Nikita75699/BAMNet}
+\item \textbf{Dataset:} \url{https://doi.org/10.5281/zenodo.19219901}
 \item \textbf{Models:} \url{https://doi.org/10.5281/zenodo.15106413}
 \end{itemize}
 
