@@ -3,6 +3,7 @@ import glob
 import json
 import shutil
 import argparse
+from bamnet_paths import get_data_path
 
 def extract_meta(folds_dir, out_meta_json):
     """
@@ -93,14 +94,14 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Управление фолдами: сбор меты и распределение аннотаций")
     parser.add_argument("--action", type=str, choices=["extract_meta", "distribute"], required=True, 
                         help="extract_meta - собрать мету из структуры, distribute - раскидать маски и точки по мете")
-    parser.add_argument("--folds_dir", type=str, default="segpoint_folds", 
+    parser.add_argument("--folds_dir", type=str, default=str(get_data_path("export_project", "segpoint_folds")), 
                         help="Путь к корневой папке с фолдами")
-    parser.add_argument("--meta_file", type=str, default="folds_meta.json", 
+    parser.add_argument("--meta_file", type=str, default="dataset_metadata/segpoint_folds/folds_meta.json", 
                         help="Файл для сохранения/чтения распределения (JSON)")
     
     # Эти параметры нужны только для distribute
-    parser.add_argument("--src_root", type=str, default="MANet_dataset", 
-                        help="Путь к корневой папке MANet_dataset (где лежат подпапки train/val с масками и точками)")
+    parser.add_argument("--src_root", type=str, default=str(get_data_path("export_project", "segpoint")), 
+                        help="Путь к корневой папке BAMNet dataset (где лежат подпапки train/val с масками и точками)")
     
     args = parser.parse_args()
     

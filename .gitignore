@@ -1,17 +1,32 @@
-./export_project/*
-export_project/*
-segmentation_point(v2)/*
-__pycache__/*
-publication/sn-article-template/bamnet-article.aux
-publication/sn-article-template/bamnet-article.bbl
-publication/sn-article-template/bamnet-article.log
-publication/sn-article-template/bamnet-article.fls
-publication/sn-article-template/bamnet-article.fdb_latexmk
-publication/sn-article-template/bamnet-article.out
-publication/sn-article-template/bamnet-article.aux
-publication/sn-article-template/bamnet-article.bbl
-publication/sn-article-template/bamnet-article.fdb_latexmk
-publication/sn-article-template/bamnet-article.log
-publication/sn-article-template/bamnet-article.out
-.agents/*
-.agents
+# External local data trees or symlinks
+/export_project
+/segmentation_point(v2)
+
+# Python caches
+__pycache__/
+**/__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local experiment outputs
+/runs/
+/debug_inspect/
+/output_samples/
+/pred_out/
+
+# Agent-local state
+/.agent/
+/.agents/
+
+# LaTeX build artifacts
+/publication/sn-article-template/*.aux
+/publication/sn-article-template/*.bbl
+/publication/sn-article-template/*.blg
+/publication/sn-article-template/*.fdb_latexmk
+/publication/sn-article-template/*.fls
+/publication/sn-article-template/*.log
+/publication/sn-article-template/*.out
+/publication/sn-article-template/*.synctex.gz
+/publication/sn-article-template/*.pdf

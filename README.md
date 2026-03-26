@@ -27,6 +27,8 @@ The main training entry point is [train.py](./train.py). Dataset loading and aug
 - [data.py](./data.py) — dataset, augmentations, datamodule, debug visualizations.
 - [model_backbone_coords.py](./model_backbone_coords.py) — BAMNet architecture and Lightning module.
 - [config.yaml](./config.yaml) — default configuration.
+- [dataset_metadata/](./dataset_metadata/) — small tracked metadata required for dataset reproducibility.
+- [prepare_data/](./prepare_data/) — dataset preparation, publication, and YOLO conversion utilities.
 - [publication/](./publication/) — manuscript, figures, and LaTeX sources for the paper.
 - [Swin-Unet/](./Swin-Unet/) — separate baseline code kept in the repository.
 
@@ -54,6 +56,30 @@ pip install pytorch-lightning albumentations opencv-python matplotlib pyyaml ten
 ```
 
 If you train on CPU only, install the CPU build of PyTorch instead of the CUDA wheel.
+
+## Repository Hygiene
+
+This repository is intended to stay source-only by default.
+
+- Commit code, configs, docs, and small metadata needed for reproducibility.
+- Keep large datasets, prepared exports, YOLO outputs, and other generated artifacts outside the repo.
+- Set `BAMNET_DATA_ROOT` to the external data root. If it is unset, the code falls back to `/mnt/ssd4tb/data/BAMNet-data`.
+
+Example:
+
+```bash
+export BAMNET_DATA_ROOT=/mnt/ssd4tb/data/BAMNet-data
+```
+
+Expected external layout:
+
+```text
+$BAMNET_DATA_ROOT/
+├── export_project/
+├── segmentation_point(v2)/
+├── runs/
+└── ablation_runs/
+```
 
 ## Dataset Layout
 
@@ -122,9 +148,10 @@ point_names: ["AA1", "AA2", "STJ1", "STJ2"]
 
 ## How to Run Training
 
-1. Edit [config.yaml](./config.yaml) and set `data_path` to your fold directory.
-2. Activate the environment.
-3. Start training:
+1. Export `BAMNET_DATA_ROOT` if you use a custom external data root.
+2. Edit [config.yaml](./config.yaml) if you want a fold different from the default one.
+3. Activate the environment.
+4. Start training:
 
 ```bash
 python train.py --config config.yaml
@@ -145,10 +172,10 @@ The trainer automatically uses GPU when `torch.cuda.is_available()` is true; oth
 
 ## Training Outputs
 
-Training artifacts are written to:
+By default, training artifacts are written to:
 
 ```text
-runs/<experiment_name>/<architecture>/<version>/
+$BAMNET_DATA_ROOT/runs/<experiment_name>/<architecture>/<version>/
 ```
 
 Typical contents:
@@ -193,5 +220,5 @@ These results support the use of the model as a foundation for contrast-sparing 
 ## Notes
 
 - The repository contains code and publication materials under active development.
-- Paths in [config.yaml](./config.yaml) are currently local and should be adapted before running.
+- Paths in [config.yaml](./config.yaml) and helper scripts resolve through `BAMNET_DATA_ROOT`.
 - The `Swin-Unet/` subdirectory is a separate baseline implementation and is not required for BAMNet training.

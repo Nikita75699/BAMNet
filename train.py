@@ -10,12 +10,13 @@ from pathlib import Path
 import shutil
 from model_backbone_coords_v2 import build_system
 from datetime import datetime
+from bamnet_paths import expand_config_tree
 
 # Видимость GPU задаётся снаружи через окружение или настройки Lightning.
 
 def load_config(path: str):
     with open(path, 'r') as f:
-        return yaml.safe_load(f)
+        return expand_config_tree(yaml.safe_load(f))
 
 def main():
     parser = argparse.ArgumentParser()
@@ -149,8 +150,9 @@ def main():
     dm.print_stats()
 
     # глубже посмотрим на первые примеры обоих сплитов
-    dm.inspect_n_samples(n=4, split="train", outdir="debug_inspect/train")
-    dm.inspect_n_samples(n=4, split="val",   outdir="debug_inspect/val")
+    debug_root = Path(save_dir) / "debug_inspect"
+    dm.inspect_n_samples(n=4, split="train", outdir=str(debug_root / "train"))
+    dm.inspect_n_samples(n=4, split="val", outdir=str(debug_root / "val"))
 
     # ---------------- Fit ----------------
     trainer.fit(lit, dm)

@@ -7,11 +7,13 @@ import io
 import numpy as np
 import cv2
 import shutil
+import argparse
 from PIL import Image, ImageDraw, ImageFont
+from bamnet_paths import get_data_path
 
 # Константы
-ROOT_DIR = "/mnt/ssd4tb/project/BAMNet/segmentation_point(v2)"
-OUTPUT_DIR = "./output_samples"
+ROOT_DIR = str(get_data_path("segmentation_point(v2)"))
+OUTPUT_DIR = str(get_data_path("output_samples"))
 NUM_SAMPLES = 25
 DPI = 300
 
@@ -233,18 +235,24 @@ def draw_supervisely_style(img, ann_data):
 
 
 def main():
-    if not os.path.exists(OUTPUT_DIR):
-        os.makedirs(OUTPUT_DIR)
-        print(f"Created output directory: {OUTPUT_DIR}")
+    parser = argparse.ArgumentParser(description="Генерация примеров аннотированных изображений.")
+    parser.add_argument("--input", type=str, default=ROOT_DIR, help="Путь к Supervisely-датасету.")
+    parser.add_argument("--output", type=str, default=OUTPUT_DIR, help="Куда сохранить JPEG-примеры.")
+    parser.add_argument("--num-samples", type=int, default=NUM_SAMPLES, help="Сколько примеров сохранить.")
+    args = parser.parse_args()
+
+    if not os.path.exists(args.output):
+        os.makedirs(args.output)
+        print(f"Created output directory: {args.output}")
 
     print("Finding samples...")
-    all_samples = get_all_samples(ROOT_DIR)
+    all_samples = get_all_samples(args.input)
     print(f"Found {len(all_samples)} samples.")
 
-    if len(all_samples) < NUM_SAMPLES:
+    if len(all_samples) < args.num_samples:
         selected = all_samples
     else:
-        selected = random.sample(all_samples, NUM_SAMPLES)
+        selected = random.sample(all_samples, args.num_samples)
 
     for i, sample in enumerate(selected):
         print(f"[{i+1}/{len(selected)}] Processing {sample['name']}...")
@@ -256,17 +264,17 @@ def main():
             result = draw_supervisely_style(img, ann_data)
 
             out_name = f"sample_{i+1:02d}_{sample['name'].replace('.png', '.jpeg')}"
-            out_path = os.path.join(OUTPUT_DIR, out_name)
+            out_path = os.path.join(args.output, out_name)
             result.save(out_path, "JPEG", dpi=(DPI, DPI), quality=95)
 
             # Копируем оригинальный файл
             orig_name = f"orig_{i+1:02d}_{sample['name']}"
-            orig_path = os.path.join(OUTPUT_DIR, orig_name)
+            orig_path = os.path.join(args.output, orig_name)
             shutil.copy2(sample['img_path'], orig_path)
         except Exception as e:
             print(f"  ERROR: {e}")
 
-    print(f"Done. {len(selected)} images saved to {OUTPUT_DIR}/")
+    print(f"Done. {len(selected)} images saved to {args.output}/")
 
 
 if __name__ == "__main__":
