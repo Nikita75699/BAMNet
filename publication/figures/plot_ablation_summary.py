@@ -31,7 +31,7 @@ n = len(variants)
 y = np.arange(n)
 
 # ---------- palette ----------
-BG       = "#FAFAFA"
+BG       = "#FFFFFF"
 TEXT     = "#2D2D2D"
 TEXT_SEC = "#6B7280"
 ACCENT   = "#10B981"  # emerald for full model
@@ -166,7 +166,7 @@ fig.tight_layout(pad=0.8)
 
 # ---- save ----
 out = "/Users/viacheslav/projects/personal/BAMNet/publication/figures/ablation_summary.png"
-fig.savefig(out, dpi=300, bbox_inches="tight", facecolor=BG)
+fig.savefig(out, dpi=400, bbox_inches="tight", facecolor=BG)
 fig.savefig(out.replace(".png", ".pdf"), bbox_inches="tight", facecolor=BG)
 print(f"Saved: {out}")
 print(f"Saved: {out.replace('.png', '.pdf')}")
