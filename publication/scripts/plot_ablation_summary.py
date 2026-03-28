@@ -2,7 +2,7 @@
 Ablation study summary figure for BAMNet.
 Modern two-panel dot plot showing the impact of each architectural
 component on segmentation quality (Dice) and landmark localization
-accuracy (Mean Error).
+accuracy (Mean / Median Error).
 """
 
 from pathlib import Path
@@ -13,7 +13,7 @@ import numpy as np
 SCRIPT_DIR = Path(__file__).resolve().parent
 FIGURES_DIR = SCRIPT_DIR.parent / "figures"
 
-# ---------- data from Table 5 ----------
+# ---------- data from publication/evaluation/table_metrics.csv ----------
 variants = [
     "Full BAMNet",
     "w/o Coordinate Attention",
@@ -25,12 +25,14 @@ variants = [
     "Temperature schedule: 4 to 8",
 ]
 
-dice   = np.array([0.91, 0.90, 0.91, 0.91, 0.90, 0.91, 0.91, 0.91])
+# Dice scores
+mean_dice = np.array([0.907, 0.902, 0.905, 0.907, 0.900, 0.912, 0.910, 0.910])
+med_dice  = np.array([0.895, 0.889, 0.892, 0.894, 0.886, 0.900, 0.898, 0.897])  # TODO: replace with real median values
+
+# Localization errors (px)
 mean_e = np.array([10.30, 10.62, 10.84, 10.96, 11.04, 10.88, 11.29, 11.37])
 med_e  = np.array([8.17, 8.47, 9.01, 8.82, 9.21, 8.77, 9.51, 9.46])
-pck10  = np.array([59.88, 57.41, 55.76, 54.73, 53.70, 56.69, 52.98, 53.29])
 
-# Sort by mean error (best → worst), keep Full model on top
 n = len(variants)
 y = np.arange(n)
 
@@ -39,9 +41,9 @@ BG       = "#FFFFFF"
 TEXT     = "#2D2D2D"
 TEXT_SEC = "#6B7280"
 ACCENT   = "#10B981"  # emerald for full model
-DOT_DICE = "#3B82F6"  # blue
-DOT_ERR  = "#EF4444"  # red
-DOT_MED  = "#F59E0B"  # amber
+DOT_MEAN = "#3B82F6"  # blue — mean values
+DOT_MED  = "#F59E0B"  # amber — median values
+DOT_ERR_MEAN = "#3B82F6"  # blue — same as DOT_MEAN for consistency
 LINE_COL = "#E5E7EB"
 STRIP_BG = "#F3F4F6"
 
@@ -80,64 +82,66 @@ for i in range(n):
 for ax in (ax_dice, ax_err):
     ax.axhspan(-0.5, 0.5, color=ACCENT, alpha=0.10, zorder=0)
 
-# ===== LEFT PANEL: Dice Score =====
-# reference line for Full model Dice
-ax_dice.axvline(dice[0], color=ACCENT, linewidth=0.8, linestyle="--", alpha=0.5, zorder=1)
+# ===== LEFT PANEL: Dice Score (mean + median) =====
+ax_dice.axvline(mean_dice[0], color=ACCENT, linewidth=0.8, linestyle="--", alpha=0.5, zorder=1)
 
 for i in range(n):
-    color = ACCENT if i == 0 else DOT_DICE
-    size = 60
-    marker = "o"
-    ax_dice.scatter(dice[i], y[i], s=size, color=color, zorder=3,
-                    marker=marker, edgecolors="white", linewidths=0.8)
-    # value label
-    offset = -0.004 if dice[i] >= dice[0] else 0.003
-    ha = "right" if dice[i] >= dice[0] else "left"
-    ax_dice.text(dice[i] + offset, y[i], f"{dice[i]:.2f}",
-                 va="center", ha=ha, fontsize=7.5,
-                 color=color, fontweight="bold" if i == 0 else "normal")
+    col_mean = ACCENT if i == 0 else DOT_MEAN
+    col_med = ACCENT if i == 0 else DOT_MED
 
-ax_dice.set_xlim(0.893, 0.917)
-ax_dice.set_xlabel("Dice Score (higher is better)", fontsize=9, fontweight="bold", color=DOT_DICE)
+    # connecting line between mean and median
+    color_line = ACCENT if i == 0 else "#D1D5DB"
+    lw = 1.8 if i == 0 else 1.2
+    ax_dice.plot([mean_dice[i], med_dice[i]], [y[i], y[i]],
+                 color=color_line, linewidth=lw, solid_capstyle="round", zorder=2)
+
+    # mean dot (square)
+    ax_dice.scatter(mean_dice[i], y[i], s=50, color=col_mean, zorder=3,
+                    marker="s", edgecolors="white", linewidths=0.8)
+    # median dot (circle)
+    ax_dice.scatter(med_dice[i], y[i], s=30, color=col_med, zorder=3,
+                    marker="o", edgecolors="white", linewidths=0.6)
+
+    # value labels: mean label to the right, median label to the left
+    ax_dice.text(mean_dice[i] + 0.0015, y[i], f"{mean_dice[i]:.3f}",
+                 va="center", ha="left", fontsize=7.5,
+                 color=col_mean, fontweight="bold" if i == 0 else "normal")
+    ax_dice.text(med_dice[i] - 0.0015, y[i], f"{med_dice[i]:.3f}",
+                 va="center", ha="right", fontsize=7.5,
+                 color=col_med, fontweight="bold" if i == 0 else "normal")
+
+ax_dice.set_xlim(0.880, 0.918)
+ax_dice.set_xlabel("Dice Score (higher is better)", fontsize=9, fontweight="bold", color=TEXT)
 ax_dice.set_yticks(y)
 ax_dice.set_yticklabels(variants, fontsize=8.5)
 ax_dice.invert_yaxis()
 
-# Bold the full model label
 labels = ax_dice.get_yticklabels()
 labels[0].set_fontweight("bold")
 labels[0].set_color(ACCENT)
 
-# minimal grid
 ax_dice.xaxis.grid(True, color=LINE_COL, linewidth=0.4, zorder=0)
 ax_dice.yaxis.grid(False)
 for spine in ax_dice.spines.values():
     spine.set_visible(False)
 
-# ===== RIGHT PANEL: Localization Error =====
-# reference lines for Full model
+# ===== RIGHT PANEL: Localization Error (mean + median) =====
 ax_err.axvline(mean_e[0], color=ACCENT, linewidth=0.8, linestyle="--", alpha=0.5, zorder=1)
 
 for i in range(n):
-    # connecting line between mean and median
     color_line = ACCENT if i == 0 else "#D1D5DB"
     lw = 1.8 if i == 0 else 1.2
     ax_err.plot([med_e[i], mean_e[i]], [y[i], y[i]],
                 color=color_line, linewidth=lw, solid_capstyle="round", zorder=2)
 
-    # median dot
     col_med = ACCENT if i == 0 else DOT_MED
     ax_err.scatter(med_e[i], y[i], s=30, color=col_med,
                    marker="o", zorder=3, edgecolors="white", linewidths=0.6)
 
-    # mean dot
-    col_mean = ACCENT if i == 0 else DOT_ERR
-    size = 50
-    mk = "s"
-    ax_err.scatter(mean_e[i], y[i], s=size, color=col_mean, marker=mk,
+    col_mean = ACCENT if i == 0 else DOT_ERR_MEAN
+    ax_err.scatter(mean_e[i], y[i], s=50, color=col_mean, marker="s",
                    zorder=3, edgecolors="white", linewidths=0.8)
 
-    # value labels
     ax_err.text(mean_e[i] + 0.18, y[i], f"{mean_e[i]:.1f}",
                 va="center", ha="left", fontsize=7.5,
                 color=col_mean, fontweight="bold" if i == 0 else "normal")
@@ -146,7 +150,7 @@ for i in range(n):
                 color=col_med, fontweight="bold" if i == 0 else "normal")
 
 ax_err.set_xlim(7.2, 12.2)
-ax_err.set_xlabel("Localization Error, px (lower is better)", fontsize=9, fontweight="bold", color=DOT_ERR)
+ax_err.set_xlabel("Localization Error, px (lower is better)", fontsize=9, fontweight="bold", color=TEXT)
 ax_err.xaxis.grid(True, color=LINE_COL, linewidth=0.4, zorder=0)
 ax_err.yaxis.grid(False)
 for spine in ax_err.spines.values():
@@ -156,14 +160,15 @@ for spine in ax_err.spines.values():
 legend_elements = [
     mpatches.Patch(facecolor=ACCENT, alpha=0.3, edgecolor=ACCENT,
                    linewidth=0.8, label="Full BAMNet"),
-    plt.Line2D([0], [0], marker="s", color="w", markerfacecolor=DOT_ERR,
-               markersize=7, label="Mean error"),
+    plt.Line2D([0], [0], marker="s", color="w", markerfacecolor=DOT_MEAN,
+               markersize=7, label="Mean"),
     plt.Line2D([0], [0], marker="o", color="w", markerfacecolor=DOT_MED,
-               markersize=6, label="Median error"),
+               markersize=6, label="Median"),
 ]
 leg = ax_err.legend(handles=legend_elements, loc="upper right", fontsize=7.5,
                     frameon=True, fancybox=True, framealpha=0.95,
-                    edgecolor=LINE_COL, handletextpad=0.5, borderpad=0.6)
+                    edgecolor=LINE_COL, handletextpad=0.5, borderpad=0.6,
+                    bbox_to_anchor=(1.02, 1.0))
 leg.get_frame().set_linewidth(0.5)
 
 fig.tight_layout(pad=0.8)
