@@ -20,6 +20,9 @@ __pycache__/
 /pred_out/
 /baselines/**/model_out/
 /baselines/**/pretrained_ckpt/
+/runs_ablation/*
+ablation/runs_ablation/*
+val/*
 
 # Agent-local state
 /.agent/
@@ -35,3 +38,5 @@ __pycache__/
 /publication/sn-article-template/*.out
 /publication/sn-article-template/*.synctex.gz
 /boundary_aware_manet_v4/*
+
+

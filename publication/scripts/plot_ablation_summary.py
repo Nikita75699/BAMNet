@@ -27,7 +27,7 @@ variants = [
 
 # Dice scores
 mean_dice = np.array([0.907, 0.902, 0.905, 0.907, 0.900, 0.912, 0.910, 0.910])
-med_dice  = np.array([0.895, 0.889, 0.892, 0.894, 0.886, 0.900, 0.898, 0.897])  # TODO: replace with real median values
+med_dice  = np.array([0.9165, 0.9166, 0.9114, 0.9134, 0.9041, 0.9185, 0.9188, 0.9138])
 
 # Localization errors (px)
 mean_e = np.array([10.30, 10.62, 10.84, 10.96, 11.04, 10.88, 11.29, 11.37])
@@ -102,15 +102,15 @@ for i in range(n):
     ax_dice.scatter(med_dice[i], y[i], s=30, color=col_med, zorder=3,
                     marker="o", edgecolors="white", linewidths=0.6)
 
-    # value labels: mean label to the right, median label to the left
-    ax_dice.text(mean_dice[i] + 0.0015, y[i], f"{mean_dice[i]:.3f}",
-                 va="center", ha="left", fontsize=7.5,
-                 color=col_mean, fontweight="bold" if i == 0 else "normal")
-    ax_dice.text(med_dice[i] - 0.0015, y[i], f"{med_dice[i]:.3f}",
+    # value labels: mean label to the left, median label to the right
+    ax_dice.text(mean_dice[i] - 0.0015, y[i], f"{mean_dice[i]:.3f}",
                  va="center", ha="right", fontsize=7.5,
+                 color=col_mean, fontweight="bold" if i == 0 else "normal")
+    ax_dice.text(med_dice[i] + 0.0015, y[i], f"{med_dice[i]:.3f}",
+                 va="center", ha="left", fontsize=7.5,
                  color=col_med, fontweight="bold" if i == 0 else "normal")
 
-ax_dice.set_xlim(0.880, 0.918)
+ax_dice.set_xlim(0.895, 0.922)
 ax_dice.set_xlabel("Dice Score (higher is better)", fontsize=9, fontweight="bold", color=TEXT)
 ax_dice.set_yticks(y)
 ax_dice.set_yticklabels(variants, fontsize=8.5)
@@ -158,8 +158,8 @@ for spine in ax_err.spines.values():
 
 # ===== Legend =====
 legend_elements = [
-    mpatches.Patch(facecolor=ACCENT, alpha=0.3, edgecolor=ACCENT,
-                   linewidth=0.8, label="Full BAMNet"),
+    # mpatches.Patch(facecolor=ACCENT, alpha=0.3, edgecolor=ACCENT,
+    #                linewidth=0.8, label="Full BAMNet"),
     plt.Line2D([0], [0], marker="s", color="w", markerfacecolor=DOT_MEAN,
                markersize=7, label="Mean"),
     plt.Line2D([0], [0], marker="o", color="w", markerfacecolor=DOT_MED,
