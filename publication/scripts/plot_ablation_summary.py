@@ -5,9 +5,13 @@ component on segmentation quality (Dice) and landmark localization
 accuracy (Mean Error).
 """
 
+from pathlib import Path
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import numpy as np
+
+SCRIPT_DIR = Path(__file__).resolve().parent
+FIGURES_DIR = SCRIPT_DIR.parent / "figures"
 
 # ---------- data from Table 5 ----------
 variants = [
@@ -165,9 +169,9 @@ leg.get_frame().set_linewidth(0.5)
 fig.tight_layout(pad=0.8)
 
 # ---- save ----
-out = "/Users/viacheslav/projects/personal/BAMNet/publication/figures/ablation_summary.png"
+out = FIGURES_DIR / "figure_4" / "ablation_summary.png"
 fig.savefig(out, dpi=400, bbox_inches="tight", facecolor=BG)
-fig.savefig(out.replace(".png", ".pdf"), bbox_inches="tight", facecolor=BG)
+fig.savefig(out.with_suffix(".pdf"), bbox_inches="tight", facecolor=BG)
 print(f"Saved: {out}")
-print(f"Saved: {out.replace('.png', '.pdf')}")
+print(f"Saved: {out.with_suffix('.pdf')}")
 plt.close()
