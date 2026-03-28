@@ -6,6 +6,7 @@
 \usepackage{textcomp}
 \usepackage{booktabs}
 \usepackage{subcaption}
+\usepackage{xcolor}
 
 \makeatletter
 \@twosidefalse
@@ -51,9 +52,9 @@
 
 \abstract{\textbf{Purpose} Accurate intraoperative delineation of the aortic root and localization of key anatomical landmarks during transcatheter aortic valve implantation (TAVI) remain difficult because fluoroscopy provides low soft-tissue contrast and is frequently degraded by motion and overlap from catheters and delivery systems. This study developed and validated a multitask deep learning model for simultaneous aortic root segmentation and landmark localization on fluoroscopic images to support image-guided TAVI.
 
-\textbf{Methods} A retrospective dataset of 2,925 fully anonymized fluoroscopic frames from 83 patients who underwent TAVI between 2018 and 2024 was used. Expert annotations included binary masks of the contrast-enhanced aortic root and four anatomical landmarks: AA1, AA2, STJ1, and STJ2. We developed BoundaryAwareMAnet (BAMNet), a multitask architecture combining an EfficientNet-V2 encoder, a MA-Net-inspired decoder, a coordinate-aware landmark head, and an auxiliary boundary-guidance pathway. Model performance was evaluated using patient-level five-fold cross-validation. Segmentation quality was assessed with Dice, intersection-over-union (IoU), and Surface Dice at 4 mm, while landmark localization was evaluated using median and mean point localization error.
+\textbf{Methods} A retrospective dataset of 2,925 fully anonymized fluoroscopic frames from 83 patients who underwent TAVI between 2018 and 2024 was used. Expert annotations included binary masks of the contrast-enhanced aortic root and four anatomical landmarks: \textcolor{red}{two aortic annulus points} (AA1, AA2) \textcolor{red}{and two sinotubular junction points near the coronary ostia} (STJ1, STJ2). We developed BoundaryAwareMAnet (BAMNet), a multitask architecture combining an EfficientNet-V2 encoder, a MA-Net-inspired decoder, a coordinate-aware landmark head, and an auxiliary boundary-guidance pathway. Model performance was evaluated using patient-level five-fold cross-validation. Segmentation quality was assessed with Dice, intersection-over-union (IoU), and Surface Dice at 4 mm, while landmark localization was evaluated using median and mean point localization error.
 
-\textbf{Results} Across five folds, BAMNet achieved a Dice score of $0.92 \pm 0.01$, an IoU of $0.85 \pm 0.02$, and a Surface Dice@4 mm of $0.84 \pm 0.03$. Landmark localization performance reached a median error of $7.64 \pm 0.33$~px and a mean error of $10.02 \pm 0.17$~px. The model produced both segmentation masks and landmark coordinates in a single forward pass and maintained real-time inference performance of 62.5 FPS.
+\textbf{Results} Across five folds, BAMNet achieved a Dice score of $0.92 \pm 0.01$, an IoU of $0.85 \pm 0.02$, and a Surface Dice@4 mm of $0.84 \pm 0.03$. Landmark localization performance reached a median error of $7.64 \pm 0.33$~px and a mean error of $10.02 \pm 0.17$~px. The model produced both segmentation masks and landmark coordinates in a single forward pass, \textcolor{red}{maintaining real-time inference at approximately 63~FPS on an NVIDIA RTX~4070 GPU}.
 
 \textbf{Conclusion} Joint segmentation of the aortic root and localization of anatomical landmarks on intraoperative fluoroscopy is feasible. BAMNet provides a practical foundation for anatomical overlay during TAVI and may support future contrast-sparing, image-guided, and robot-assisted valve implantation workflows.}
 
@@ -69,7 +70,7 @@ Despite this expansion, optimal valve positioning during deployment remains a ma
 
 In current clinical practice, operators rely primarily on fluoroscopy, often supplemented by repeated contrast aortography to delineate the aortic root, annular plane, and coronary ostia. Fluoroscopy offers high temporal resolution, but it also suffers from low soft-tissue contrast, noise, respiratory and cardiac motion, and frequent occlusion by guidewires, catheters, and delivery systems. These limitations increase dependence on contrast administration and operator experience. Hybrid approaches based on preoperative CT and CT-fluoroscopy fusion have been explored for procedural guidance, but their accuracy may be limited by cardiorespiratory motion, deformation from stiff guidewires, and the lack of continuous real-time updating during valve deployment \cite{vernikouskaya2017_imageguidance,vernikouskaya2018_registration}.
 
-In our previous work, we performed a large-scale comparison of six modern convolutional architectures for automatic aortic root segmentation on intraoperative TAVI frames. On a dataset of 2,925 images from 83 patients with strict patient-level 5-fold cross-validation, the best single-task model, MA-Net with an EfficientNet-B4 encoder, achieved a median Dice score of 0.94 and an ASSD of 4.07~mm \cite{laptev2025_aorticroot}. These results showed that high-quality segmentation is possible even under low-contrast fluoroscopic conditions. However, a segmentation mask alone is insufficient when sub-pixel landmark coordinates are needed for automated or robotic valve positioning.
+\textcolor{red}{Recent work has begun to address the segmentation task in this setting. In a prior study by our group} \cite{laptev2025_aorticroot}, we performed a large-scale comparison of six modern convolutional architectures for automatic aortic root segmentation on intraoperative TAVI frames. On a dataset of 2,925 images from 83 patients with strict patient-level 5-fold cross-validation, the best single-task model, MA-Net with an EfficientNet-B4 encoder, achieved a median Dice score of 0.94 and an ASSD of 4.07~mm. These results \textcolor{red}{demonstrated} that high-quality segmentation is \textcolor{red}{feasible} even under low-contrast fluoroscopic conditions. However, a segmentation mask alone is insufficient when sub-pixel landmark coordinates are needed for automated or robotic valve positioning.
 
 The next stage in TAVI guidance is the transition toward robot-assisted and potentially autonomous delivery platforms. Early translational robotic systems are already emerging, including AI-guided positioning studies and the ongoing feasibility evaluation of the TAVIPILOT platform \cite{smits2025_autonomous,clinicaltrials_nct07152574}. Such systems require not only a contour of the aortic root, but also reliable and temporally stable localization of key landmarks, especially the two annular points (AA1 and AA2) and the two sinotubular-junction landmarks near the coronary ostia (STJ1 and STJ2).
 
@@ -79,7 +80,7 @@ To address this clinical and technological need, we developed BoundaryAwareMAnet
 
 \subsection{Dataset and annotation protocol}\label{subsec:dataset}
 
-The study used intraoperative fluoroscopic images acquired during TAVI procedures in patients with severe aortic stenosis. The present work builds on a previously published dataset of intraoperative angiographic images and extends it with additional patients and revised annotations. The final dataset comprised 2,925 grayscale images of size $1000 \times 1000$ pixels (8-bit) obtained from 83 patients between 2018 and 2024.
+The study used intraoperative fluoroscopic images acquired during TAVI procedures in patients with severe aortic stenosis. The present work builds on a previously published dataset of intraoperative angiographic images \textcolor{red}{\cite{danilov2024_dataset}} and extends it with additional patients and revised annotations. The final dataset comprised 2,925 grayscale images of size $1000 \times 1000$ pixels (8-bit) obtained from 83 patients between 2018 and 2024.
 
 The primary annotation task was binary segmentation of the aortic root. The expert mask represented the visible contour of the contrast-enhanced aortic root in the current frame. Guidewires, catheters, valve delivery system components, and other radiopaque instruments were deliberately excluded from the mask. Annotation was performed in the Supervisely web-based computer vision platform, consistent with the previous dataset release (Fig.~\ref{fig:annotation_examples}).
 
@@ -226,7 +227,7 @@ Landmark localization was evaluated with mean Euclidean error, median Euclidean 
 \begin{equation}
 \mathrm{PCK}@r = \frac{1}{N}\sum_{k=1}^{N}\mathbb{I}(d_k \leq r),
 \end{equation}
-where $d_k$ is the Euclidean error for landmark $k$ and $\mathbb{I}$ is the indicator function. During training, the primary point metric was mean Euclidean error over visible landmarks, whereas the final analysis also included median error, PCK, and landmark-specific performance for AA1, AA2, STJ1, and STJ2. A combined validation score that balanced segmentation quality and landmark localization error was also monitored.
+where $d_k$ is the Euclidean error for landmark $k$ and $\mathbb{I}$ is the indicator function. During training, the primary point metric was mean Euclidean error over visible landmarks, whereas the final analysis also included median error, PCK, and landmark-specific performance for AA1, AA2, STJ1, and STJ2. A combined validation score that balanced segmentation quality and landmark localization error was also monitored. \textcolor{red}{In the cross-validation analysis (Section~\ref{subsec:crossval}), localization errors are reported in pixels at the model input resolution of $640 \times 640$. In the baseline comparison (Section~\ref{subsec:baseline_results}), errors are converted to millimeters using the known pixel spacing of each fluoroscopic acquisition.}
 
 \section{Results}\label{sec:results}
 
@@ -380,7 +381,7 @@ The ablation study therefore focused on PositionAttention in the decoder, Coordi
 \label{fig:ablation_summary}
 \end{figure}
 
-Numerical ablation results are summarized in Table~\ref{tab:ablation_results}. The variant with a fixed soft-argmax temperature of 8 achieved the highest Dice, IoU, and Surface Dice@4~mm, indicating particularly strong segmentation performance. However, the full BAMNet v4 configuration yielded the lowest mean and median landmark localization errors together with the best PCK@10, and therefore provided the most balanced combination of segmentation quality and landmark localization accuracy.
+Numerical ablation results are summarized in Table~\ref{tab:ablation_results}. The variant with a fixed soft-argmax temperature of 8 achieved the highest Dice, IoU, and Surface Dice@4~mm, indicating particularly strong segmentation performance. However, the full BAMNet configuration \textcolor{red}{(labeled ``v4'' to denote the final iteration after systematic architectural refinement)} yielded the lowest mean and median landmark localization errors together with the best PCK@10, and therefore provided the most balanced combination of segmentation quality and landmark localization accuracy. \textcolor{red}{All ablation experiments were conducted on the fold-1 hold-out test set; cross-validated ablation was not performed due to computational cost.}
 
 \begin{table*}[htbp]
 \caption{Numerical results of the BAMNet ablation study across the main architectural variants. Evaluated on fold-1 fixed hold-out test set}\label{tab:ablation_results}
@@ -475,7 +476,7 @@ Authors declare that the research was conducted in the absence of any commercial
 
 \section*{Author Contributions}
 
-NL: Conceptualization, Data curation, Formal analysis, Investigation, Methodology, Software, Supervision, Validation, Visualization, Writing--original draft, Writing--review and editing. OG: Formal analysis, Investigation, Methodology, Software, Validation, Visualization, Writing--review and editing. YK: Data curation, Formal analysis, Visualization, Writing--review and editing. MC: Data curation, Project administration, Resources, Supervision. VD: Methodology, Resources, Validation, Writing--review and editing, Supervision.
+NL: Conceptualization, Data curation, Formal analysis, Investigation, Methodology, Software, Supervision, Validation, Visualization, Writing--original draft, Writing--review and editing. OG: Formal analysis, Investigation, Methodology, Software, Validation, Visualization, Writing--review and editing. \textcolor{red}{JP}: Data curation, Formal analysis, Visualization, Writing--review and editing. MC: Data curation, Project administration, Resources, Supervision. VD: Methodology, Resources, Validation, Writing--review and editing, Supervision.
 
 \bibliography{bamnet}
 
