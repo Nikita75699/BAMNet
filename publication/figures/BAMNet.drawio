@@ -1,11 +1,11 @@
 <mxfile host="Electron" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.6 Chrome/144.0.7559.236 Electron/40.8.4 Safari/537.36" version="29.6.6">
   <diagram name="Page-1" id="q1dxFx7juMiXPgYipiH1">
-    <mxGraphModel dx="1370" dy="850" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1956" dy="1214" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="joHhub_tuArhoe22AtQs-140" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5E8D44D;strokeColor=#82b366;" value="" vertex="1">
-          <mxGeometry height="180" width="960" x="150" y="250" as="geometry" />
+          <mxGeometry height="180" width="940" x="160" y="250" as="geometry" />
         </mxCell>
         <mxCell id="joHhub_tuArhoe22AtQs-1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="Fluoroscopic&lt;div&gt;Image&lt;/div&gt;" vertex="1">
           <mxGeometry height="40" width="120" x="20" y="130" as="geometry" />
@@ -17,7 +17,7 @@
           <mxGeometry height="150" width="700" x="410" y="90" as="geometry" />
         </mxCell>
         <mxCell id="joHhub_tuArhoe22AtQs-85" parent="joHhub_tuArhoe22AtQs-32" style="rounded=1;whiteSpace=wrap;html=1;fillColor=light-dark(#DAE8FC4D,#DAE8FC4D);strokeColor=#6c8ebf;gradientColor=none;" value="" vertex="1">
-          <mxGeometry height="180" width="960" x="-260" y="-30" as="geometry" />
+          <mxGeometry height="180" width="940" x="-250" y="-30" as="geometry" />
         </mxCell>
         <mxCell id="joHhub_tuArhoe22AtQs-34" edge="1" parent="joHhub_tuArhoe22AtQs-32" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fillColor=#f5f5f5;strokeColor=#666666;" target="joHhub_tuArhoe22AtQs-36">
           <mxGeometry relative="1" as="geometry" />
