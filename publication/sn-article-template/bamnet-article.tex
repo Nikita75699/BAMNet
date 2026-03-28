@@ -381,7 +381,7 @@ The ablation study therefore focused on PositionAttention in the decoder, Coordi
 \label{fig:ablation_summary}
 \end{figure}
 
-Numerical ablation results are summarized in Table~\ref{tab:ablation_results}. The variant with a fixed soft-argmax temperature of 8 achieved the highest Dice, IoU, and Surface Dice@4~mm, indicating particularly strong segmentation performance. However, the full BAMNet configuration \textcolor{red}{(labeled ``v4'' to denote the final iteration after systematic architectural refinement)} yielded the lowest mean and median landmark localization errors together with the best PCK@10, and therefore provided the most balanced combination of segmentation quality and landmark localization accuracy. \textcolor{red}{All ablation experiments were conducted on the fold-1 hold-out test set; cross-validated ablation was not performed due to computational cost.}
+Numerical ablation results are summarized in Table~\ref{tab:ablation_results}. The variant with a fixed soft-argmax temperature of 8 achieved the highest Dice, IoU, and Surface Dice@4~mm, indicating particularly strong segmentation performance. However, the full BAMNet configuration yielded the lowest mean and median landmark localization errors together with the best PCK@10, and therefore provided the most balanced combination of segmentation quality and landmark localization accuracy. \textcolor{red}{All ablation experiments were conducted on the fold-1 hold-out test set; cross-validated ablation was not performed due to computational cost.}
 
 \begin{table*}[htbp]
 \caption{Numerical results of the BAMNet ablation study across the main architectural variants. Evaluated on fold-1 fixed hold-out test set}\label{tab:ablation_results}
@@ -391,7 +391,7 @@ Numerical ablation results are summarized in Table~\ref{tab:ablation_results}. T
 \toprule
 Variant & Dice & IoU & Surface Dice@4~mm & Mean err.\ (px) & Median err.\ (px) & PCK@10 (\%) & FPS \\
 \midrule
-Full (v4) & 0.91 & 0.83 & 0.84 & \textbf{10.30} & \textbf{8.17} & \textbf{59.88} & 63 \\
+Full & 0.91 & 0.83 & 0.84 & \textbf{10.30} & \textbf{8.17} & \textbf{59.88} & 63 \\
 No Pos Attn & 0.91 & 0.84 & 0.83 & 11.29 & 9.51 & 52.98 & \textbf{69} \\
 No Coord Attn & 0.90 & 0.83 & 0.83 & 10.62 & 8.47 & 57.41 & 67 \\
 No Fusion & 0.91 & 0.83 & 0.83 & 10.84 & 9.01 & 55.76 & 65 \\
