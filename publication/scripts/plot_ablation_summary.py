@@ -103,15 +103,15 @@ for i in range(n):
                     marker="o", edgecolors="white", linewidths=0.6)
 
     # value labels: mean label to the left, median label to the right
-    ax_dice.text(mean_dice[i] - 0.0015, y[i], f"{mean_dice[i]:.3f}",
+    ax_dice.text(mean_dice[i] - 0.001, y[i], f"{mean_dice[i]:.3f}",
                  va="center", ha="right", fontsize=7.5,
                  color=col_mean, fontweight="bold" if i == 0 else "normal")
-    ax_dice.text(med_dice[i] + 0.0015, y[i], f"{med_dice[i]:.3f}",
+    ax_dice.text(med_dice[i] + 0.001, y[i], f"{med_dice[i]:.3f}",
                  va="center", ha="left", fontsize=7.5,
                  color=col_med, fontweight="bold" if i == 0 else "normal")
 
 ax_dice.set_xlim(0.895, 0.922)
-ax_dice.set_xlabel("Dice Score (higher is better)", fontsize=9, fontweight="bold", color=TEXT)
+ax_dice.set_xlabel("Dice Score (higher is better)", fontsize=9, fontweight="bold", color=TEXT, labelpad=10)
 ax_dice.set_yticks(y)
 ax_dice.set_yticklabels(variants, fontsize=8.5)
 ax_dice.invert_yaxis()
@@ -142,15 +142,15 @@ for i in range(n):
     ax_err.scatter(mean_e[i], y[i], s=50, color=col_mean, marker="s",
                    zorder=3, edgecolors="white", linewidths=0.8)
 
-    ax_err.text(mean_e[i] + 0.18, y[i], f"{mean_e[i]:.1f}",
+    ax_err.text(mean_e[i] + 0.1, y[i], f"{mean_e[i]:.1f}",
                 va="center", ha="left", fontsize=7.5,
                 color=col_mean, fontweight="bold" if i == 0 else "normal")
-    ax_err.text(med_e[i] - 0.18, y[i], f"{med_e[i]:.1f}",
+    ax_err.text(med_e[i] - 0.1, y[i], f"{med_e[i]:.1f}",
                 va="center", ha="right", fontsize=7.5,
                 color=col_med, fontweight="bold" if i == 0 else "normal")
 
 ax_err.set_xlim(7.2, 12.2)
-ax_err.set_xlabel("Localization Error, px (lower is better)", fontsize=9, fontweight="bold", color=TEXT)
+ax_err.set_xlabel("Localization Error, px (lower is better)", fontsize=9, fontweight="bold", color=TEXT, labelpad=8)
 ax_err.xaxis.grid(True, color=LINE_COL, linewidth=0.4, zorder=0)
 ax_err.yaxis.grid(False)
 for spine in ax_err.spines.values():
@@ -167,8 +167,8 @@ legend_elements = [
 ]
 leg = ax_err.legend(handles=legend_elements, loc="upper right", fontsize=7.5,
                     frameon=True, fancybox=True, framealpha=0.95,
-                    edgecolor=LINE_COL, handletextpad=0.5, borderpad=0.6,
-                    bbox_to_anchor=(1.02, 1.0))
+                    edgecolor=LINE_COL, handletextpad=0.3, borderpad=0.77,
+                    bbox_to_anchor=(1.013, 0.973))
 leg.get_frame().set_linewidth(0.5)
 
 fig.tight_layout(pad=0.8)
