@@ -27,7 +27,7 @@ DEFAULT_EXPORT_SIZE = None
 
 # Цвета из meta.json (Supervisely)
 CLASS_COLORS = {
-    "mask": "#49BC4E",
+    #"mask": "#49BC4E",
     "AA1": "#E916E6",
     "AA2": "#AEFF01",
     "STJ1": "#DBFF00",

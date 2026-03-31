@@ -1,0 +1,17 @@
+Dear Editor,
+
+Please consider our manuscript, "BAMNet: Joint Aortic Root Segmentation and Anatomical Landmark Localization on Intraoperative Fluoroscopy for Transcatheter Aortic Valve Implantation", for publication in Computerized Medical Imaging and Graphics.
+
+This study presents a multitask deep learning model for simultaneous segmentation of the contrast-enhanced aortic root and localization of four anatomical landmarks directly on intraoperative fluoroscopic images acquired during TAVI. The proposed BAMNet architecture combines segmentation-aware decoding, coordinate-aware landmark prediction, and explicit boundary-guided supervision in a single real-time model. In patient-level five-fold cross-validation on 2,925 fluoroscopic frames from 83 patients, BAMNet achieved Dice 0.916 +/- 0.011, IoU 0.850 +/- 0.018, and mean landmark localization error 10.02 +/- 0.17 px. On the fixed fold-1 hold-out test set, the model maintained 63 FPS while producing both dense segmentation and landmark coordinates in a single forward pass.
+
+We believe the manuscript fits the scope of Computerized Medical Imaging and Graphics because it addresses an image-guided interventional imaging problem through clinically oriented computational methodology and focuses on translational use of AI for intraoperative imaging. The work is original, has not been published previously in this form, and is not under consideration elsewhere.
+
+All authors have approved the manuscript and agree with its submission. Research data, source code, and trained models are available through public repositories, and the manuscript includes declarations on funding, conflicts of interest, ethics, data availability, CRediT contributions, and AI-assisted manuscript preparation.
+
+Thank you for your consideration.
+
+Sincerely,
+
+Nikita V. Laptev
+Corresponding author
+nikitalaptev77@gmail.com
