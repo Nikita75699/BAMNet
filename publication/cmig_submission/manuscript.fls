@@ -171,8 +171,8 @@ INPUT ./figures/Figure_4.png
 INPUT ./figures/Figure_4.png
 INPUT ./figures/Figure_4.png
 INPUT ./figures/Figure_4.png
-INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/jknappen/ec/tcrm1200.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/jknappen/ec/ectt1200.tfm
+INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/jknappen/ec/tcrm1200.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc
 INPUT ./manuscript.bbl
 INPUT ./manuscript.bbl

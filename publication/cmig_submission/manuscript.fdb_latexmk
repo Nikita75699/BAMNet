@@ -1,14 +1,14 @@
 # Fdb version 4
-["bibtex manuscript"] 1774964004.81455 "manuscript.aux" "manuscript.bbl" "manuscript" 1774964009.83224 0
+["bibtex manuscript"] 1774964004.81455 "manuscript.aux" "manuscript.bbl" "manuscript" 1774965497.8333 0
   "./cmig.bib" 1774962233.37941 10114 aae0bd3a38125a2738a7e6e002854c4e ""
   "/usr/local/texlive/2025/texmf-dist/bibtex/bst/elsarticle/elsarticle-harv.bst" 1736456871 30002 e0380d61aa45e0af6c9b40308561c934 ""
-  "manuscript.aux" 1774964009.59992 10333 dff7a4b18415c02fb4a355b1810812fb "pdflatex"
+  "manuscript.aux" 1774965497.6151 10333 dff7a4b18415c02fb4a355b1810812fb "pdflatex"
   (generated)
   "manuscript.bbl"
   "manuscript.blg"
   (rewritten before read)
-["pdflatex"] 1774964008.60083 "/Users/viacheslav/projects/personal/BAMNet/publication/cmig_submission/manuscript.tex" "manuscript.pdf" "manuscript" 1774964009.83237 0
-  "/Users/viacheslav/projects/personal/BAMNet/publication/cmig_submission/manuscript.tex" 1774964008.38678 41770 c3859cde852fa3e866067cfdea278b54 ""
+["pdflatex"] 1774965496.64678 "/Users/viacheslav/projects/personal/BAMNet/publication/cmig_submission/manuscript.tex" "manuscript.pdf" "manuscript" 1774965497.83341 0
+  "/Users/viacheslav/projects/personal/BAMNet/publication/cmig_submission/manuscript.tex" 1774965496.45466 41961 23d8b239ae274a067efa29c3bfefd9cf ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -107,10 +107,10 @@
   "figures/Figure_3a.png" 1774962233.40339 2161364 971e2b010de2af4d036fb5fe86bffdf0 ""
   "figures/Figure_3b.png" 1774962233.41169 2066535 dc4712ca78b3910bcee3a6c2e242fc10 ""
   "figures/Figure_4.png" 1774962233.41348 237372 7518ca28bfa13a5fcdddf3731b5b0af2 ""
-  "manuscript.aux" 1774964009.59992 10333 dff7a4b18415c02fb4a355b1810812fb "pdflatex"
+  "manuscript.aux" 1774965497.6151 10333 dff7a4b18415c02fb4a355b1810812fb "pdflatex"
   "manuscript.bbl" 1774964004.92642 13663 5797e6b8c71a9131a1ffe6e759b1ea4f "bibtex manuscript"
-  "manuscript.spl" 1774964008.76564 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "manuscript.tex" 1774964008.38678 41770 c3859cde852fa3e866067cfdea278b54 ""
+  "manuscript.spl" 1774965496.79111 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "manuscript.tex" 1774965496.45466 41961 23d8b239ae274a067efa29c3bfefd9cf ""
   (generated)
   "manuscript.aux"
   "manuscript.log"
