@@ -36,7 +36,7 @@
 \address[label4]{Pompeu Fabra University, Carrer de la Merc\`{e} 12, 08002 Barcelona, Spain}
 
 \begin{abstract}
-Accurate intraoperative delineation of the aortic root and localization of key anatomical landmarks during transcatheter aortic valve implantation (TAVI) remain difficult because fluoroscopy provides low soft-tissue contrast and is frequently degraded by motion and overlap from catheters and delivery systems. This study developed and validated a multitask deep learning model for simultaneous aortic root segmentation and landmark localization on fluoroscopic images to support image-guided TAVI. A retrospective dataset of 2,925 fully anonymized fluoroscopic frames from 83 patients who underwent TAVI between 2018 and 2024 was used. Expert annotations included binary masks of the contrast-enhanced aortic root and four anatomical landmarks: two aortic annulus points (AA1, AA2) and two sinotubular junction points near the coronary ostia (STJ1, STJ2). We developed BoundaryAwareMANet (BAMNet), a multitask architecture combining an EfficientNet-V2 encoder, an MA-Net-inspired decoder, a coordinate-aware landmark head, and an auxiliary boundary-guidance pathway. Model performance was evaluated using patient-level five-fold cross-validation. Across five folds, BAMNet achieved Dice $0.916 \pm 0.011$, IoU $0.850 \pm 0.018$, and Surface Dice@4 mm $0.845 \pm 0.031$. Landmark localization reached median and mean errors of $7.64 \pm 0.33$ px and $10.02 \pm 0.17$ px. The model produced both segmentation masks and landmark coordinates in a single forward pass, maintaining real-time inference at approximately 63 FPS. Joint segmentation of the aortic root and localization of anatomical landmarks on intraoperative fluoroscopy is feasible.
+Accurate intraoperative delineation of the aortic root and localization of key anatomical landmarks during transcatheter aortic valve implantation (TAVI) remain difficult because fluoroscopy provides low soft-tissue contrast and is frequently degraded by motion and overlap from catheters and delivery systems. This study developed and validated a multitask deep learning model for simultaneous aortic root segmentation and landmark localization on fluoroscopic images to support image-guided TAVI. A retrospective dataset of 2,925 fully anonymized fluoroscopic frames from 83 patients who underwent TAVI between 2018 and 2024 was used. Expert annotations included binary masks of the contrast-enhanced aortic root and four anatomical landmarks: two aortic annulus points (AA1, AA2) and two sinotubular junction points near the coronary ostia (STJ1, STJ2). We developed BoundaryAwareMANet (BAMNet), a multitask architecture combining an EfficientNet-V2 encoder, an MA-Net-inspired decoder, a coordinate-aware landmark head, and an auxiliary boundary-guidance pathway. Model performance was evaluated using patient-level five-fold cross-validation. Across five folds, BAMNet achieved Dice $0.916 \pm 0.011$, Intersection over Union (IoU) $0.850 \pm 0.018$, and Surface Dice@4 mm $0.845 \pm 0.031$. Landmark localization reached median and mean errors of $7.64 \pm 0.33$ px and $10.02 \pm 0.17$ px. The model produced both segmentation masks and landmark coordinates in a single forward pass, maintaining real-time inference at approximately 63 FPS. Joint segmentation of the aortic root and localization of anatomical landmarks on intraoperative fluoroscopy is feasible.
 \end{abstract}
 
 \begin{keyword}
@@ -47,7 +47,7 @@ TAVI \sep aortic root segmentation \sep landmark localization \sep multitask lea
 
 \section{Introduction}
 
-Aortic stenosis remains one of the most common and clinically important valvular diseases in aging populations worldwide. As life expectancy increases, the number of patients with severe aortic stenosis also continues to rise. Transcatheter aortic valve implantation (TAVI) has become a major interventional treatment option in contemporary cardiology, with expanding indications in patients at intermediate and low surgical risk \citep{otto2020_guideline,vahanian2021_guidelines,leon2019_partner3}.
+Aortic stenosis remains one of the most common and clinically important valvular diseases in aging populations worldwide. As life expectancy increases, the number of patients with severe aortic stenosis also continues to rise. TAVI has become a major interventional treatment option in contemporary cardiology, with expanding indications in patients at intermediate and low surgical risk \citep{otto2020_guideline,vahanian2021_guidelines,leon2019_partner3}.
 
 Despite this expansion, optimal valve positioning during deployment remains a major determinant of procedural success and long-term outcome. Suboptimal implantation depth and alignment relative to the annular plane and coronary ostia may increase the risk of paravalvular regurgitation, coronary obstruction, or conduction disturbances requiring permanent pacemaker implantation \citep{pibarot2021_pvl,jilaihawi2022_coronary,kammler2016_implantdepth}. Accurate real-time visualization is therefore central to safe guidance.
 
@@ -55,7 +55,7 @@ In current clinical practice, operators rely primarily on fluoroscopy, often sup
 
 Recent work has begun to address the segmentation task in this setting. In a prior study by our group \citep{laptev2025_aorticroot}, we performed a large-scale comparison of six modern convolutional architectures for automatic aortic root segmentation on intraoperative TAVI frames. On a dataset of 2,925 images from 83 patients with strict patient-level 5-fold cross-validation, the best single-task model, MA-Net with an EfficientNet-B4 encoder, achieved a median Dice score of 0.94 and an average symmetric surface distance (ASSD) of 4.07 mm. These results demonstrated that high-quality segmentation is feasible even under low-contrast fluoroscopic conditions. However, a segmentation mask alone is insufficient when sub-pixel landmark coordinates are needed for automated or robotic valve positioning.
 
-The next stage in TAVI guidance is the transition toward robot-assisted and potentially autonomous delivery platforms. Early translational robotic systems are already emerging, including AI-guided positioning studies and the ongoing feasibility evaluation of the TAVIPILOT platform \citep{smits2025_autonomous,clinicaltrials_nct07152574}. Such systems require not only a contour of the aortic root, but also reliable and temporally stable localization of key landmarks, especially the two annular points (AA1 and AA2) and the two sinotubular-junction landmarks near the coronary ostia (STJ1 and STJ2).
+The next stage in TAVI guidance is the transition toward robot-assisted and potentially autonomous delivery platforms. Early translational robotic systems are already emerging, including AI-guided positioning studies and the ongoing feasibility evaluation of the TAVIPILOT platform \citep{smits2025_autonomous,clinicaltrials_nct07152574}. Such systems require not only a contour of the aortic root, but also reliable and temporally stable localization of key landmarks, especially the annular points AA1 and AA2 and the sinotubular-junction landmarks STJ1 and STJ2 near the coronary ostia.
 
 To address this clinical and technological need, we developed BAMNet, a multitask architecture for simultaneous aortic root segmentation and precise localization of four landmarks on intraoperative fluoroscopic images. We further hypothesized that combining global contextual reasoning, coordinate-aware feature modulation, and explicit boundary-focused supervision in a unified multitask formulation would improve both segmentation quality and landmark localization performance.
 
@@ -79,7 +79,7 @@ The primary annotation task was binary segmentation of the aortic root. The expe
 \label{fig:annotation_examples}
 \end{figure}
 
-In addition to binary masks, each image was annotated with four key anatomical landmarks: two points on the aortic annulus (AA1 and AA2) and two landmarks near the coronary ostia at the sinotubular junction (STJ1 and STJ2). For each landmark, two-dimensional coordinates $(x,y)$ and a binary visibility flag were stored. A landmark was considered visible only when its position could be identified reliably on the current frame. When anatomy was obscured by devices, contrast opacification was insufficient, or the anatomical configuration was ambiguous, the landmark was marked as invisible.
+In addition to binary masks, each image was annotated with four key anatomical landmarks: AA1 and AA2 on the aortic annulus and STJ1 and STJ2 near the coronary ostia at the sinotubular junction. For each landmark, two-dimensional coordinates $(x,y)$ and a binary visibility flag were stored. A landmark was considered visible only when its position could be identified reliably on the current frame. When anatomy was obscured by devices, contrast opacification was insufficient, or the anatomical configuration was ambiguous, the landmark was marked as invisible.
 
 To assess generalization properly, all experiments followed a patient-level protocol that prevented frames from the same patient from appearing in both training and validation or test subsets. Five-fold patient-level cross-validation was used throughout. In each fold, approximately 86--88\% of patients were assigned to training and 12--14\% to validation or test. Because the number of frames per patient varied, the exact image counts differed slightly across folds.
 
@@ -95,7 +95,7 @@ The contribution of the landmark branch and the influence of boundary-guided fea
 
 \subsection{Proposed multitask architecture}
 
-BoundaryAwareMANet (BAMNet) was designed as a single multitask network for simultaneous dense segmentation of the aortic root and localization of anatomical landmarks. Both tasks are solved in one forward pass, which is important for intraoperative deployment under real-time latency constraints.
+BAMNet was designed as a single multitask network for simultaneous dense segmentation of the aortic root and localization of anatomical landmarks. Both tasks are solved in one forward pass, which is important for intraoperative deployment under real-time latency constraints.
 
 The model is built on an ImageNet-pretrained EfficientNet-V2 encoder that extracts features at multiple spatial scales. These features are fused in a decoder inspired by U-Net and MA-Net so that the network can combine global anatomical context with local contour details. At low-resolution decoder levels, additional spatial attention is applied to improve reconstruction of the continuous aortic root contour in difficult frames affected by low contrast, noise, motion, and device overlap.
 
@@ -112,7 +112,7 @@ This design allows the model to exploit both global root morphology and local co
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{figures/Figure_2.png}
-\caption{Overview of the proposed BoundaryAwareMANet (BAMNet) architecture for joint aortic root segmentation and anatomical landmark localization on fluoroscopic images. The network combines an EfficientNet-V2 encoder, a segmentation-oriented decoder, a dedicated landmark branch with Coordinate Attention, and an auxiliary boundary pathway used for boundary-guided supervision.}
+\caption{Overview of the proposed BAMNet architecture for joint aortic root segmentation and anatomical landmark localization on fluoroscopic images. The network combines an EfficientNet-V2 encoder, a segmentation-oriented decoder, a dedicated landmark branch with Coordinate Attention, and an auxiliary boundary pathway used for boundary-guided supervision.}
 \label{fig:bamnet_architecture}
 \end{figure}
 
@@ -179,7 +179,7 @@ The boundary branch was trained with Smooth L1 loss between the predicted bounda
 
 \subsection{Evaluation metrics}
 
-Segmentation performance was assessed with the Dice coefficient and Intersection over Union (IoU). The Dice coefficient was defined as
+Segmentation performance was assessed with the Dice coefficient and IoU. The Dice coefficient was defined as
 \begin{equation}
 \mathrm{Dice} = \frac{2|P \cap G|}{|P| + |G|},
 \end{equation}
@@ -391,7 +391,7 @@ Several natural extensions follow from the present work. The first is a move tow
 
 \section{Conclusion}
 
-BoundaryAwareMANet (BAMNet) is a multitask deep learning architecture for simultaneous segmentation of the aortic root and localization of four key anatomical landmarks on intraoperative fluoroscopic images acquired during TAVI. Unlike single-task formulations, the proposed approach produces both a dense anatomical mask and a set of geometrically meaningful landmarks within one forward pass, making it especially attractive for intraoperative visual guidance.
+BAMNet is a multitask deep learning architecture for simultaneous segmentation of the aortic root and localization of four key anatomical landmarks on intraoperative fluoroscopic images acquired during TAVI. Unlike single-task formulations, the proposed approach produces both a dense anatomical mask and a set of geometrically meaningful landmarks within one forward pass, making it especially attractive for intraoperative visual guidance.
 
 In patient-level 5-fold cross-validation, BAMNet demonstrated stable performance with Dice $0.916 \pm 0.011$, IoU $0.850 \pm 0.018$, Surface Dice@4 mm $0.845 \pm 0.031$, median localization error $7.64 \pm 0.33$ px, and mean localization error $10.02 \pm 0.17$ px. These findings indicate that the model maintains high segmentation accuracy and reproducible landmark localization across different patient subsets, which is particularly important for clinically realistic assessment of generalization.
 
