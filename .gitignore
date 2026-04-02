@@ -23,6 +23,7 @@ __pycache__/
 /runs_ablation/*
 ablation/runs_ablation/*
 val/*
+data/*
 
 # Agent-local state
 /.agent/

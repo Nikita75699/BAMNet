@@ -27,7 +27,7 @@ DEFAULT_EXPORT_SIZE = None
 
 # Цвета из meta.json (Supervisely)
 CLASS_COLORS = {
-    #"mask": "#49BC4E",
+    "mask": "#49BC4E",
     "AA1": "#E916E6",
     "AA2": "#AEFF01",
     "STJ1": "#DBFF00",
@@ -167,17 +167,32 @@ def patient_dir_from_image_name(image_name):
 def get_single_sample(input_path, dataset_root):
     """Собирает одну пару image+annotation по имени файла."""
     image_name = os.path.basename(input_path)
-    patient_dir = patient_dir_from_image_name(image_name)
-    ann_path = os.path.join(dataset_root, patient_dir, "ann", image_name + ".json")
+    base_name = os.path.splitext(image_name)[0]
 
-    if not os.path.exists(ann_path):
-        raise FileNotFoundError(f"Annotation not found for {image_name}: {ann_path}")
+    # Ищем аннотацию в нескольких местах
+    candidates = [
+        os.path.join(dataset_root, "points", base_name + ".json"),
+        os.path.join(dataset_root, "ann", image_name + ".json"),
+    ]
+    # Также пробуем Supervisely-структуру (пациент/ann/...)
+    try:
+        patient_dir = patient_dir_from_image_name(image_name)
+        candidates.append(os.path.join(dataset_root, patient_dir, "ann", image_name + ".json"))
+    except ValueError:
+        pass
 
-    return {
-        "img_path": input_path,
-        "ann_path": ann_path,
-        "name": image_name,
-    }
+    for ann_path in candidates:
+        if os.path.exists(ann_path):
+            return {
+                "img_path": input_path,
+                "ann_path": ann_path,
+                "name": image_name,
+            }
+
+    raise FileNotFoundError(
+        f"Annotation not found for {image_name}. Checked:\n"
+        + "\n".join(f"  - {p}" for p in candidates)
+    )
 
 
 def compute_render_scale(img_size, export_size):
@@ -189,7 +204,7 @@ def compute_render_scale(img_size, export_size):
     return float(export_size) / float(longest_side)
 
 
-def draw_supervisely_style(img, ann_data, export_size=None):
+def draw_supervisely_style(img, ann_data, export_size=None, mask_path=None):
     """Отрисовка аннотаций в стиле Supervisely."""
     orig_w, orig_h = img.size
     render_scale = compute_render_scale((orig_w, orig_h), export_size)
@@ -218,6 +233,40 @@ def draw_supervisely_style(img, ann_data, export_size=None):
     overlay_draw = ImageDraw.Draw(overlay)
 
     mask_labels = []  # для последующей отрисовки бейджей масок
+
+    # Внешняя маска (кастомный формат: masks/*.png)
+    if mask_path and os.path.exists(mask_path):
+        mask_pil = Image.open(mask_path).convert("L")
+        if abs(render_scale - 1.0) > 1e-6:
+            mask_pil = mask_pil.resize((W, H), Image.Resampling.NEAREST)
+        mask_np = np.array(mask_pil)
+        max_val = mask_np.max()
+        if max_val == 0:
+            pass  # пустая маска, пропускаем
+        elif max_val <= 1:
+            # Бинарная маска (0/1) — масштабируем до 0/255
+            mask_np = (mask_np * 255).astype(np.uint8)
+        else:
+            # Градации серого — бинаризуем по порогу
+            mask_np = (mask_np > 127).astype(np.uint8) * 255
+        kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
+        mask_np = cv2.morphologyEx(mask_np, cv2.MORPH_OPEN, kernel)
+        mask_pil = Image.fromarray(mask_np)
+
+        rgb = hex_to_rgb(CLASS_COLORS.get("mask", "#49BC4E"))
+        fill_layer = Image.new("RGBA", (W, H), rgb + (MASK_FILL_OPACITY,))
+        transparent = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+        transparent.paste(fill_layer, (0, 0), mask_pil)
+        overlay.paste(transparent, (0, 0), transparent)
+
+        contours, _ = cv2.findContours(mask_np, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        for cnt in contours:
+            if cv2.contourArea(cnt) < 100:
+                continue
+            pts_list = cnt.reshape(-1, 2).tolist()
+            if len(pts_list) > 1:
+                point_list = [tuple(p) for p in pts_list] + [tuple(pts_list[0])]
+                overlay_draw.line(point_list, fill=rgb + (255,), width=style["mask_contour_width"])
 
     for obj in ann_data.get("objects", []):
         if obj.get("geometryType") != "bitmap":
@@ -259,17 +308,7 @@ def draw_supervisely_style(img, ann_data, export_size=None):
                 point_list = [tuple(p) for p in pts] + [tuple(pts[0])]
                 overlay_draw.line(point_list, fill=rgb + (255,), width=style["mask_contour_width"])
 
-        # Запоминаем позицию для бейджа маски (нижний-левый угол видимой области)
-        ys, xs = np.where(mask_np > 0)
-        if len(ys) > 0:
-            # Берём нижнюю-левую точку маски
-            max_y_idx = np.argmax(ys)
-            label_x = x0 + int(xs[np.argmin(xs)]) - 10
-            label_y = y0 + int(np.max(ys)) + 5
-            # Ограничиваем позицию
-            label_x = max(5, min(label_x, W - scale_px(80, render_scale)))
-            label_y = min(label_y, H - scale_px(25, render_scale))
-            mask_labels.append((class_title, rgb, label_x, label_y))
+        # Бейдж маски не добавляем
 
     # Комбинирование
     img_rgba = img.convert("RGBA")
@@ -281,6 +320,30 @@ def draw_supervisely_style(img, ann_data, export_size=None):
         draw_supervisely_badge(draw, lx, ly, class_title, rgb, font, style)
 
     # --- Слой 3: точки + бейджи точек ---
+    # Кастомный формат точек (points dict: {"AA1": {"x_norm": ..., ...}, ...})
+    custom_points = ann_data.get("points", {})
+    if isinstance(custom_points, dict) and custom_points:
+        for class_title, pt_info in custom_points.items():
+            if not isinstance(pt_info, dict) or not pt_info.get("visible", 1):
+                continue
+            rgb = hex_to_rgb(CLASS_COLORS.get(class_title, "#FFFFFF"))
+            if "x_norm" in pt_info and "y_norm" in pt_info:
+                x = int(round(pt_info["x_norm"] * (W - 1)))
+                y = int(round(pt_info["y_norm"] * (H - 1)))
+            else:
+                js_w = ann_data.get("width", orig_w)
+                js_h = ann_data.get("height", orig_h)
+                x = int(round(pt_info["x"] * (W / js_w)))
+                y = int(round(pt_info["y"] * (H / js_h)))
+            r = style["point_radius"]
+            draw.ellipse([x-r-1, y-r-1, x+r+1, y+r+1], fill=(0, 0, 0, 255))
+            draw.ellipse([x-r, y-r, x+r, y+r], fill=rgb + (255,))
+            draw.ellipse([x-1, y-1, x+1, y+1], fill=(255, 255, 255, 255))
+            badge_x = x + r + 5
+            badge_y = max(2, y - scale_px(10, render_scale))
+            draw_supervisely_badge(draw, badge_x, badge_y, class_title, rgb, font, style, show_icon=False)
+
+    # Supervisely точки
     for obj in ann_data.get("objects", []):
         if obj.get("geometryType") != "point":
             continue
@@ -311,6 +374,17 @@ def draw_supervisely_style(img, ann_data, export_size=None):
         draw_supervisely_badge(draw, badge_x, badge_y, class_title, rgb, font, style, show_icon=False)
 
     return combined.convert("RGB")
+
+
+def _find_mask(sample):
+    """Ищет внешнюю маску для кастомного формата (masks/*.png)."""
+    name = sample["name"]
+    for base_dir in [os.path.dirname(sample["ann_path"]), os.path.dirname(sample["img_path"])]:
+        candidate = os.path.join(base_dir, "..", "masks", name)
+        candidate = os.path.normpath(candidate)
+        if os.path.exists(candidate):
+            return candidate
+    return None
 
 
 def main():
@@ -362,7 +436,8 @@ def main():
             with open(sample['ann_path'], 'r') as f:
                 ann_data = json.load(f)
 
-            result = draw_supervisely_style(img, ann_data, export_size=args.export_size)
+            result = draw_supervisely_style(img, ann_data, export_size=args.export_size,
+                                            mask_path=_find_mask(sample))
 
             if args.export_size:
                 render_scale = compute_render_scale(img.size, args.export_size)

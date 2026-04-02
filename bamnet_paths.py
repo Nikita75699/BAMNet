@@ -9,7 +9,8 @@ from pathlib import Path
 from typing import Any
 
 ENV_DATA_ROOT = "BAMNET_DATA_ROOT"
-DEFAULT_DATA_ROOT = Path("/mnt/ssd4tb/data/BAMNet-data")
+project_root = Path(__file__).resolve().parent
+DEFAULT_DATA_ROOT = project_root / "data" / "BAMNet-data"
 
 
 def get_data_root() -> Path:
