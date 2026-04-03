@@ -11,6 +11,7 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 import yaml
+from PIL import Image, ImageDraw, ImageFont
 from torchvision import models as tv_models
 
 ROOT_DIR = Path(__file__).resolve().parents[2]
@@ -26,6 +27,10 @@ IMAGE_EXTS = {".png", ".jpg", ".jpeg", ".bmp", ".tif", ".tiff"}
 IMAGENET_MEAN = np.array([0.485, 0.456, 0.406], dtype=np.float32)
 IMAGENET_STD = np.array([0.229, 0.224, 0.225], dtype=np.float32)
 POINT_NAMES = ["AA1", "AA2", "STJ1", "STJ2"]
+LABEL_BG_COLOR = (56, 56, 56, 208)
+LABEL_TEXT_COLOR = (255, 255, 255, 255)
+POINT_FILL_COLOR = (30, 230, 255)
+POINT_OUTLINE_COLOR = (20, 20, 20)
 
 
 def find_default_weights() -> Path | None:
@@ -74,7 +79,7 @@ def parse_args() -> argparse.Namespace:
         "--images",
         dest="input_path",
         type=Path,
-        default=ROOT_DIR / "publication" / "figures",
+        default=ROOT_DIR / "publication" / "figures" / "figure_1",
         help="Input image file or directory with images.",
     )
     parser.add_argument(
@@ -318,6 +323,83 @@ def scaled_thickness(base: int, render_scale: float) -> int:
     return max(1, int(round(base * render_scale)))
 
 
+def clamp_px(value: float, minimum: int = 1, maximum: int | None = None) -> int:
+    px = int(round(value))
+    if maximum is not None:
+        px = min(px, maximum)
+    return max(minimum, px)
+
+
+def load_font(font_size: int) -> ImageFont.FreeTypeFont | ImageFont.ImageFont:
+    font_paths = [
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+        "C:/Windows/Fonts/arialbd.ttf",
+        "C:/Windows/Fonts/Arial.ttf",
+    ]
+    for font_path in font_paths:
+        candidate = Path(font_path)
+        if candidate.is_file():
+            return ImageFont.truetype(str(candidate), font_size)
+    return ImageFont.load_default()
+
+
+def build_point_style(canvas_shape: Tuple[int, int, int]) -> dict:
+    height, width = canvas_shape[:2]
+    short_side = max(1, min(height, width))
+    font_size = clamp_px(short_side * 0.032 * 0.6, minimum=6, maximum=72)
+    return {
+        "badge_font_size": font_size,
+        "badge_radius": clamp_px(font_size * 0.35, minimum=3, maximum=18),
+        "badge_padding_x": clamp_px(font_size * 0.45, minimum=3, maximum=24),
+        "badge_padding_y": clamp_px(font_size * 0.28, minimum=2, maximum=18),
+        "label_gap": clamp_px(font_size * 0.55, minimum=4, maximum=28),
+        "label_margin": clamp_px(font_size * 0.35, minimum=3, maximum=18),
+        "point_radius": clamp_px(short_side * 0.0115 * 0.7, minimum=2, maximum=18),
+        "point_outline_width": clamp_px(font_size * 0.15, minimum=1, maximum=4),
+    }
+
+
+def draw_label_badge(
+    draw: ImageDraw.ImageDraw,
+    point_xy: Tuple[int, int],
+    label: str,
+    font: ImageFont.FreeTypeFont | ImageFont.ImageFont,
+    style: dict,
+    canvas_size: Tuple[int, int],
+) -> None:
+    point_x, point_y = point_xy
+    canvas_w, canvas_h = canvas_size
+    text_bbox = draw.textbbox((0, 0), label, font=font)
+    text_w = text_bbox[2] - text_bbox[0]
+    text_h = text_bbox[3] - text_bbox[1]
+    badge_w = text_w + style["badge_padding_x"] * 2
+    badge_h = text_h + style["badge_padding_y"] * 2
+
+    badge_x = point_x + style["label_gap"]
+    if badge_x + badge_w > canvas_w - style["label_margin"]:
+        badge_x = point_x - style["label_gap"] - badge_w
+    badge_x = clamp_px(
+        badge_x,
+        minimum=style["label_margin"],
+        maximum=max(style["label_margin"], canvas_w - badge_w - style["label_margin"]),
+    )
+    badge_y = clamp_px(
+        point_y - badge_h // 2,
+        minimum=style["label_margin"],
+        maximum=max(style["label_margin"], canvas_h - badge_h - style["label_margin"]),
+    )
+
+    draw.rounded_rectangle(
+        [badge_x, badge_y, badge_x + badge_w, badge_y + badge_h],
+        radius=style["badge_radius"],
+        fill=LABEL_BG_COLOR,
+    )
+    text_x = badge_x + style["badge_padding_x"]
+    text_y = badge_y + style["badge_padding_y"] - text_bbox[1]
+    draw.text((text_x, text_y), label, fill=LABEL_TEXT_COLOR, font=font)
+
+
 def draw_zone_geometry(canvas: np.ndarray, points_xy: np.ndarray, render_scale: float = 1.0) -> np.ndarray:
     aa1, aa2, stj1, stj2 = [points_xy[idx].astype(np.float32) for idx in range(4)]
     annulus_mid = (aa1 + aa2) * 0.5
@@ -422,26 +504,26 @@ def draw_zone_geometry(canvas: np.ndarray, points_xy: np.ndarray, render_scale: 
 
 
 def draw_points(canvas: np.ndarray, points_xy: np.ndarray, render_scale: float = 1.0) -> np.ndarray:
-    radius = scaled_thickness(6, render_scale)
-    outline = scaled_thickness(2, render_scale)
-    offset = scaled_thickness(8, render_scale)
-    font_scale = 0.52 * render_scale
-    text_thickness = scaled_thickness(1, render_scale)
+    style = build_point_style(canvas.shape)
+    font = load_font(style["badge_font_size"])
     for idx, name in enumerate(POINT_NAMES):
         x, y = np.round(points_xy[idx]).astype(int)
-        cv2.circle(canvas, (x, y), radius, (30, 230, 255), thickness=-1, lineType=cv2.LINE_AA)
-        cv2.circle(canvas, (x, y), radius, (20, 20, 20), thickness=outline, lineType=cv2.LINE_AA)
-        cv2.putText(
+        cv2.circle(canvas, (x, y), style["point_radius"], POINT_FILL_COLOR, thickness=-1, lineType=cv2.LINE_AA)
+        cv2.circle(
             canvas,
-            name,
-            (x + offset, y - offset),
-            cv2.FONT_HERSHEY_SIMPLEX,
-            font_scale,
-            (255, 255, 255),
-            text_thickness,
-            cv2.LINE_AA,
+            (x, y),
+            style["point_radius"],
+            POINT_OUTLINE_COLOR,
+            thickness=style["point_outline_width"],
+            lineType=cv2.LINE_AA,
         )
-    return canvas
+    pil_canvas = Image.fromarray(cv2.cvtColor(canvas, cv2.COLOR_BGR2RGB)).convert("RGBA")
+    draw = ImageDraw.Draw(pil_canvas)
+    canvas_size = (pil_canvas.width, pil_canvas.height)
+    for idx, name in enumerate(POINT_NAMES):
+        x, y = np.round(points_xy[idx]).astype(int)
+        draw_label_badge(draw, (x, y), name, font, style, canvas_size)
+    return cv2.cvtColor(np.array(pil_canvas.convert("RGB")), cv2.COLOR_RGB2BGR)
 
 
 def render_overlay(

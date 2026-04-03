@@ -1,0 +1,4 @@
+- BAMNet segments the aortic root and localizes four TAVI landmarks.
+- Validation used 2,925 fluoroscopy frames from 83 patients.
+- Five-fold validation reached Dice 0.916 and mean landmark error 10.0 px.
+- BAMNet runs at 63 FPS for real-time fluoroscopic guidance.

@@ -1,6 +1,6 @@
-# BoundaryAwareMAnet: Multi-Task FluoroscopicSegmentation of the Aortic Root and LandmarkLocalization for TAVI Guidance
+# BoundaryAwareMAnet: Multi-Task FluoroscopicSegmentation of the Aortic Root and LandmarkLocalization for TAVI guidance
 
-This repository accompanies the manuscript `BoundaryAwareMAnet: Multi-Task FluoroscopicSegmentation of the Aortic Root and LandmarkLocalization for TAVI Guidance`. `BoundaryAwareMAnet (BAMNet)` is a multitask deep learning project for fluoroscopic guidance during transcatheter aortic valve implantation (TAVI). The model predicts the aortic root mask and four anatomical landmarks in one forward pass:
+This repository accompanies the manuscript `BoundaryAwareMAnet: Multi-Task FluoroscopicSegmentation of the Aortic Root and LandmarkLocalization for TAVI guidance`. `BoundaryAwareMAnet (BAMNet)` is a multitask deep learning project for fluoroscopic guidance during transcatheter aortic valve implantation (TAVI). The model predicts the aortic root mask and four anatomical landmarks in one forward pass:
 
 - `AA1`
 - `AA2`
@@ -10,8 +10,25 @@ This repository accompanies the manuscript `BoundaryAwareMAnet: Multi-Task Fluor
 BAMNet is designed for low-contrast intraoperative fluoroscopy, where the anatomy is partially occluded by catheters, guidewires, and valve delivery systems.
 
 <p align="center">
-  <img src="publication/figures/BAMNet.jpg" width="960" alt="BoundaryAwareMAnet architecture">
+  <img src="readme_images/BAMNet.png" width="960" alt="BoundaryAwareMAnet architecture">
 </p>
+
+## Table of Contents
+
+- [Highlights](#highlights)
+- [Qualitative Examples](#qualitative-examples)
+- [Results from the Publication](#results-from-the-publication)
+- [Quick Start](#quick-start)
+- [Project Overview](#project-overview)
+- [Environment Setup](#environment-setup)
+- [Data Root and Repository Hygiene](#data-root-and-repository-hygiene)
+- [Dataset and Zenodo](#dataset-and-zenodo)
+- [Expected Training Dataset Layout](#expected-training-dataset-layout)
+- [Configuration](#configuration)
+- [How to Run Training](#how-to-run-training)
+- [Inference](#inference)
+- [Training Outputs](#training-outputs)
+- [Publications and Related Material](#publications-and-related-material)
 
 ## Highlights
 
@@ -38,12 +55,12 @@ Representative predictions from `BoundaryAwareMAnet: Multi-Task FluoroscopicSegm
     <th>BAMNet prediction</th>
   </tr>
   <tr>
-    <td><img src="publication/figures/orig_0019_008_030.png" width="340" alt="Input fluoroscopy example 1"></td>
-    <td><img src="publication/figures/orig_0019_008_030_implant_zone.png" width="340" alt="BoundaryAwareMAnet prediction example 1"></td>
+    <td><img src="readme_images/orig_0019_008_030.png" width="340" alt="Input fluoroscopy example 1"></td>
+    <td><img src="readme_images/orig_0019_008_030_implant_zone.png" width="340" alt="BoundaryAwareMAnet prediction example 1"></td>
   </tr>
   <tr>
-    <td><img src="publication/figures/orig_0019_013_027.png" width="340" alt="Input fluoroscopy example 2"></td>
-    <td><img src="publication/figures/orig_0019_013_027_implant_zone.png" width="340" alt="BoundaryAwareMAnet prediction example 2"></td>
+    <td><img src="readme_images/orig_0019_013_027.png" width="340" alt="Input fluoroscopy example 2"></td>
+    <td><img src="readme_images/orig_0019_013_027_implant_zone.png" width="340" alt="BoundaryAwareMAnet prediction example 2"></td>
   </tr>
 </table>
 
@@ -77,13 +94,13 @@ Landmark-wise localization summary:
 Segmentation comparison from the manuscript:
 
 <p align="center">
-  <img src="publication/figures/comparison_segmentation.png" width="860" alt="Segmentation comparison">
+  <img src="readme_images/comparison_segmentation.png" width="860" alt="Segmentation comparison">
 </p>
 
 Localization comparison from the manuscript:
 
 <p align="center">
-  <img src="publication/figures/comparison_landmarks.png" width="860" alt="Landmark comparison">
+  <img src="readme_images/comparison_landmarks.png" width="860" alt="Landmark comparison">
 </p>
 
 Practical takeaway:
@@ -91,6 +108,32 @@ Practical takeaway:
 - `Swin-Unet` reaches slightly higher pure segmentation quality, but it is much slower (`1.91 FPS` in the manuscript comparison).
 - BAMNet stays close to the strongest segmentation baselines while also predicting landmarks.
 - BAMNet gives the best mean landmark localization error among the compared methods and remains suitable for real-time overlay generation.
+
+## Quick Start
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/Nikita75699/BAMNet
+cd BAMNet
+
+# 2. Create and activate a virtual environment
+python -m venv .venv
+source .venv/bin/activate          # Linux/macOS
+# .venv\Scripts\activate           # Windows
+
+# 3. Install PyTorch (choose the build for your system)
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
+
+# 4. Install remaining dependencies
+pip install -r requirements.txt
+
+# 5. Set the data root and run training
+export BAMNET_DATA_ROOT=/path/to/your/data      # Linux/macOS
+# $env:BAMNET_DATA_ROOT="C:\path\to\your\data"  # Windows PowerShell
+python train.py --config config.yaml
+```
+
+See [Dataset and Zenodo](#dataset-and-zenodo) for downloading and preparing the data.
 
 ## Project Overview
 
@@ -108,20 +151,16 @@ Core components:
 
 Additional directories currently present in the repo:
 
-- `Swin-Unet/` — segmentation baseline code.
-- `ultralistics_models/` — YOLO-based baseline experiments.
 - `ablation/` — ablation configs and related experiment assets.
 
 ## Environment Setup
-
-The repository does not currently ship a pinned root `requirements.txt`, so installation is based on the imports used by the training code.
 
 Recommended environment:
 
 - Python `3.10+`
 - PyTorch with CUDA support for training on GPU
 
-Example setup:
+Installation:
 
 ```bash
 python -m venv .venv
@@ -132,7 +171,8 @@ pip install --upgrade pip
 # Example for CUDA 12.1:
 pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
 
-pip install pytorch-lightning albumentations opencv-python matplotlib pyyaml tensorboard numpy
+# Install all other dependencies:
+pip install -r requirements.txt
 ```
 
 If you train on CPU only, install the CPU build of PyTorch instead of the CUDA wheel.
@@ -316,6 +356,42 @@ To inspect logs:
 ```bash
 tensorboard --logdir "$BAMNET_DATA_ROOT/runs"
 ```
+
+## Inference
+
+The repository does not include a standalone inference script, but you can load a trained checkpoint and run predictions as follows:
+
+```python
+import torch
+import cv2
+import numpy as np
+from model_backbone_coords import LitBoundaryAwareSystem
+
+IMGNET_MEAN = np.array([0.485, 0.456, 0.406], dtype=np.float32)
+IMGNET_STD  = np.array([0.229, 0.224, 0.225], dtype=np.float32)
+
+# 1. Load checkpoint
+model = LitBoundaryAwareSystem.load_from_checkpoint("path/to/best.pt")
+model.eval()
+model.cuda()  # omit if running on CPU
+
+# 2. Prepare an image
+img = cv2.imread("path/to/fluoroscopy.png")
+img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+img = cv2.resize(img, (640, 640))
+img = img.astype(np.float32) / 255.0
+img = (img - IMGNET_MEAN) / IMGNET_STD
+tensor = torch.from_numpy(img.transpose(2, 0, 1)).unsqueeze(0).float().cuda()
+
+# 3. Run inference
+with torch.no_grad():
+    out = model(tensor)
+
+seg_mask = torch.sigmoid(out["segmentation"]).cpu().numpy()  # (1, 1, H, W)
+heatmaps = out["point_heatmaps"].cpu().numpy()               # (1, 4, H, W)
+```
+
+Pretrained weights are available on Zenodo: `https://zenodo.org/uploads/19219901`.
 
 ## Publications and Related Material
 

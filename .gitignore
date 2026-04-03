@@ -1,3 +1,6 @@
+# macOS
+.DS_Store
+
 # External local data trees or symlinks
 /export_project
 /segmentation_point(v2)
@@ -17,6 +20,10 @@ __pycache__/
 /pred_out/
 /baselines/**/model_out/
 /baselines/**/pretrained_ckpt/
+/runs_ablation/*
+ablation/runs_ablation/*
+val/*
+data/*
 
 # Agent-local state
 /.agent/
@@ -31,5 +38,6 @@ __pycache__/
 /publication/sn-article-template/*.log
 /publication/sn-article-template/*.out
 /publication/sn-article-template/*.synctex.gz
-/publication/sn-article-template/*.pdf
 /boundary_aware_manet_v4/*
+
+
