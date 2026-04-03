@@ -69,12 +69,12 @@ The primary annotation task was binary segmentation of the aortic root. The expe
 
 \begin{figure}[htbp]
 \centering
-\subfloat[]{\includegraphics[width=0.48\textwidth]{figures/Figure_1a.png}}
+\subfloat[]{\includegraphics[width=0.48\textwidth]{../figures/figure_1/orig_0019_008_030.png}}
 \hfill
-\subfloat[]{\includegraphics[width=0.48\textwidth]{figures/Figure_1b.jpeg}}\\[0.8em]
-\subfloat[]{\includegraphics[width=0.48\textwidth]{figures/Figure_1c.png}}
+\subfloat[]{\includegraphics[width=0.48\textwidth]{../figures/figure_1/sample_0019_008_030.jpeg}}\\[0.8em]
+\subfloat[]{\includegraphics[width=0.48\textwidth]{../figures/figure_1/orig_0019_013_027.png}}
 \hfill
-\subfloat[]{\includegraphics[width=0.48\textwidth]{figures/Figure_1d.jpeg}}
+\subfloat[]{\includegraphics[width=0.48\textwidth]{../figures/figure_1/sample_0019_013_027.jpeg}}
 \caption{Representative fluoroscopic images (a, c) and corresponding expert annotations (b, d) illustrating the aortic root mask and four anatomical landmarks (AA1, AA2, STJ1, STJ2).}
 \label{fig:annotation_examples}
 \end{figure}
@@ -111,7 +111,7 @@ This design allows the model to exploit both global root morphology and local co
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=\textwidth]{figures/Figure_2.png}
+\includegraphics[width=\textwidth]{../figures/figure_2/BAMNet.png}
 \caption{Overview of the proposed BAMNet architecture for joint aortic root segmentation and anatomical landmark localization on fluoroscopic images. The network combines an EfficientNet-V2 encoder, a segmentation-oriented decoder, a dedicated landmark branch with Coordinate Attention, and an auxiliary boundary pathway used for boundary-guided supervision.}
 \label{fig:bamnet_architecture}
 \end{figure}
@@ -247,9 +247,9 @@ These examples highlight an important practical feature of the proposed multitas
 
 \begin{figure}[htbp]
 \centering
-\subfloat[]{\includegraphics[width=0.48\textwidth]{figures/Figure_3a.png}}
+\subfloat[]{\includegraphics[width=0.48\textwidth]{../figures/figure_3/orig_0019_008_030_implant_zone.png}}
 \hfill
-\subfloat[]{\includegraphics[width=0.48\textwidth]{figures/Figure_3b.png}}
+\subfloat[]{\includegraphics[width=0.48\textwidth]{../figures/figure_3/orig_0019_013_027_implant_zone.png}}
 \caption{Representative BAMNet predictions on intraoperative fluoroscopic frames. The yellow contour and semi-transparent green region denote the predicted aortic root mask. Yellow points correspond to the four predicted landmarks (AA1, AA2, STJ1, STJ2). The blue arrow indicates the estimated aortic axis, and the central geometric overlay illustrates the predicted implantation zone derived from the landmark configuration.}
 \label{fig:bamnet_qualitative}
 \end{figure}
@@ -337,7 +337,7 @@ The ablation study therefore focused on Position Attention in the decoder, Coord
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=\textwidth]{figures/Figure_4.png}
+\includegraphics[width=\textwidth]{../figures/figure_4/ablation_summary.png}
 \caption{Summary of the BAMNet ablation study across the main architectural variants. The figure highlights how global spatial attention, coordinate-aware modulation, feature fusion, boundary-related supervision, and the soft-argmax configuration affect the balance between segmentation quality and landmark localization accuracy.}
 \label{fig:ablation_summary}
 \end{figure}

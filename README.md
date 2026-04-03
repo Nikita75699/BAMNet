@@ -1,6 +1,6 @@
-# BoundaryAwareMAnet: Multi-Task FluoroscopicSegmentation of the Aortic Root and LandmarkLocalization for TAVI Guidance
+# BoundaryAwareMAnet: Multi-Task FluoroscopicSegmentation of the Aortic Root and LandmarkLocalization for TAVI guidance
 
-This repository accompanies the manuscript `BoundaryAwareMAnet: Multi-Task FluoroscopicSegmentation of the Aortic Root and LandmarkLocalization for TAVI Guidance`. `BoundaryAwareMAnet (BAMNet)` is a multitask deep learning project for fluoroscopic guidance during transcatheter aortic valve implantation (TAVI). The model predicts the aortic root mask and four anatomical landmarks in one forward pass:
+This repository accompanies the manuscript `BoundaryAwareMAnet: Multi-Task FluoroscopicSegmentation of the Aortic Root and LandmarkLocalization for TAVI guidance`. `BoundaryAwareMAnet (BAMNet)` is a multitask deep learning project for fluoroscopic guidance during transcatheter aortic valve implantation (TAVI). The model predicts the aortic root mask and four anatomical landmarks in one forward pass:
 
 - `AA1`
 - `AA2`
