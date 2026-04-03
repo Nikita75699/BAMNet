@@ -28,23 +28,26 @@ DEFAULT_EXPORT_SIZE = None
 # Цвета из meta.json (Supervisely)
 CLASS_COLORS = {
     "mask": "#49BC4E",
-    "AA1": "#AEFF01",
-    "AA2": "#AEFF01",
-    "STJ1": "#AEFF01",
-    "STJ2": "#AEFF01",
+    "AA1": "#FFE61E",
+    "AA2": "#FFE61E",
+    "STJ1": "#FFE61E",
+    "STJ2": "#FFE61E",
 }
 
 # Стиль бейджей Supervisely
-BADGE_BG = (50, 50, 50, 200)       # тёмно-серый фон с прозрачностью
-BADGE_RADIUS = 3                    # скругление углов
-BADGE_PADDING_X = 6                 # горизонтальный отступ
-BADGE_PADDING_Y = 3                 # вертикальный отступ
-BADGE_ICON_SIZE = 8                 # размер иконки (треугольник из 3 точек)
-BADGE_ICON_GAP = 5                  # отступ между иконкой и текстом
-BADGE_FONT_SIZE = 12                # размер шрифта
-POINT_RADIUS = 4                    # радиус точки-аннотации
-MASK_CONTOUR_WIDTH = 2              # толщина контура маски
-MASK_FILL_OPACITY = 100             # прозрачность заливки маски (~0.39)
+POINT_RADIUS = 6
+BADGE_FONT_SIZE = 44
+BADGE_RADIUS = 4
+BADGE_PADDING_X = 8
+BADGE_PADDING_Y = 4
+BADGE_BG = (56, 56, 56, 208)
+BADGE_TEXT_COLOR = (255, 255, 255, 255)
+BADGE_ICON_SIZE = 14
+BADGE_ICON_GAP = 5
+MASK_FILL_OPACITY = 56
+MASK_CONTOUR_WIDTH = 2
+POINT_OUTLINE_WIDTH = 2
+POINT_OUTLINE_COLOR = (20, 20, 20, 255)
 
 
 def hex_to_rgb(hex_color):
@@ -64,16 +67,44 @@ def scale_px(value, render_scale, minimum=1):
     return max(minimum, int(round(value * render_scale)))
 
 
+def clamp_px(value, minimum=1, maximum=None):
+    px = int(round(value))
+    if maximum is not None:
+        px = min(px, maximum)
+    return max(minimum, px)
+
+
 def load_font(font_size):
     """Загрузка шрифта для меток."""
     font_paths = [
         "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
         "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+        "C:/Windows/Fonts/arialbd.ttf",
+        "C:/Windows/Fonts/Arial.ttf",
     ]
     for fp in font_paths:
         if os.path.exists(fp):
             return ImageFont.truetype(fp, font_size)
     return ImageFont.load_default()
+
+
+def build_render_style(image_size):
+    width, height = image_size
+    short_side = max(1, min(width, height))
+    font_size = clamp_px(short_side * 0.032 * 0.6, minimum=6, maximum=72)
+    return {
+        "badge_radius": clamp_px(font_size * 0.35, minimum=3, maximum=18),
+        "badge_padding_x": clamp_px(font_size * 0.45, minimum=3, maximum=24),
+        "badge_padding_y": clamp_px(font_size * 0.28, minimum=2, maximum=18),
+        "badge_icon_size": clamp_px(font_size * 0.7, minimum=8, maximum=28),
+        "badge_icon_gap": clamp_px(font_size * 0.28, minimum=3, maximum=12),
+        "badge_font_size": font_size,
+        "point_radius": clamp_px(short_side * 0.0115 * 0.7, minimum=2, maximum=18),
+        "point_outline_width": clamp_px(font_size * 0.15, minimum=1, maximum=4),
+        "mask_contour_width": clamp_px(short_side * 0.004, minimum=1, maximum=6),
+        "label_gap": clamp_px(font_size * 0.55, minimum=4, maximum=28),
+        "label_margin": clamp_px(font_size * 0.35, minimum=3, maximum=18),
+    }
 
 
 def draw_supervisely_icon(draw, cx, cy, color_rgb, size=8):
@@ -93,6 +124,39 @@ def draw_supervisely_icon(draw, cx, cy, color_rgb, size=8):
     # Нижняя правая
     draw.ellipse([cx + half - dot_r, cy + half - dot_r - 1, cx + half + dot_r, cy + half + dot_r - 1],
                  fill=color_rgb + (255,))
+
+
+def draw_point_badge(draw, point_xy, label, font, style, canvas_size):
+    point_x, point_y = point_xy
+    canvas_w, canvas_h = canvas_size
+    text_bbox = draw.textbbox((0, 0), label, font=font)
+    text_w = text_bbox[2] - text_bbox[0]
+    text_h = text_bbox[3] - text_bbox[1]
+    badge_w = text_w + style["badge_padding_x"] * 2
+    badge_h = text_h + style["badge_padding_y"] * 2
+
+    badge_x = point_x + style["label_gap"]
+    if badge_x + badge_w > canvas_w - style["label_margin"]:
+        badge_x = point_x - style["label_gap"] - badge_w
+    badge_x = clamp_px(
+        badge_x,
+        minimum=style["label_margin"],
+        maximum=max(style["label_margin"], canvas_w - badge_w - style["label_margin"]),
+    )
+    badge_y = clamp_px(
+        point_y - badge_h // 2,
+        minimum=style["label_margin"],
+        maximum=max(style["label_margin"], canvas_h - badge_h - style["label_margin"]),
+    )
+
+    draw.rounded_rectangle(
+        [badge_x, badge_y, badge_x + badge_w, badge_y + badge_h],
+        radius=style["badge_radius"],
+        fill=BADGE_BG,
+    )
+    text_x = badge_x + style["badge_padding_x"]
+    text_y = badge_y + style["badge_padding_y"] - text_bbox[1]
+    draw.text((text_x, text_y), label, fill=BADGE_TEXT_COLOR, font=font)
 
 
 def draw_supervisely_badge(draw, x, y, label, color_rgb, font, style, anchor="left", show_icon=True):
@@ -130,8 +194,8 @@ def draw_supervisely_badge(draw, x, y, label, color_rgb, font, style, anchor="le
     else:
         text_x = x + style["badge_padding_x"]
 
-    text_y = y + (badge_h - text_h) // 2 - 1
-    draw.text((text_x, text_y), label, fill=(255, 255, 255, 255), font=font)
+    text_y = y + (badge_h - text_h) // 2 - text_bbox[1]
+    draw.text((text_x, text_y), label, fill=BADGE_TEXT_COLOR, font=font)
 
     return badge_w, badge_h
 
@@ -216,16 +280,9 @@ def draw_supervisely_style(img, ann_data, export_size=None, mask_path=None):
         img = img.resize(target_size, Image.Resampling.LANCZOS)
     W, H = img.size
 
-    style = {
-        "badge_radius": scale_px(BADGE_RADIUS, render_scale),
-        "badge_padding_x": scale_px(BADGE_PADDING_X, render_scale),
-        "badge_padding_y": scale_px(BADGE_PADDING_Y, render_scale),
-        "badge_icon_size": scale_px(BADGE_ICON_SIZE, render_scale),
-        "badge_icon_gap": scale_px(BADGE_ICON_GAP, render_scale),
-        "badge_font_size": scale_px(BADGE_FONT_SIZE, render_scale, minimum=8),
-        "point_radius": scale_px(POINT_RADIUS, render_scale),
-        "mask_contour_width": scale_px(MASK_CONTOUR_WIDTH, render_scale),
-    }
+    # Адаптивное масштабирование относительно базового размера (напр., 1024px)
+    # Если изображение 512px, всё будет в 2 раза меньше от базовых констант.
+    style = build_render_style((W, H))
     font = load_font(style["badge_font_size"])
 
     # --- Слой 1: маски (заливка + контур) ---
@@ -335,13 +392,14 @@ def draw_supervisely_style(img, ann_data, export_size=None, mask_path=None):
                 js_h = ann_data.get("height", orig_h)
                 x = int(round(pt_info["x"] * (W / js_w)))
                 y = int(round(pt_info["y"] * (H / js_h)))
+            # Точка: тёмная обводка + цветная заливка (как в render_implant_zone.py)
             r = style["point_radius"]
-            draw.ellipse([x-r-1, y-r-1, x+r+1, y+r+1], fill=(0, 0, 0, 255))
-            draw.ellipse([x-r, y-r, x+r, y+r], fill=rgb + (255,))
-            draw.ellipse([x-1, y-1, x+1, y+1], fill=(255, 255, 255, 255))
-            badge_x = x + r + 5
-            badge_y = max(2, y - scale_px(10, render_scale))
-            draw_supervisely_badge(draw, badge_x, badge_y, class_title, rgb, font, style, show_icon=False)
+            w = style["point_outline_width"]
+            draw.ellipse([x - r - w, y - r - w, x + r + w, y + r + w], fill=POINT_OUTLINE_COLOR)
+            draw.ellipse([x - r, y - r, x + r, y + r], fill=rgb + (255,))
+
+            # Текст справа-сверху от точки (без бейджа, белым цветом)
+            draw_point_badge(draw, (x, y), class_title, font, style, (W, H))
 
     # Supervisely точки
     for obj in ann_data.get("objects", []):
@@ -357,21 +415,14 @@ def draw_supervisely_style(img, ann_data, export_size=None, mask_path=None):
         x = int(round(pts[0][0] * render_scale))
         y = int(round(pts[0][1] * render_scale))
 
-        # Точка: чёрная обводка + цветная заливка + белый центр
+        # Точка: тёмная обводка + цветная заливка (как в render_implant_zone.py)
         r = style["point_radius"]
-        draw.ellipse([x-r-1, y-r-1, x+r+1, y+r+1],
-                     fill=(0, 0, 0, 255))
-        draw.ellipse([x-r, y-r, x+r, y+r],
-                     fill=rgb + (255,))
-        draw.ellipse([x-1, y-1, x+1, y+1],
-                     fill=(255, 255, 255, 255))
+        w = style["point_outline_width"]
+        draw.ellipse([x - r - w, y - r - w, x + r + w, y + r + w], fill=POINT_OUTLINE_COLOR)
+        draw.ellipse([x - r, y - r, x + r, y + r], fill=rgb + (255,))
 
-        # Бейдж справа от точки
-        badge_x = x + r + 5
-        badge_y = y - scale_px(10, render_scale)
-        # Ограничиваем
-        badge_y = max(2, badge_y)
-        draw_supervisely_badge(draw, badge_x, badge_y, class_title, rgb, font, style, show_icon=False)
+        # Текст справа-сверху от точки (без бейджа, белым цветом)
+        draw_point_badge(draw, (x, y), class_title, font, style, (W, H))
 
     return combined.convert("RGB")
 
