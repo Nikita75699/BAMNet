@@ -1,20 +1,20 @@
 # Fdb version 4
-["bibtex manuscript"] 1775218033.12786 "manuscript.aux" "manuscript.bbl" "manuscript" 1775218036.14657 0
+["bibtex manuscript"] 1775218033.12786 "manuscript.aux" "manuscript.bbl" "manuscript" 1775226120.53457 0
   "./cmig.bib" 1775109443 10281 aae0bd3a38125a2738a7e6e002854c4e ""
   "c:/texlive/2026/texmf-dist/bibtex/bst/elsarticle/elsarticle-harv.bst" 1774102607 30002 8c3d766e7980d576fdc8329774bbf7b2 ""
-  "manuscript.aux" 1775218035 10361 f36fa6a712ed5cb0315b104c59d90082 "pdflatex"
+  "manuscript.aux" 1775226119 10361 f36fa6a712ed5cb0315b104c59d90082 "pdflatex"
   (generated)
   "manuscript.bbl"
   "manuscript.blg"
   (rewritten before read)
-["pdflatex"] 1775218033.54877 "c:/Users/nikit/Documents/BAMNet/publication/cmig_submission/manuscript.tex" "manuscript.pdf" "manuscript" 1775218036.1472 0
+["pdflatex"] 1775226117.05931 "c:/Users/nikit/Documents/BAMNet/publication/cmig_submission/manuscript.tex" "manuscript.pdf" "manuscript" 1775226120.53537 0
   "../figures/figure_1/orig_0019_008_030.png" 1774719487 939358 2689760ccb0c00bfcd31a04cbe28d87b ""
   "../figures/figure_1/orig_0019_013_027.png" 1774719487 963324 36277d3d55e0cb161578c06f269b93a2 ""
-  "../figures/figure_1/sample_0019_008_030.jpeg" 1775217451 60918 3a21d3b8c27b409e391253c4c3e37a61 ""
-  "../figures/figure_1/sample_0019_013_027.jpeg" 1775217444 60239 bd521669651313bccfda09386cfb129a ""
+  "../figures/figure_1/sample_0019_008_030.jpeg" 1775220056 172627 b8a6bcb5da0589e8ca3be040f27478b0 ""
+  "../figures/figure_1/sample_0019_013_027.jpeg" 1775220062 173312 ef5b2e2db81761595ff30c5f04d35ecc ""
   "../figures/figure_2/BAMNet.png" 1774719487 462041 62d8133efcba82858bb6fea3ca98262d ""
-  "../figures/figure_3/orig_0019_008_030_implant_zone.png" 1774719487 2161364 5a7a0aeab95992eee38af8c98ccaea51 ""
-  "../figures/figure_3/orig_0019_013_027_implant_zone.png" 1774719487 2066535 de2ba9faf3481460ecb8c2fe56714431 ""
+  "../figures/figure_3/orig_0019_008_030_implant_zone.png" 1775220987 2207011 16f2e56a948636d86eec4e8ede7d3987 ""
+  "../figures/figure_3/orig_0019_013_027_implant_zone.png" 1775220990 2127677 ae9c9b277838fdf0f32e149ecfe6c298 ""
   "../figures/figure_4/ablation_summary.png" 1775109443 237372 f8876cfadfd92d6b112f60722f78836e ""
   "c:/Users/nikit/Documents/BAMNet/publication/cmig_submission/manuscript.tex" 1775217859 42600 07f4b25757af3c1fd17ba8e4f54c0898 ""
   "c:/texlive/2026/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1774101913 2971 def0b6c1f0b107b3b936def894055589 ""
@@ -107,9 +107,9 @@
   "c:/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1774108405 5619402 045890036aad9b52b154ef5568e59d3a ""
   "c:/texlive/2026/texmf-var/web2c/pdftex/pdflatex.fmt" 1774108800 3636418 87e68b24a79a5162e0d8d574032aa0dd ""
   "c:/texlive/2026/texmf.cnf" 1774108361 713 e69b156964470283e0530f5060668171 ""
-  "manuscript.aux" 1775218035 10361 f36fa6a712ed5cb0315b104c59d90082 "pdflatex"
+  "manuscript.aux" 1775226119 10361 f36fa6a712ed5cb0315b104c59d90082 "pdflatex"
   "manuscript.bbl" 1775218033 13663 5797e6b8c71a9131a1ffe6e759b1ea4f "bibtex manuscript"
-  "manuscript.spl" 1775218034 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "manuscript.spl" 1775226117 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
   "manuscript.tex" 1775217859 42600 07f4b25757af3c1fd17ba8e4f54c0898 ""
   (generated)
   "manuscript.aux"
